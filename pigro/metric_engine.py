@@ -22,6 +22,7 @@ class metric():
 
     def __init__(self):
         self.initialized = 0
+        self.geodesic_engine_linked = False
     
     def initialize_metric(self):
         self.name = input("Insert the name of the spacetime (e.g. 'Kerr metric'): ")
@@ -52,45 +53,75 @@ class metric():
                 self.g[i,j] = parse_expr(component)
                 self.g_str[i,j] = component
         
-        self.g_f = lambdify([self.x], self.g, 'numpy')
-
-        self.initialized = 1
-
-        self.surfaces = {}
-        self.constants = {}
-
-        free_sym = list(self.g.free_symbols-set(self.x))
-
-        if(len(free_sym)) > 0:
-            for sym in free_sym:
-                self.add_constant(str(sym))
-            print("Symbols {} are not coordinate. They have been set as constants. Do you wish to set their value now?")
-            if input("[y/n]: ") == "y":
-                for sym in free_sym:
-                    self.set_constant(sym, input("{} = ".format(str(sym))))
-            else:
-                pass
-                
         print("Calculating inverse metric...")
         self.g_inv = self.g.inv()
+
+        self.g_inv_str = np.zeros([4,4], dtype = object)
+        
+        for i in range(4):
+            for j in range(4):
+                self.g_inv_str[i,j] = str(self.g_inv[i,j])
+        
+        print("Calculating symbolic equations of motion:")
+        self.eq_u = []
+        self.eq_u_str = np.zeros(4, dtype = object)
+
+        self.eq_x = []
+        self.eq_x_str = np.zeros(4, dtype = object)
+
+        for rho in range(4):
+            print("- {}/4".format(rho+1))
+            eq = 0
+            for mu in range(4):
+                for nu in range(4):
+                    eq += -self.chr(mu, nu, rho)*self.u[mu]*self.u[nu]
+            self.eq_u.append(eq)
+            self.eq_u_str[rho] = str(eq)
+
+            self.eq_x.append(self.u[rho])
+            self.eq_x_str[rho] = str(self.u[rho])
+
+
+        print("Adding to class a method to get initial u_0...")
+
+        eq = 0
+
+        for mu in range(4):
+            for nu in range(4):
+                eq += self.g[mu, nu]*self.u[mu]*self.u[nu]
+
+        self.u0_s_null = solve(eq, self.u[0], simplify=False, rational=False)[0]
+
+        eq += 1
+
+        self.u0_s_timelike = solve(eq, self.u[0], simplify=False, rational=False)[0]
+
+        self.initialized = 1
+        self.constants = {}
+        self.transform_functions = []
+
+        free_sym = list(self.g.free_symbols-set(self.x))
 
         print("The metric_engine has been initialized.")
 
     def save_metric(self, filename):
-        if self.initalized:
-            f = open(filename, "w")
-            
-            output = {}
-            
-            output['name'] = self.name
-            output['g'] = self.g_str.tolist()
-            output['x'] = self.x_str
-            if(self.transform_functions):
-                output['transform'] = self.self.transform_functions_str
+        if self.initialized:
+            with open(filename, "w+") as f:
+                output = {}
+                
+                output['name'] = self.name
+                output['g'] = self.g_str.tolist()
+                output['x'] = self.x_str
+                output['g_inv'] = self.g_inv_str.tolist()
+                output['eq_x'] = self.eq_x_str.tolist()
+                output['eq_u'] = self.eq_u_str.tolist()
+                output['u0_timelike'] = str(self.u0_s_timelike)
+                output['u0_null'] = str(self.u0_s_null)
+                
+                if(self.transform_functions):
+                    output['transform'] = self.self.transform_functions_str
 
-            json.dump(output, f)
-
-            f.close()
+                json.dump(output, f)
 
         else:
             print("Inizialize (initialize_metric) or load (load_metric) a metric before saving.")
@@ -111,6 +142,7 @@ class metric():
         self.u = []
 
         for i in range(4):
+
             coordinate = load['x'][i]
             setattr(self, coordinate, symbols(coordinate))
             self.x.append(self.__dict__[coordinate])
@@ -121,19 +153,36 @@ class metric():
             self.u.append(self.__dict__[velocity])
         
         self.g = zeros(4, 4)
+        self.g_inv = zeros(4, 4)
+        self.eq_u = zeros(4)
+        self.eq_x = zeros(4)
+        
         self.g_str = np.zeros([4,4], dtype = object)
+        self.g_inv_str = np.zeros([4,4], dtype = object)
+        self.eq_u_str = np.zeros(4, dtype = object)
+        self.eq_x_str = np.zeros(4, dtype = object)
 
         for i in range(4):
+
             for j in range(4):
+
                 component = load['g'][i][j]
                 self.g[i,j] = parse_expr(component)
                 self.g_str[i,j] = component
+                component = load['g_inv'][i][j]
+                self.g_inv[i,j] = parse_expr(component)
+                self.g_inv_str[i,j] = component
 
+            self.eq_u[i] = parse_expr(load['eq_u'][i])
+            self.eq_x[i] = parse_expr(load['eq_x'][i])
+            self.eq_u_str[i] = load['eq_u'][i]
+            self.eq_x_str[i] = load['eq_x'][i]
+        
+        self.u0_s_null = parse_expr(load['u0_null'])
+        self.u0_s_timelike = parse_expr(load['u0_timelike'])
+        
         self.initialized = 1
-
-        self.horizons = {}
         self.constants = {}
-        self.constants_of_motion = {}
 
         free_sym = list(self.g.free_symbols-set(self.x))
 
@@ -141,26 +190,22 @@ class metric():
             for sym in free_sym:
                 self.add_constant(str(sym))
                 if str(sym) in params:
-                    self.set_constant(sym, params.get(str(sym)))
+                    self.set_constant(**{str(sym): params.get(str(sym))})
                 else:
-                    self.set_constant(sym, input("{} = ".format(str(sym))))
+                    self.set_constant(**{str(sym): params.get(str(sym))})
 
         self.transform_functions = []
-
+        
+        '''
         if load['transform']:
             for i in range(3):
                 transf = load['transform'][i]
                 transform_function = parse_expr(transf)
                 self.transform_functions.append(lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function), 'numpy'))
-
+        '''
 
         self.g_f = lambdify([self.x], self.evaluate_constants(self.g), 'numpy')
-
-        if verbose:
-            print("Calculating inverse metric tensor...")
-            
-        self.g_inv = self.g_val.inv()
-        self.g_inv_s = self.g.inv()
+        self.g_inv_f = lambdify([self.x], self.evaluate_constants(self.g_inv), 'numpy')
         
         if verbose:
             print("The metric_engine has been initialized.")
@@ -173,9 +218,17 @@ class metric():
         else:
             print("Inizialize (initialize_metric) or load (load_metric) a metric before adding constants.")
     
-    def set_constant(self, symbol, value):
+    def set_constant(self, **params):
         if self.initialized:
-            self.constants[str(symbol)]['value'] = value
+            for param in params:
+                try:
+                    self.constants[str(param)]['value'] = params[param]
+                except:
+                    print(f"No constant named '{symbol}' in the metric_engine.")
+                    break
+            self.g_f = lambdify([self.x], self.evaluate_constants(self.g), 'numpy')
+            if self.geodesic_engine_linked:
+                self.geodesic_engine.evaluate_constants()
         else:
             print("Inizialize (initialize_metric) or load (load_metric) a metric before adding constants.")
 
@@ -193,7 +246,7 @@ class metric():
     def chr(self, mu, nu, rho):
         ch = 0
         for sigma in range(4):
-            ch += self.g_inv_s[rho,sigma]*(self.g[sigma, nu].diff(self.x[mu])+self.g[mu, sigma].diff(self.x[nu])-self.g[mu, nu].diff(self.x[sigma]))/2
+            ch += self.g_inv[rho,sigma]*(self.g[sigma, nu].diff(self.x[mu])+self.g[mu, sigma].diff(self.x[nu])-self.g[mu, nu].diff(self.x[sigma]))/2
         return ch
 
     def set_coordinate_transformation(self):
@@ -209,6 +262,15 @@ class metric():
 
     def transform(self, X):
         return self.transform_functions[0](X[0], X[1], X[2]), self.transform_functions[1](X[0], X[1], X[2]), self.transform_functions[2](X[0], X[1], X[2])
+
+    def norm4(self, x, v):
+        norm = 0
+        
+        for mu in range(4):
+            for nu in range(4):
+                norm += self.g_f(x)[mu, nu]*v[mu]*v[nu]
+        
+        return norm
 
     def set_constant_of_motion(self, name, expr):
         self.constants_of_motion[name] = lambdify([self.x, self.u], self.evaluate_constants(expr), 'numpy')

@@ -1,4 +1,5 @@
-def ck4(self, x, u, tau, h, delta):
+def ck4(self, x, u, tau, h, Rtol, Atol):
+    delta = Atol
     rho = 0
     h1 = h
     while rho < 1:
@@ -67,7 +68,6 @@ def dp4(self, x, u, tau, h, Atol, Rtol):
             tol_i = Atol+max(abs(u5[i]),abs(u[i]))*Rtol
             tol.append(tol_i)
         
-
         epsilon = 0
         for i in range(4):
             epsilon += ((x5[i]-x4[i])/(tol[i]))**2
@@ -87,11 +87,15 @@ def dp4(self, x, u, tau, h, Atol, Rtol):
 
     return [x5, u5, tau1, h1]
 
-def fh78(self, x, u, tau, h, delta):
+def fh78(self, x, u, tau, h, Rtol, Atol):
     rho = 0
     h1 = h
+
     x = np.array(x)
     u= np.array(u)
+
+    delta  = Atol
+
     while rho < 1:
         
         bb = np.array(
@@ -145,11 +149,14 @@ def fh78(self, x, u, tau, h, delta):
 
     return [x7, u7, tau1, h1]
 
-def dp78(self, x, u, tau, h, delta):
+def dp78(self, x, u, tau, h, Rtol, Atol):
     rho = 0
     h1 = h
     x = np.array(x)
     u= np.array(u)
+
+    delta = Atol
+
     while rho < 1:
         
         bb = np.array(
@@ -203,7 +210,10 @@ def dp78(self, x, u, tau, h, delta):
 
     return [x8, u8, tau1, h1]
 
-def bs23(self, x, u, tau, h, delta):
+def bs23(self, x, u, tau, h, Atol, Rtol):
+
+    delta = Atol
+
     rho = 0
     h1 = h
     while rho < 1:
@@ -236,7 +246,7 @@ def bs23(self, x, u, tau, h, delta):
 
     return [x3, u3, tau1, h1]
 
-def rk45(self, x, u, tau, h):
+def rk45(self, x, u, tau, h, Rtol, Atol):
     k1 = self.motion_eq(x, u)
     k2 = self.motion_eq(x+k1[0]*h/2, u+k1[1]*h/2)
     k3 = self.motion_eq(x+k2[0]*h/2, u+k2[1]*h/2)
@@ -254,7 +264,7 @@ def rk45(self, x, u, tau, h):
     tau1 = tau + h
     return [x1, u1, tau1]
 
-def rkf45(self, x, u, tau, h, delta):
+def rkf45(self, x, u, tau, h, Atol, Rtol):
     rho = 0
     h1 = h
     while rho < 1:

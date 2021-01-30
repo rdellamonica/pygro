@@ -1,6 +1,7 @@
 import numpy as np
 import time
 from sympy import *
+import pigro.integrators as integrators
 
 #########################################################################################
 #                               GEODESIC ENGINE                                         #
@@ -57,7 +58,7 @@ class geodesic_engine(object):
         ################################################################
 
         if verbose:
-            print("Adding to class a method to get initial u_0 and u_1...")
+            print("Adding to class a method to get initial u_0...")
 
         eq = 0
 
@@ -65,8 +66,7 @@ class geodesic_engine(object):
             for nu in range(4):
                 eq += self.metric.g[mu, nu]*self.metric.u[mu]*self.metric.u[nu]
 
-        self.u0_s_null = solve(eq, self.metric.u[0], simplify=False, rational=False)
-        self.u1_s_null = solve(eq, self.metric.u[1], simplify=False, rational=False)
+        self.u0_s_null = solve(eq, self.metric.u[0], simplify=False, rational=False)[0]
 
         eq = 1
 
@@ -74,11 +74,15 @@ class geodesic_engine(object):
             for nu in range(4):
                 eq += self.metric.g[mu, nu]*self.metric.u[mu]*self.metric.u[nu]
 
-        self.u0_s_timelike = solve(eq, self.metric.u[0], simplify=False, rational=False)
-        self.u1_s_timelike = solve(eq, self.metric.u[1], simplify=False, rational=False)
+        self.u0_s_timelike = solve(eq, self.metric.u[0], simplify=False, rational=False)[0]
 
         if verbose:
             print("OK")
+
+        self.metric.geodesic_engine_linked = True
+        self.metric.geodesic_engine = self
+
+        self.evaluate_constants()
 
         if verbose:
             print("Metric linking complete.")
@@ -89,216 +93,62 @@ class geodesic_engine(object):
     def set_stopping_criterion(self, f):
         self.stopping_criterion = f
 
-    def integrate(self, geo, tauf, show_time = False, eval_constants = False, h = 0.01, delta = 1e-10, verbose = True, direction = "fw"):
+    def integrate(self, geo, tauf, initial_step = 0.01, Atol = 0, Rtol = 1e-6, verbose = True, direction = "fw", method = "dp4"):
         if verbose:
             print("Integrating...")
-    
-        geo.tau.append(0)
+
+        try:
+            integrator = integrators.__dict__[method]
+        except:
+            print(f"Method {method} not found. Currently supported methods: ck4, dp4, fh78, dp78, bs23, rk45, rkf45.")
 
         if direction == "bw":
             h = -h
             tauf = -tauf
 
-        geo.x = []
+        geo.tau.append(0)
+        geo.x = [] 
         geo.u = []
-
-        if eval_constants:
-            geo.constants = [self.eval_constants_of_motion(geo.initial_x, geo.initial_u)]
         
         geo.x.append(geo.initial_x)
         geo.u.append(geo.initial_u)
 
-        if show_time:
+        if verbose:
             time_start = time.perf_counter()
+
+        h = initial_step
 
         while abs(geo.tau[-1]) < abs(tauf) and self.stopping_criterion(geo):
-            next = self.ck4(geo.x[-1], geo.u[-1], geo.tau[-1], h, delta)
-            if eval_constants:
-                geo.constants.append(self.eval_constants_of_motion(next[0], next[1]))
+            next = integrator(self, geo.x[-1], geo.u[-1], geo.tau[-1], h, Atol, Rtol)
             geo.x.append(next[0])
             geo.u.append(next[1])
             geo.tau.append(next[2])
             h = next[3]
-            if show_time:
+            if verbose:
                 print("Tau = {}".format(next[2]), end = "\r")
                 
-        if show_time:
-            time_elapsed = (time.perf_counter() - time_start)
-            print("Integration time = {} s".format(time_elapsed))
-
-        if eval_constants:
-                geo.constants = np.stack(geo.constants)
-
-        geo.x = np.stack(geo.x)
-        geo.u = np.stack(geo.u)
-    
-    def integrate2(self, geo, tauf, show_time = False, eval_constants = False, h = 0.01, Atol = 1e-10, Rtol = 1e-5, verbose = True, direction = "fw", precision = 10):
         if verbose:
-            print("Integrating...")
-    
-        geo.tau.append(0)
-
-        if direction == "bw":
-            h = -h
-            tauf = -tauf
-
-        geo.x = []
-        geo.u = []
-
-        if eval_constants:
-            geo.constants = [self.eval_constants_of_motion(geo.initial_x, geo.initial_u)]
-        
-        geo.x.append(geo.initial_x)
-        geo.u.append(geo.initial_u)
-
-        if show_time:
-            time_start = time.perf_counter()
-
-        while abs(geo.tau[-1]) < abs(tauf) and self.stopping_criterion(geo):
-            next = self.dp4(geo.x[-1], geo.u[-1], geo.tau[-1], h, Atol, Rtol)
-            if eval_constants:
-                geo.constants.append(self.eval_constants_of_motion(next[0], next[1]))
-            geo.x.append(next[0])
-            geo.u.append(next[1])
-            geo.tau.append(next[2])
-            h = next[3]
-            if show_time:
-                print("Tau = {}".format(next[2]), end = "\r")
-                
-        if show_time:
             time_elapsed = (time.perf_counter() - time_start)
             print("Integration time = {} s".format(time_elapsed))
-
-        if eval_constants:
-                geo.constants = np.stack(geo.constants)
 
         geo.x = np.stack(geo.x)
         geo.u = np.stack(geo.u)
     
-    def integrate3(self, geo, tauf, show_time = False, eval_constants = False, h = 0.01, delta = 1e-10, verbose = True, direction = "fw"):
-        if verbose:
-            print("Integrating...")
-    
-        geo.tau.append(0)
+    def evaluate_constants(self):
 
-        if direction == "fw":
-            geo.initial_u[0] = abs(geo.initial_u[0])
-        elif direction == "bw":
-            geo.initial_u[0] = -abs(geo.initial_u[0])
-
-        geo.x = []
-        geo.u = []
-
-        if eval_constants:
-            geo.constants = [self.eval_constants_of_motion(geo.initial_x, geo.initial_u)]
-        
-        geo.x.append(geo.initial_x)
-        geo.u.append(geo.initial_u)
-
-        if show_time:
-            time_start = time.perf_counter()
-
-        while geo.tau[-1] < tauf and self.stopping_criterion(geo):
-            next = self.bs23(geo.x[-1], geo.u[-1], geo.tau[-1], h, delta)
-            if eval_constants:
-                geo.constants.append(self.eval_constants_of_motion(next[0], next[1]))
-            geo.x.append(next[0])
-            geo.u.append(next[1])
-            geo.tau.append(next[2])
-            h = next[3]
-            if show_time:
-                print("Tau = {}".format(next[2]), end = "\r")
-                
-        if show_time:
-            time_elapsed = (time.perf_counter() - time_start)
-            print("Integration time = {} s".format(time_elapsed))
-
-        if eval_constants:
-                geo.constants = np.stack(geo.constants)
-
-        geo.x = np.stack(geo.x)
-        geo.u = np.stack(geo.u)
-    
-    def integrate4(self, geo, tauf, show_time = False, eval_constants = False, h = 0.01, delta = 1e-10, verbose = True, direction = "fw"):
-        if verbose:
-            print("Integrating...")
-
-        if direction == "bw":
-            h = -h
-            tauf = -tauf
-
-        geo.tau = []
-        geo.x = []
-        geo.u = []
-
-        geo.tau.append(0)
-
-        if eval_constants:
-            geo.constants = [self.eval_constants_of_motion(geo.initial_x, geo.initial_u)]
-        
-        geo.x.append(geo.initial_x)
-        geo.u.append(geo.initial_u)
-
-        if show_time:
-            time_start = time.perf_counter()
-
-        while geo.tau[-1] < tauf and self.stopping_criterion(geo):
-            next = self.dp78(geo.x[-1], geo.u[-1], geo.tau[-1], h, delta)
-            if eval_constants:
-                geo.constants.append(self.eval_constants_of_motion(next[0], next[1]))
-            geo.x.append(next[0])
-            geo.u.append(next[1])
-            geo.tau.append(next[2])
-            h = next[3]
-            if show_time:
-                print("Tau = {}".format(next[2]), end = "\r")
-                
-        if show_time:
-            time_elapsed = (time.perf_counter() - time_start)
-            print("Integration time = {} s".format(time_elapsed))
-
-        if eval_constants:
-                geo.constants = np.stack(geo.constants)
-
-        geo.x = np.stack(geo.x)
-        geo.u = np.stack(geo.u)
-
-    def eval_constants_of_motion(self, x, u):
-        c = []
-        for constant in self.metric.constants_of_motion:
-            c.append(self.metric.constants_of_motion[constant](x, u))
-
-        return c
-    
-    def set_constants(self):
-
-        motion_eq_f = lambdify([g.x, g.u], [self.eq_x, self.eq_u], 'numpy')
-
-        def f(x, u):
-            return np.array(motion_eq_f(x, u))
-        
-        self.motion_eq = f
-
-        eq_x = self.eq_x_s
-    
-        subs = []
-        for param in params:
-            x = param['symbol']
-            y = param['value']
-            subs.append([x,y])
-        
         eq_u = []
-        for i in range(4):
-            eq_u.append(self.eq_u_s[i].subs(subs))
-        
-        u0 = self.u0_f_null_s.subs(subs)
-        self.u0_f_null = lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0, 'numpy')
-        u0 = self.u0_f_timelike_s.subs(subs)
-        self.u0_f_timelike= lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0, 'numpy')
+        for eq in self.eq_u:
+            eq_u.append(self.metric.evaluate_constants(eq))
 
-        motion_eq_f = lambdify([self.metric.x, self.metric.u], [eq_x, eq_u], 'numpy')
+        motion_eq_f = lambdify([self.metric.x, self.metric.u], [self.eq_x, eq_u], 'numpy')
 
         def f(x, u):
             return np.array(motion_eq_f(x, u))
 
         self.motion_eq = f
+        
+        u0_timelike = self.metric.evaluate_constants(self.u0_s_timelike)
+        u0_null = self.metric.evaluate_constants(self.u0_s_null)
+
+        self.u0_f_null = lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0_null, 'numpy')
+        self.u0_f_timelike = lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0_timelike, 'numpy')

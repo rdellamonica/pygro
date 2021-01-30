@@ -1,0 +1,53 @@
+{
+    "name": "Kerr Metric",
+    "g": [
+        [
+            "-(1-2*m*r/(r**2+a**2*cos(theta)**2))",
+            "0",
+            "0",
+            "-(2*m*r*a*sin(theta)**2)/(r**2+a**2*cos(theta)**2)"
+        ],
+        [
+            "0",
+            "(r**2+a**2*cos(theta)**2)/(r**2-2*m*r+a**2)",
+            "0",
+            "0"
+        ],
+        [
+            "0",
+            "0",
+            "(r**2+a**2*cos(theta)**2)",
+            "0"
+        ],
+        [
+            "-(2*m*r*a*sin(theta)**2)/(r**2+a**2*cos(theta)**2)",
+            "0",
+            "0",
+            "(r**2+a**2+(2*m*r*a**2*sin(theta)**2)/(r**2+a**2*cos(theta)**2))*sin(theta)**2"
+        ]
+    ],
+    "g_inv": [
+        [
+            
+        ],
+    ],
+    "eq_x": [
+
+    ],
+    "eq_u": [
+
+    ],
+    "u0_timelike" : "-2*a*m*r*uphi*sin(theta)**2/(a**2*cos(theta)**2 - 2*m*r + r**2) - sqrt((a**2*cos(theta)**2 + r**2)*(a**2 - 2*m*r + r**2)*(a**6*uphi**2*sin(theta)**2*cos(theta)**2 + a**6*utheta**2*cos(theta)**4 + 2*a**4*m*r*uphi**2*sin(theta)**4 - 2*a**4*m*r*uphi**2*sin(theta)**2*cos(theta)**2 - 2*a**4*m*r*uphi**2*sin(theta)**2 - 2*a**4*m*r*utheta**2*cos(theta)**4 - 2*a**4*m*r*utheta**2*cos(theta)**2 + 2*a**4*r**2*uphi**2*sin(theta)**2*cos(theta)**2 + a**4*r**2*uphi**2*sin(theta)**2 + a**4*r**2*utheta**2*cos(theta)**4 + 2*a**4*r**2*utheta**2*cos(theta)**2 + a**4*ur**2*cos(theta)**4 + a**4*cos(theta)**2 - 4*a**2*m**2*r**2*uphi**2*sin(theta)**4 + 4*a**2*m**2*r**2*uphi**2*sin(theta)**2 + 4*a**2*m**2*r**2*utheta**2*cos(theta)**2 + 2*a**2*m*r**3*uphi**2*sin(theta)**4 - 2*a**2*m*r**3*uphi**2*sin(theta)**2*cos(theta)**2 - 6*a**2*m*r**3*uphi**2*sin(theta)**2 - 6*a**2*m*r**3*utheta**2*cos(theta)**2 - 2*a**2*m*r**3*utheta**2 - 2*a**2*m*r*ur**2*cos(theta)**2 - 2*a**2*m*r*cos(theta)**2 - 2*a**2*m*r + a**2*r**4*uphi**2*sin(theta)**2*cos(theta)**2 + 2*a**2*r**4*uphi**2*sin(theta)**2 + 2*a**2*r**4*utheta**2*cos(theta)**2 + a**2*r**4*utheta**2 + 2*a**2*r**2*ur**2*cos(theta)**2 + a**2*r**2*cos(theta)**2 + a**2*r**2 + 4*m**2*r**4*uphi**2*sin(theta)**2 + 4*m**2*r**4*utheta**2 + 4*m**2*r**2 - 4*m*r**5*uphi**2*sin(theta)**2 - 4*m*r**5*utheta**2 - 2*m*r**3*ur**2 - 4*m*r**3 + r**6*uphi**2*sin(theta)**2 + r**6*utheta**2 + r**4*ur**2 + r**4))/(-a**4*cos(theta)**2 + 2*a**2*m*r*cos(theta)**2 + 2*a**2*m*r - a**2*r**2*cos(theta)**2 - a**2*r**2 - 4*m**2*r**2 + 4*m*r**3 - r**4)",
+    "u0_null": "-2*a*m*r*uphi*sin(theta)**2/(a**2*cos(theta)**2 - 2*m*r + r**2) - sqrt((a**2*cos(theta)**2 + r**2)*(a**2 - 2*m*r + r**2)*(a**6*uphi**2*sin(theta)**2*cos(theta)**2 + a**6*utheta**2*cos(theta)**4 + 2*a**4*m*r*uphi**2*sin(theta)**4 - 2*a**4*m*r*uphi**2*sin(theta)**2*cos(theta)**2 - 2*a**4*m*r*uphi**2*sin(theta)**2 - 2*a**4*m*r*utheta**2*cos(theta)**4 - 2*a**4*m*r*utheta**2*cos(theta)**2 + 2*a**4*r**2*uphi**2*sin(theta)**2*cos(theta)**2 + a**4*r**2*uphi**2*sin(theta)**2 + a**4*r**2*utheta**2*cos(theta)**4 + 2*a**4*r**2*utheta**2*cos(theta)**2 + a**4*ur**2*cos(theta)**4 - 4*a**2*m**2*r**2*uphi**2*sin(theta)**4 + 4*a**2*m**2*r**2*uphi**2*sin(theta)**2 + 4*a**2*m**2*r**2*utheta**2*cos(theta)**2 + 2*a**2*m*r**3*uphi**2*sin(theta)**4 - 2*a**2*m*r**3*uphi**2*sin(theta)**2*cos(theta)**2 - 6*a**2*m*r**3*uphi**2*sin(theta)**2 - 6*a**2*m*r**3*utheta**2*cos(theta)**2 - 2*a**2*m*r**3*utheta**2 - 2*a**2*m*r*ur**2*cos(theta)**2 + a**2*r**4*uphi**2*sin(theta)**2*cos(theta)**2 + 2*a**2*r**4*uphi**2*sin(theta)**2 + 2*a**2*r**4*utheta**2*cos(theta)**2 + a**2*r**4*utheta**2 + 2*a**2*r**2*ur**2*cos(theta)**2 + 4*m**2*r**4*uphi**2*sin(theta)**2 + 4*m**2*r**4*utheta**2 - 4*m*r**5*uphi**2*sin(theta)**2 - 4*m*r**5*utheta**2 - 2*m*r**3*ur**2 + r**6*uphi**2*sin(theta)**2 + r**6*utheta**2 + r**4*ur**2))/(-a**4*cos(theta)**2 + 2*a**2*m*r*cos(theta)**2 + 2*a**2*m*r - a**2*r**2*cos(theta)**2 - a**2*r**2 - 4*m**2*r**2 + 4*m*r**3 - r**4)",
+    "x": [
+        "t",
+        "r",
+        "theta",
+        "phi"
+    ],
+    "transform": [
+        "sqrt(r**2+a**2)*sin(theta)*cos(phi)",
+        "sqrt(r**2+a**2)*sin(theta)*sin(phi)",
+        "r*cos(theta)"
+    ]
+}
