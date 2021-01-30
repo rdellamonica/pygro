@@ -32,52 +32,11 @@ class geodesic_engine(object):
             print("Linking {} to the Geodesic Engine".format(g.name))
 
         self.metric = g
-        self.eq_x = []
-        self.eq_u = []
+        self.eq_x = g.eq_x
+        self.eq_u = g.eq_u
 
-        ################################################################
-        #   Calculating equations of motion based                      #
-        #   on the christhoffel symbols of the metric                  #
-        ################################################################
-        if verbose:
-            print("Calculating symbolic equations of motion:")
-
-        for rho in range(4):
-            if verbose:
-                print("- {}/4".format(rho+1))
-            eq = 0
-            for mu in range(4):
-                for nu in range(4):
-                    eq += -g.chr(mu, nu, rho)*g.u[mu]*g.u[nu]
-            self.eq_u.append(eq)
-            self.eq_x.append(self.metric.u[rho])
-
-        ################################################################
-        #   Adding to class a symbolic method to retrieve u_0          #
-        #   starting from the other components of u                    #
-        ################################################################
-
-        if verbose:
-            print("Adding to class a method to get initial u_0...")
-
-        eq = 0
-
-        for mu in range(4):
-            for nu in range(4):
-                eq += self.metric.g[mu, nu]*self.metric.u[mu]*self.metric.u[nu]
-
-        self.u0_s_null = solve(eq, self.metric.u[0], simplify=False, rational=False)[0]
-
-        eq = 1
-
-        for mu in range(4):
-            for nu in range(4):
-                eq += self.metric.g[mu, nu]*self.metric.u[mu]*self.metric.u[nu]
-
-        self.u0_s_timelike = solve(eq, self.metric.u[0], simplify=False, rational=False)[0]
-
-        if verbose:
-            print("OK")
+        self.u0_s_null = g.u0_s_null
+        self.u0_s_timelike = g.u0_s_timelike
 
         self.metric.geodesic_engine_linked = True
         self.metric.geodesic_engine = self
@@ -106,7 +65,7 @@ class geodesic_engine(object):
             h = -h
             tauf = -tauf
 
-        geo.tau.append(0)
+        geo.tau = [0]
         geo.x = [] 
         geo.u = []
         

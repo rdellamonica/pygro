@@ -154,8 +154,8 @@ class metric():
         
         self.g = zeros(4, 4)
         self.g_inv = zeros(4, 4)
-        self.eq_u = zeros(4)
-        self.eq_x = zeros(4)
+        self.eq_u = []
+        self.eq_x = []
         
         self.g_str = np.zeros([4,4], dtype = object)
         self.g_inv_str = np.zeros([4,4], dtype = object)
@@ -173,8 +173,8 @@ class metric():
                 self.g_inv[i,j] = parse_expr(component)
                 self.g_inv_str[i,j] = component
 
-            self.eq_u[i] = parse_expr(load['eq_u'][i])
-            self.eq_x[i] = parse_expr(load['eq_x'][i])
+            self.eq_u.append(parse_expr(load['eq_u'][i]))
+            self.eq_x.append(parse_expr(load['eq_x'][i]))
             self.eq_u_str[i] = load['eq_u'][i]
             self.eq_x_str[i] = load['eq_x'][i]
         
