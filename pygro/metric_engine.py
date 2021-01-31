@@ -102,6 +102,15 @@ class metric():
 
         free_sym = list(self.g.free_symbols-set(self.x))
 
+        if len(free_sym) > 0:
+            for sym in free_sym:
+                self.add_constant(str(sym))
+                value = float(input("Insert value for {}: ".format(str(sym))))
+                self.set_constant(**{str(sym): value})
+
+        self.g_f = lambdify([self.x], self.evaluate_constants(self.g), 'numpy')
+        self.g_inv_f = lambdify([self.x], self.evaluate_constants(self.g_inv), 'numpy')
+
         print("The metric_engine has been initialized.")
 
     def save_metric(self, filename):
