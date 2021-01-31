@@ -281,3 +281,6 @@ def rkf45(self, x, u, tau, h, Atol, Rtol):
         h1 = h1*(rho**0.25)
     
     return [y_hh[0], y_hh[1], y_hh[2], h1]
+
+def step_selector():
+    pass

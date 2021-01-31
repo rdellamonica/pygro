@@ -12,6 +12,8 @@ from sympy import *
 
 class geodesic(object):
     def __init__(self, type, engine, verbose = True):
+        if not type in ['null', 'time-like']:
+            raise TypeError("Geodesic must be either 'null' or 'time-like'.")
         self.initial_x = []
         self.initial_u = []
         self.tau = []

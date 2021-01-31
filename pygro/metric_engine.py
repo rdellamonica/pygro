@@ -219,6 +219,88 @@ class metric():
         if verbose:
             print("The metric_engine has been initialized.")
 
+    def load_metric_from_json(self, metric_json, verbose = True, **params):
+
+        load = metric_json
+
+        self.name = load['name']
+
+        if verbose:
+            print("Loading {}".format(self.name))
+        
+        self.x = []
+        self.x_str = []
+        self.u = []
+
+        for i in range(4):
+
+            coordinate = load['x'][i]
+            setattr(self, coordinate, symbols(coordinate))
+            self.x.append(self.__dict__[coordinate])
+            self.x_str.append(coordinate)
+
+            velocity = "u" + coordinate
+            setattr(self, velocity, symbols(velocity))
+            self.u.append(self.__dict__[velocity])
+        
+        self.g = zeros(4, 4)
+        self.g_inv = zeros(4, 4)
+        self.eq_u = []
+        self.eq_x = []
+        
+        self.g_str = np.zeros([4,4], dtype = object)
+        self.g_inv_str = np.zeros([4,4], dtype = object)
+        self.eq_u_str = np.zeros(4, dtype = object)
+        self.eq_x_str = np.zeros(4, dtype = object)
+
+        for i in range(4):
+
+            for j in range(4):
+
+                component = load['g'][i][j]
+                self.g[i,j] = parse_expr(component)
+                self.g_str[i,j] = component
+                component = load['g_inv'][i][j]
+                self.g_inv[i,j] = parse_expr(component)
+                self.g_inv_str[i,j] = component
+
+            self.eq_u.append(parse_expr(load['eq_u'][i]))
+            self.eq_x.append(parse_expr(load['eq_x'][i]))
+            self.eq_u_str[i] = load['eq_u'][i]
+            self.eq_x_str[i] = load['eq_x'][i]
+        
+        self.u0_s_null = parse_expr(load['u0_null'])
+        self.u0_s_timelike = parse_expr(load['u0_timelike'])
+        
+        self.initialized = 1
+        self.constants = {}
+
+        free_sym = list(self.g.free_symbols-set(self.x))
+
+        if(len(free_sym)) > 0:
+            for sym in free_sym:
+                self.add_constant(str(sym))
+                if str(sym) in params:
+                    self.set_constant(**{str(sym): params.get(str(sym))})
+                else:
+                    self.set_constant(**{str(sym): params.get(str(sym))})
+
+        self.transform_functions = []
+        
+        '''
+        if load['transform']:
+            for i in range(3):
+                transf = load['transform'][i]
+                transform_function = parse_expr(transf)
+                self.transform_functions.append(lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function), 'numpy'))
+        '''
+
+        self.g_f = lambdify([self.x], self.evaluate_constants(self.g), 'numpy')
+        self.g_inv_f = lambdify([self.x], self.evaluate_constants(self.g_inv), 'numpy')
+        
+        if verbose:
+            print("The metric_engine has been initialized.")
+
     def add_constant(self, symbol):
         if self.initialized:
             self.constants[symbol] = {}
