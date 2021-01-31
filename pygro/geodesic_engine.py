@@ -1,7 +1,7 @@
 import numpy as np
 import time
 from sympy import *
-import pigro.integrators as integrators
+import integrators
 
 #########################################################################################
 #                               GEODESIC ENGINE                                         #
