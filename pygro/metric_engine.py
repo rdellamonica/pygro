@@ -31,6 +31,7 @@ class metric():
         
         print("Define coordinates symbols:")
         self.x = []
+        self.dx = []
         self.x_str = []
         self.u = []
         for i in range(4):
@@ -39,19 +40,38 @@ class metric():
             self.x.append(self.__dict__[coordinate])
             self.x_str.append(coordinate)
 
-            velocity = "u" + coordinate
+            velocity = "u_" + coordinate
             setattr(self, velocity, symbols(velocity))
             self.u.append(self.__dict__[velocity])
-        
-        print("Define metric tensor components:")
-        self.g = zeros(4, 4)
-        self.g_str = np.zeros([4,4], dtype = object)
 
-        for i in range(4):
-            for j in range(4):
-                component = input("g[{},{}]: ".format(i, j))
-                self.g[i,j] = parse_expr(component)
-                self.g_str[i,j] = component
+            differential = "d" + coordinate
+            setattr(self, differential, symbols(differential))
+            self.dx.append(self.__dict__[differential])
+        
+
+        case = input("From? [tensor/line element]: ")
+
+        if case == "tensor":
+            print("Define metric tensor components:")
+            self.g = zeros(4, 4)
+            self.g_str = np.zeros([4,4], dtype = object)
+
+            for i in range(4):
+                for j in range(4):
+                    component = input("g[{},{}]: ".format(i, j))
+                    self.g[i,j] = parse_expr(component)
+                    self.g_str[i,j] = component
+        elif case == "line element":
+            self.g = zeros(4, 4)
+            self.g_str = np.zeros([4,4], dtype = object)
+            ds2_str = input("ds^2 = ")
+            self.ds2 = parse_expr(ds2_str)
+            for i, dx1 in enumerate(self.dx):
+                for j, dx2 in enumerate(self.dx):
+                    self.g[i,j] = self.ds2.coeff(dx1*dx2,1)
+                    self.g_str[i,j] = str(self.g[i,j])
+        else:
+            raise("Only 'tensor' or 'line element' are accepted method for parsing the metric.")
         
         print("Calculating inverse metric...")
         self.g_inv = self.g.inv()
