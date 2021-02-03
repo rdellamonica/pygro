@@ -1,3 +1,7 @@
+class Integrator():
+    def __init__(self):
+        pass
+
 def ck4(self, x, u, tau, h, Rtol, Atol):
     delta = Atol
     rho = 0
