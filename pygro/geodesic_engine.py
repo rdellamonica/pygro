@@ -21,7 +21,7 @@ import pygro.integrators as integrators
 ################################################################
 
 
-class geodesic_engine(object):
+class GeodesicEngine():
 
     def __init__(self, metric, verbose = True):
 

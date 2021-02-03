@@ -1,0 +1,8 @@
+PyGRO - Pyhton integrator for General Relativistic Orbits
+
+CHANGELOG
+|---------------------------------------------------------------------------|
+
+Version 0.0.3.2:
+
+- Added new method for metric definition from line element.

@@ -1,4 +1,4 @@
-from pygro.metric_engine import metric
-from pygro.geodesic import geodesic
-from pygro.geodesic_engine import geodesic_engine
+from pygro.metric_engine import Metric
+from pygro.geodesic import Geodesic
+from pygro.geodesic_engine import GeodesicEngine
 from pygro.default_metrics import *

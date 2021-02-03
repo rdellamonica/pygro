@@ -18,8 +18,7 @@ import json
 #                                                                                       #
 #########################################################################################
 
-class metric():
-
+class Metric():
     def __init__(self):
         self.initialized = 0
         self.geodesic_engine_linked = False
@@ -58,18 +57,35 @@ class metric():
 
             for i in range(4):
                 for j in range(4):
-                    component = input("g[{},{}]: ".format(i, j))
-                    self.g[i,j] = parse_expr(component)
-                    self.g_str[i,j] = component
+                    while True:
+                        try:
+                            component = input("g[{},{}]: ".format(i, j))
+                            component_symb = parse_expr(component)
+                        except:
+                            print("Please insert a valid expression for the component.")
+                            continue
+                        else:
+                            self.g[i,j] = component_symb
+                            self.g_str[i,j] = component
+                            break
+                    
         elif case == "line element":
             self.g = zeros(4, 4)
             self.g_str = np.zeros([4,4], dtype = object)
-            ds2_str = input("ds^2 = ")
-            self.ds2 = parse_expr(ds2_str)
-            for i, dx1 in enumerate(self.dx):
-                for j, dx2 in enumerate(self.dx):
-                    self.g[i,j] = self.ds2.coeff(dx1*dx2,1)
-                    self.g_str[i,j] = str(self.g[i,j])
+            while True:
+                try:
+                    ds2_str = input("ds^2 = ")
+                    ds2_sym = expand(parse_expr(ds2_str))
+                except:
+                    print("Please insert a valid expression for the line element.")
+                    continue
+                else:
+                    self.ds2 = ds2_sym
+                    for i, dx1 in enumerate(self.dx):
+                        for j, dx2 in enumerate(self.dx):
+                            self.g[i,j] = self.ds2.coeff(dx1*dx2,1)
+                            self.g_str[i,j] = str(self.g[i,j])
+                    break
         else:
             raise("Only 'tensor' or 'line element' are accepted method for parsing the metric.")
         
@@ -221,7 +237,8 @@ class metric():
                 if str(sym) in params:
                     self.set_constant(**{str(sym): params.get(str(sym))})
                 else:
-                    self.set_constant(**{str(sym): params.get(str(sym))})
+                    value = float(input("Insert value for {}: ".format(str(sym))))
+                    self.set_constant(**{str(sym): value})
 
         self.transform_functions = []
         
@@ -303,7 +320,8 @@ class metric():
                 if str(sym) in params:
                     self.set_constant(**{str(sym): params.get(str(sym))})
                 else:
-                    self.set_constant(**{str(sym): params.get(str(sym))})
+                    value = float(input("Insert value for {}: ".format(str(sym))))
+                    self.set_constant(**{str(sym): value})
 
         self.transform_functions = []
         
