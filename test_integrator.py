@@ -16,7 +16,7 @@ x_s = np.linspace(x0, x1, 500)
 y_s = 2*np.exp(np.sin(x_s))-1
 '''
 
-y = ck.integrate(x0, x1, y0, 0.0001, 1e-10, interpolate = True)
+x, y = ck.integrate(x0, x1, y0, 0.001)
 
 #plt.plot(x, y)
 #plt.plot(x_s, y_s)
