@@ -1,6 +1,6 @@
 import numpy as np
 import time
-from sympy import *
+import sympy as sp
 import pygro.integrators as integrators
 
 #########################################################################################
@@ -21,7 +21,7 @@ import pygro.integrators as integrators
 ################################################################
 
 
-class geodesic_engine(object):
+class GeodesicEngine(object):
 
     def __init__(self, metric, verbose = True):
 
@@ -99,7 +99,7 @@ class geodesic_engine(object):
         for eq in self.eq_u:
             eq_u.append(self.metric.evaluate_constants(eq))
 
-        motion_eq_f = lambdify([self.metric.x, self.metric.u], [self.eq_x, eq_u], 'numpy')
+        motion_eq_f = sp.lambdify([self.metric.x, self.metric.u], [self.eq_x, eq_u], 'numpy')
 
         def f(x, u):
             return np.array(motion_eq_f(x, u))
@@ -109,5 +109,5 @@ class geodesic_engine(object):
         u0_timelike = self.metric.evaluate_constants(self.u0_s_timelike)
         u0_null = self.metric.evaluate_constants(self.u0_s_null)
 
-        self.u0_f_null = lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0_null, 'numpy')
-        self.u0_f_timelike = lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0_timelike, 'numpy')
+        self.u0_f_null = sp.lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0_null, 'numpy')
+        self.u0_f_timelike = sp.lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0_timelike, 'numpy')

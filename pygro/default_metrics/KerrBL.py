@@ -1,6 +1,6 @@
 import pygro
 
-class KerrBL(pygro.metric):
+class KerrBL(pygro.Metric):
     def __init__(self, **kwargs):
         self.initialized = 0
         self.geodesic_engine_linked = False

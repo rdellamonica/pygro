@@ -62,7 +62,7 @@ class CashKarp(Integrator):
         if not interpolate:
             return np.array(x), np.array(y)
         else:
-            return sp_int.interp1d(np.array(x), np.array(y), kind = 'cubic')
+            return sp_int.interp1d(np.array(x), np.array(yxw), kind = 'cubic')
 
     def next_step(self, x, y, h, TWIDDLE1, TWIDDLE2, QUIT1, QUIT2):
         k = np.zeros(6, dtype = object)

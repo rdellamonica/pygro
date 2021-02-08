@@ -1,6 +1,6 @@
 import numpy as np
 import time
-from sympy import *
+import sympy as sp
 
 ################################################################
 #   The geodesic object needs as arguments:                    #
@@ -10,7 +10,7 @@ from sympy import *
 ################################################################
 
 
-class geodesic(object):
+class Geodesic(object):
     def __init__(self, type, engine, verbose = True):
         if not type in ['null', 'time-like']:
             raise TypeError("Geodesic must be either 'null' or 'time-like'.")
@@ -83,7 +83,7 @@ class geodesic(object):
             for nu in range(4):
                 self.L += self.g[mu,nu]*self.u[mu]*self.u[nu]/2
 
-        L_f = lambdify([self.x, self.u], self.L, 'numpy')
+        L_f = sp.lambdify([self.x, self.u], self.L, 'numpy')
 
         def f(self, x, u):
             return L_f(x, u)
