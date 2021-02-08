@@ -3,4 +3,7 @@ dist/
 pygro/__pycache__/
 PyGRO.egg-info/
 test.py
-pygro/default_metrics/__pycache__
+pygro/default_metrics/__pycache__/
+*.ipynb
+.ipynb_checkpoints
+test_integrator.py
