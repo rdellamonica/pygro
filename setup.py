@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
   name='PyGRO',
-  version='0.0.3.2',
+  version='0.0.4',
   author='Riccardo Della Monica',
   author_email='dellamonicariccardo@gmail.com',
   packages=find_packages(),

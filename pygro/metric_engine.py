@@ -19,10 +19,6 @@ import json
 #########################################################################################
 
 class Metric():
-<<<<<<< HEAD
-=======
-
->>>>>>> develop
     def __init__(self):
         self.initialized = 0
         self.geodesic_engine_linked = False
