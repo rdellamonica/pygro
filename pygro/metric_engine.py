@@ -57,7 +57,6 @@ class Metric():
 
             for i in range(4):
                 for j in range(4):
-<<<<<<< HEAD
                     while True:
                         try:
                             component = input("g[{},{}]: ".format(i, j))
@@ -70,15 +69,9 @@ class Metric():
                             self.g_str[i,j] = component
                             break
                     
-=======
-                    component = input("g[{},{}]: ".format(i, j))
-                    self.g[i,j] = sp.parse_expr(component)
-                    self.g_str[i,j] = component
->>>>>>> develop
         elif case == "line element":
             self.g = sp.zeros(4, 4)
             self.g_str = np.zeros([4,4], dtype = object)
-<<<<<<< HEAD
             while True:
                 try:
                     ds2_str = input("ds^2 = ")
@@ -93,14 +86,6 @@ class Metric():
                             self.g[i,j] = self.ds2.coeff(dx1*dx2,1)
                             self.g_str[i,j] = str(self.g[i,j])
                     break
-=======
-            ds2_str = input("ds^2 = ")
-            self.ds2 = sp.parse_expr(ds2_str)
-            for i, dx1 in enumerate(self.dx):
-                for j, dx2 in enumerate(self.dx):
-                    self.g[i,j] = self.ds2.coeff(dx1*dx2,1)
-                    self.g_str[i,j] = str(self.g[i,j])
->>>>>>> develop
         else:
             raise("Only 'tensor' or 'line element' are accepted method for parsing the metric.")
         
