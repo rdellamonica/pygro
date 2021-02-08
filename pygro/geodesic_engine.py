@@ -52,7 +52,7 @@ class GeodesicEngine():
     def set_stopping_criterion(self, f):
         self.stopping_criterion = f
 
-    def integrate(self, geo, tauf, verbose=False, direction = "fw", **params):
+    def integrate(self, geo, tauf, initial_step, verbose=False, direction = "fw", **params):
         if verbose:
             print("Integrating...")
 
@@ -60,13 +60,15 @@ class GeodesicEngine():
         integrator = integrators.CashKarp(self.motion_eq, **params)
 
         if direction == "bw":
-            h = -h
+            h = -initial_step
             tauf = -tauf
+        else:
+            h = initial_step
 
         if verbose:
             time_start = time.perf_counter()
 
-        tau, xu = integrator.integrate(0, tauf, np.array([*geo.initial_x, *geo.initial_u]))
+        tau, xu = integrator.integrate(0, tauf, np.array([*geo.initial_x, *geo.initial_u]), initial_step)
                 
         if verbose:
             time_elapsed = (time.perf_counter() - time_start)

@@ -41,12 +41,12 @@ class CashKarp(Integrator):
             0, 1/5, 3/10, 3/5, 1, 7/8
         ])
 
-    def integrate(self, x_start, x_end, y_start):
+    def integrate(self, x_start, x_end, y_start, initial_step):
 
         x = [x_start]
         y = [y_start]
 
-        h = self.initial_step
+        h = initial_step
         twiddle1 = self.twiddle1
         twiddle2 = self.twiddle2
         quit1 = self.quit1
