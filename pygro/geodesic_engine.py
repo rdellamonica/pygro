@@ -34,7 +34,7 @@ class GeodesicEngine(object):
         self.metric = g
         self.eq_x = g.eq_x
         self.eq_u = g.eq_u
-
+        
         self.u0_s_null = g.u0_s_null
         self.u0_s_timelike = g.u0_s_timelike
 
@@ -52,46 +52,29 @@ class GeodesicEngine(object):
     def set_stopping_criterion(self, f):
         self.stopping_criterion = f
 
-    def integrate(self, geo, tauf, initial_step = 0.01, Atol = 0, Rtol = 1e-6, verbose = True, direction = "fw", method = "dp4"):
+    def integrate(self, geo, tauf, verbose=False, direction = "fw", **params):
         if verbose:
             print("Integrating...")
 
-        try:
-            integrator = integrators.__dict__[method]
-        except:
-            print(f"Method {method} not found. Currently supported methods: ck4, dp4, fh78, dp78, bs23, rk45, rkf45.")
+        
+        integrator = integrators.CashKarp(self.motion_eq, **params)
 
         if direction == "bw":
             h = -h
             tauf = -tauf
 
-        geo.tau = [0]
-        geo.x = [] 
-        geo.u = []
-        
-        geo.x.append(geo.initial_x)
-        geo.u.append(geo.initial_u)
-
         if verbose:
             time_start = time.perf_counter()
 
-        h = initial_step
-
-        while abs(geo.tau[-1]) < abs(tauf) and self.stopping_criterion(geo):
-            next = integrator(self, geo.x[-1], geo.u[-1], geo.tau[-1], h, Atol, Rtol)
-            geo.x.append(next[0])
-            geo.u.append(next[1])
-            geo.tau.append(next[2])
-            h = next[3]
-            if verbose:
-                print("Tau = {}".format(next[2]), end = "\r")
+        tau, xu = integrator.integrate(0, tauf, np.array([*geo.initial_x, *geo.initial_u]))
                 
         if verbose:
             time_elapsed = (time.perf_counter() - time_start)
             print("Integration time = {} s".format(time_elapsed))
 
-        geo.x = np.stack(geo.x)
-        geo.u = np.stack(geo.u)
+        geo.tau = tau
+        geo.x = np.stack(xu[:,:4])
+        geo.u = np.stack(xu[:,4:])
     
     def evaluate_constants(self):
 
@@ -99,10 +82,10 @@ class GeodesicEngine(object):
         for eq in self.eq_u:
             eq_u.append(self.metric.evaluate_constants(eq))
 
-        motion_eq_f = sp.lambdify([self.metric.x, self.metric.u], [self.eq_x, eq_u], 'numpy')
+        motion_eq_f = sp.lambdify([*self.metric.x, *self.metric.u], [*self.eq_x, *eq_u], 'numpy')
 
-        def f(x, u):
-            return np.array(motion_eq_f(x, u))
+        def f(tau, xu):
+            return np.array(motion_eq_f(*xu))
 
         self.motion_eq = f
         

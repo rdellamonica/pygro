@@ -5,9 +5,8 @@ class Integrator():
     def __init__(self):
         pass
 
-
 class CashKarp(Integrator):
-    def __init__(self, f, initial_step = 1, tolerance = 1e-6, twiddle1 = 1.1, twiddle2 = 1.5, quit1 = 100, quit2 = 100, SF = 0.9):
+    def __init__(self, f, initial_step = 1, AccuracyGoal = 10, PrecisionGoal = 0, twiddle1 = 1.1, twiddle2 = 1.5, quit1 = 100, quit2 = 100, SF = 0.9, interpolate = False):
 
         self.twiddle1 = twiddle1
         self.twiddle2 = twiddle2
@@ -15,6 +14,11 @@ class CashKarp(Integrator):
         self.quit2 = quit2
         self.SF = SF
         self.f = f
+        self.tolerance = 1
+        self.Atol = 10**(-AccuracyGoal)
+        self.Rtol = 10**(-PrecisionGoal)
+        self.initial_step = initial_step
+        self.interpolate = interpolate
 
         self.a = np.array([
             [0, 0, 0, 0, 0, 0],
@@ -37,13 +41,12 @@ class CashKarp(Integrator):
             0, 1/5, 3/10, 3/5, 1, 7/8
         ])
 
-    def integrate(self, x_start, x_end, y_start, initial_step = 0.01, tolerance = 1e-6, interpolate = False):
-        self.tolerance = tolerance
+    def integrate(self, x_start, x_end, y_start):
 
         x = [x_start]
         y = [y_start]
 
-        h = initial_step
+        h = self.initial_step
         twiddle1 = self.twiddle1
         twiddle2 = self.twiddle2
         quit1 = self.quit1
@@ -59,10 +62,10 @@ class CashKarp(Integrator):
             quit1 = next[5]
             quit2 = next[6]
         
-        if not interpolate:
+        if not self.interpolate:
             return np.array(x), np.array(y)
         else:
-            return sp_int.interp1d(np.array(x), np.array(yxw), kind = 'cubic')
+            return sp_int.interp1d(np.array(x), np.array(y), kind = 'cubic')
 
     def next_step(self, x, y, h, TWIDDLE1, TWIDDLE2, QUIT1, QUIT2):
         k = np.zeros(6, dtype = object)
@@ -157,9 +160,12 @@ class CashKarp(Integrator):
 
     def ERR(self, y1, y2, i):
         if hasattr(y1, "__len__"):
-            return np.linalg.norm(y2-y1)**(1/(1+i))
+            v = y1-y2
+            w = v/(self.Atol+self.Rtol*v)
+            return np.linalg.norm(w)**(1/(1+i))
         else:
-            return abs(y1-y2)**(1/(1+i))
+            v = y1-y2
+            return abs(v/(self.Atol+self.Rtol*v))**(1/(1+i))
 
 
 def ck4(self, x, u, tau, h, Rtol, Atol):
