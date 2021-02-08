@@ -10,11 +10,7 @@ import sympy as sp
 ################################################################
 
 
-<<<<<<< HEAD
 class Geodesic():
-=======
-class Geodesic(object):
->>>>>>> develop
     def __init__(self, type, engine, verbose = True):
         if not type in ['null', 'time-like']:
             raise TypeError("Geodesic must be either 'null' or 'time-like'.")
