@@ -1,3 +1,167 @@
+import numpy as np
+import scipy.interpolate as sp_int
+
+class Integrator():
+    def __init__(self):
+        pass
+
+
+class CashKarp(Integrator):
+    def __init__(self, f, initial_step = 1, tolerance = 1e-6, twiddle1 = 1.1, twiddle2 = 1.5, quit1 = 100, quit2 = 100, SF = 0.9):
+
+        self.twiddle1 = twiddle1
+        self.twiddle2 = twiddle2
+        self.quit1 = quit1
+        self.quit2 = quit2
+        self.SF = SF
+        self.f = f
+
+        self.a = np.array([
+            [0, 0, 0, 0, 0, 0],
+            [1/5, 0, 0, 0, 0, 0],
+            [3/40, 9/40, 0, 0, 0, 0],
+            [3/10, -9/10, 6/5, 0, 0, 0],
+            [-11/54, 5/2, -70/27, 35/27, 0, 0],
+            [1631/55296, 175/512, 575/13824, 44275/110592, 253/4096, 0]
+        ])
+
+        self.b = np.array([
+            [1, 0, 0, 0, 0, 0],
+            [-3/2, 5/2, 0, 0, 0, 0],
+            [19/54, 0, -10/27, 55/54, 0, 0],
+            [2825/27648, 0, 18575/48384, 13525/55296, 277/14336, 1/4],
+            [37/378, 0, 250/621, 125/594, 0, 512/1771]
+        ])
+
+        self.c = np.array([
+            0, 1/5, 3/10, 3/5, 1, 7/8
+        ])
+
+    def integrate(self, x_start, x_end, y_start, initial_step = 0.01, tolerance = 1e-6, interpolate = False):
+        self.tolerance = tolerance
+
+        x = [x_start]
+        y = [y_start]
+
+        h = initial_step
+        twiddle1 = self.twiddle1
+        twiddle2 = self.twiddle2
+        quit1 = self.quit1
+        quit2 = self.quit2
+
+        while x[-1] <= x_end:
+            next = self.next_step(x[-1], y[-1], h, twiddle1, twiddle2, quit1, quit2)
+            x.append(next[0])
+            y.append(next[1])
+            h = next[2]
+            twiddle1 = next[3]
+            twiddle2 = next[4]
+            quit1 = next[5]
+            quit2 = next[6]
+        
+        if not interpolate:
+            return np.array(x), np.array(y)
+        else:
+            return sp_int.interp1d(np.array(x), np.array(yxw), kind = 'cubic')
+
+    def next_step(self, x, y, h, TWIDDLE1, TWIDDLE2, QUIT1, QUIT2):
+        k = np.zeros(6, dtype = object)
+        h1 = h
+        while True:
+            k[0] = h1*self.f(x, y)
+            k[1] = h1*self.f(x + self.c[1]*h1, y + np.dot(k,self.a[1]))
+
+            y1 = y + np.dot(self.b[0], k)
+            y2 = y+ np.dot(self.b[1], k)
+            
+            E1 = self.E(y1, y2, 1)
+
+            if E1 > TWIDDLE1*QUIT1:
+                ESTTOL = E1/QUIT1
+                h1 = max(1/5, self.SF/ESTTOL)*h1
+                continue
+                
+            k[2] = h1*self.f(x + self.c[2]*h1, y+np.dot(k,self.a[2]))
+            k[3] = h1*self.f(x + self.c[3]*h1, y+np.dot(k,self.a[3]))
+
+            y3 = y + np.dot(self.b[2], k)
+            E2 = self.E(y2, y3, 2)
+
+            if E2 > TWIDDLE2*QUIT2:
+                if E1 < 1:
+                    if abs(1/10*(k[0]+k[1])) < self.tolerance:
+                        x = x + h1*self.c[1]
+                        h1 = h1/5
+                        return x, y2, h1, TWIDDLE1, TWIDDLE2, QUIT1, QUIT2
+                    else:
+                        h1 = h1/5
+                        continue
+                else:
+                    ESTTOL = E2/QUIT2
+                    h1 = max(1/5, self.SF/ESTTOL)*h1
+                    continue
+            
+            k[4] = h1*self.f(x + self.c[4]*h1, y + np.dot(k,self.a[4]))
+            k[5] = h1*self.f(x + self.c[5]*h1, y + np.dot(k,self.a[5]))
+
+            y4 = y + np.dot(self.b[3], k)
+            y5 = y + np.dot(self.b[4], k)
+
+            E4 = self.E(y5, y4, 4)
+
+            if E4 > 1:
+                if E1/QUIT1 < TWIDDLE1:
+                    TWIDDLE1 = max(1.1, E1/QUIT1)
+                if E2/QUIT2 < TWIDDLE2:
+                    TWIDDLE2 = max(1.1, E2/QUIT2)
+                if E2 < 1:
+                    if abs(1/10*(k[0]-2*k[2]+k[3])) < self.tolerance:
+                        x = x + h1*self.c[3]
+                        h1 = h1*self.c[3]
+                        return x, y3, h1, TWIDDLE1, TWIDDLE2, QUIT1, QUIT2
+                else:
+                    if E1 < 1:
+                        if abs(1/10*(k[0]+k[1])) < self.tolerance:
+                            x = x + h1*self.c[1]
+                            h1 = h1*self.c[1]
+                            return x, y2, h1, TWIDDLE1, TWIDDLE2, QUIT1, QUIT2
+                        else:
+                            h1 = h1/5
+                            continue
+                    else:
+                        ESTTOL = E4
+                        h1 = max(1/5, self.SF/ESTTOL)*h1
+                        continue
+            else:
+                x = x + h1*self.c[4]
+                h1 = min(5, self.SF/E4)*h1
+
+                Q1 = E1/E4
+                if Q1 > QUIT1:
+                    Q1 = min(Q1, 10*QUIT1)
+                else:
+                    Q1 = max(Q1, 2/3*QUIT1)
+                QUIT1 = max(1, min(10000, Q1))
+
+                Q2 = E2/E4
+                if Q2 > QUIT2:
+                    Qw = min(Q2, 10*QUIT2)
+                else:
+                    Q2 = max(Q2, 2/3*QUIT2)
+                QUIT2 = max(1, min(10000, Q2))
+
+                return x, y5, h1, TWIDDLE1, TWIDDLE2, QUIT1, QUIT2
+
+    def E(self, y1, y2, i):
+        return self.ERR(y1, y2, i)/self.tolerance**(1/(1+i))
+
+    def ERR(self, y1, y2, i):
+        if hasattr(y1, "__len__"):
+            return np.linalg.norm(y2-y1)**(1/(1+i))
+        else:
+            return abs(y1-y2)**(1/(1+i))
+
+
 def ck4(self, x, u, tau, h, Rtol, Atol):
     delta = Atol
     rho = 0

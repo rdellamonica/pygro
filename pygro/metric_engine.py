@@ -1,4 +1,4 @@
-from sympy import *
+import sympy as sp
 import numpy as np
 import json
 
@@ -19,6 +19,10 @@ import json
 #########################################################################################
 
 class Metric():
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
     def __init__(self):
         self.initialized = 0
         self.geodesic_engine_linked = False
@@ -35,16 +39,16 @@ class Metric():
         self.u = []
         for i in range(4):
             coordinate = input("Coordinate {}: ".format(i))
-            setattr(self, coordinate, symbols(coordinate))
+            setattr(self, coordinate, sp.symbols(coordinate))
             self.x.append(self.__dict__[coordinate])
             self.x_str.append(coordinate)
 
             velocity = "u_" + coordinate
-            setattr(self, velocity, symbols(velocity))
+            setattr(self, velocity, sp.symbols(velocity))
             self.u.append(self.__dict__[velocity])
 
             differential = "d" + coordinate
-            setattr(self, differential, symbols(differential))
+            setattr(self, differential, sp.symbols(differential))
             self.dx.append(self.__dict__[differential])
         
 
@@ -52,11 +56,12 @@ class Metric():
 
         if case == "tensor":
             print("Define metric tensor components:")
-            self.g = zeros(4, 4)
+            self.g = sp.zeros(4, 4)
             self.g_str = np.zeros([4,4], dtype = object)
 
             for i in range(4):
                 for j in range(4):
+<<<<<<< HEAD
                     while True:
                         try:
                             component = input("g[{},{}]: ".format(i, j))
@@ -69,9 +74,15 @@ class Metric():
                             self.g_str[i,j] = component
                             break
                     
+=======
+                    component = input("g[{},{}]: ".format(i, j))
+                    self.g[i,j] = sp.parse_expr(component)
+                    self.g_str[i,j] = component
+>>>>>>> develop
         elif case == "line element":
-            self.g = zeros(4, 4)
+            self.g = sp.zeros(4, 4)
             self.g_str = np.zeros([4,4], dtype = object)
+<<<<<<< HEAD
             while True:
                 try:
                     ds2_str = input("ds^2 = ")
@@ -86,6 +97,14 @@ class Metric():
                             self.g[i,j] = self.ds2.coeff(dx1*dx2,1)
                             self.g_str[i,j] = str(self.g[i,j])
                     break
+=======
+            ds2_str = input("ds^2 = ")
+            self.ds2 = sp.parse_expr(ds2_str)
+            for i, dx1 in enumerate(self.dx):
+                for j, dx2 in enumerate(self.dx):
+                    self.g[i,j] = self.ds2.coeff(dx1*dx2,1)
+                    self.g_str[i,j] = str(self.g[i,j])
+>>>>>>> develop
         else:
             raise("Only 'tensor' or 'line element' are accepted method for parsing the metric.")
         
@@ -126,11 +145,11 @@ class Metric():
             for nu in range(4):
                 eq += self.g[mu, nu]*self.u[mu]*self.u[nu]
 
-        self.u0_s_null = solve(eq, self.u[0], simplify=False, rational=False)[0]
+        self.u0_s_null = sp.solve(eq, self.u[0], simplify=False, rational=False)[0]
 
         eq += 1
 
-        self.u0_s_timelike = solve(eq, self.u[0], simplify=False, rational=False)[0]
+        self.u0_s_timelike = sp.solve(eq, self.u[0], simplify=False, rational=False)[0]
 
         self.initialized = 1
         self.constants = {}
@@ -144,8 +163,8 @@ class Metric():
                 value = float(input("Insert value for {}: ".format(str(sym))))
                 self.set_constant(**{str(sym): value})
 
-        self.g_f = lambdify([self.x], self.evaluate_constants(self.g), 'numpy')
-        self.g_inv_f = lambdify([self.x], self.evaluate_constants(self.g_inv), 'numpy')
+        self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
+        self.g_inv_f = sp.lambdify([self.x], self.evaluate_constants(self.g_inv))
 
         print("The metric_engine has been initialized.")
 
@@ -189,16 +208,16 @@ class Metric():
         for i in range(4):
 
             coordinate = load['x'][i]
-            setattr(self, coordinate, symbols(coordinate))
+            setattr(self, coordinate, sp.symbols(coordinate))
             self.x.append(self.__dict__[coordinate])
             self.x_str.append(coordinate)
 
             velocity = "u" + coordinate
-            setattr(self, velocity, symbols(velocity))
+            setattr(self, velocity, sp.symbols(velocity))
             self.u.append(self.__dict__[velocity])
         
-        self.g = zeros(4, 4)
-        self.g_inv = zeros(4, 4)
+        self.g = sp.zeros(4, 4)
+        self.g_inv = sp.zeros(4, 4)
         self.eq_u = []
         self.eq_x = []
         
@@ -212,19 +231,19 @@ class Metric():
             for j in range(4):
 
                 component = load['g'][i][j]
-                self.g[i,j] = parse_expr(component)
+                self.g[i,j] = sp.parse_expr(component)
                 self.g_str[i,j] = component
                 component = load['g_inv'][i][j]
-                self.g_inv[i,j] = parse_expr(component)
+                self.g_inv[i,j] = sp.parse_expr(component)
                 self.g_inv_str[i,j] = component
 
-            self.eq_u.append(parse_expr(load['eq_u'][i]))
-            self.eq_x.append(parse_expr(load['eq_x'][i]))
+            self.eq_u.append(sp.parse_expr(load['eq_u'][i]))
+            self.eq_x.append(sp.parse_expr(load['eq_x'][i]))
             self.eq_u_str[i] = load['eq_u'][i]
             self.eq_x_str[i] = load['eq_x'][i]
         
-        self.u0_s_null = parse_expr(load['u0_null'])
-        self.u0_s_timelike = parse_expr(load['u0_timelike'])
+        self.u0_s_null = sp.parse_expr(load['u0_null'])
+        self.u0_s_timelike = sp.parse_expr(load['u0_timelike'])
         
         self.initialized = 1
         self.constants = {}
@@ -247,11 +266,11 @@ class Metric():
             for i in range(3):
                 transf = load['transform'][i]
                 transform_function = parse_expr(transf)
-                self.transform_functions.append(lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function), 'numpy'))
+                self.transform_functions.append(lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function)))
         '''
 
-        self.g_f = lambdify([self.x], self.evaluate_constants(self.g), 'numpy')
-        self.g_inv_f = lambdify([self.x], self.evaluate_constants(self.g_inv), 'numpy')
+        self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
+        self.g_inv_f = sp.lambdify([self.x], self.evaluate_constants(self.g_inv))
         
         if verbose:
             print("The metric_engine has been initialized.")
@@ -272,16 +291,16 @@ class Metric():
         for i in range(4):
 
             coordinate = load['x'][i]
-            setattr(self, coordinate, symbols(coordinate))
+            setattr(self, coordinate, sp.symbols(coordinate))
             self.x.append(self.__dict__[coordinate])
             self.x_str.append(coordinate)
 
-            velocity = "u" + coordinate
-            setattr(self, velocity, symbols(velocity))
+            velocity = "u_" + coordinate
+            setattr(self, velocity, sp.symbols(velocity))
             self.u.append(self.__dict__[velocity])
         
-        self.g = zeros(4, 4)
-        self.g_inv = zeros(4, 4)
+        self.g = sp.zeros(4, 4)
+        self.g_inv = sp.zeros(4, 4)
         self.eq_u = []
         self.eq_x = []
         
@@ -295,19 +314,19 @@ class Metric():
             for j in range(4):
 
                 component = load['g'][i][j]
-                self.g[i,j] = parse_expr(component)
+                self.g[i,j] = sp.parse_expr(component)
                 self.g_str[i,j] = component
                 component = load['g_inv'][i][j]
-                self.g_inv[i,j] = parse_expr(component)
+                self.g_inv[i,j] = sp.parse_expr(component)
                 self.g_inv_str[i,j] = component
 
-            self.eq_u.append(parse_expr(load['eq_u'][i]))
-            self.eq_x.append(parse_expr(load['eq_x'][i]))
+            self.eq_u.append(sp.parse_expr(load['eq_u'][i]))
+            self.eq_x.append(sp.parse_expr(load['eq_x'][i]))
             self.eq_u_str[i] = load['eq_u'][i]
             self.eq_x_str[i] = load['eq_x'][i]
         
-        self.u0_s_null = parse_expr(load['u0_null'])
-        self.u0_s_timelike = parse_expr(load['u0_timelike'])
+        self.u0_s_null = sp.parse_expr(load['u0_null'])
+        self.u0_s_timelike = sp.parse_expr(load['u0_timelike'])
         
         self.initialized = 1
         self.constants = {}
@@ -330,11 +349,11 @@ class Metric():
             for i in range(3):
                 transf = load['transform'][i]
                 transform_function = parse_expr(transf)
-                self.transform_functions.append(lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function), 'numpy'))
+                self.transform_functions.append(lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function)))
         '''
 
-        self.g_f = lambdify([self.x], self.evaluate_constants(self.g), 'numpy')
-        self.g_inv_f = lambdify([self.x], self.evaluate_constants(self.g_inv), 'numpy')
+        self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
+        self.g_inv_f = sp.lambdify([self.x], self.evaluate_constants(self.g_inv))
         
         if verbose:
             print("The metric_engine has been initialized.")
@@ -355,7 +374,7 @@ class Metric():
                 except:
                     print(f"No constant named '{symbol}' in the metric_engine.")
                     break
-            self.g_f = lambdify([self.x], self.evaluate_constants(self.g), 'numpy')
+            self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
             if self.geodesic_engine_linked:
                 self.geodesic_engine.evaluate_constants()
         else:
@@ -385,9 +404,9 @@ class Metric():
         coords = ["x", "y", "z"]
         for i in range(3):
             transf = input("{} = ".format(coords[i]))
-            transform_function = parse_expr(transf)
+            transform_function = sp.parse_expr(transf)
             self.transform_functions_str.append(transf)
-            self.transform_functions.append(lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function), 'numpy'))
+            self.transform_functions.append(sp.lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function)))
 
     def transform(self, X):
         return self.transform_functions[0](X[0], X[1], X[2]), self.transform_functions[1](X[0], X[1], X[2]), self.transform_functions[2](X[0], X[1], X[2])
@@ -402,4 +421,4 @@ class Metric():
         return norm
 
     def set_constant_of_motion(self, name, expr):
-        self.constants_of_motion[name] = lambdify([self.x, self.u], self.evaluate_constants(expr), 'numpy')
+        self.constants_of_motion[name] = sp.lambdify([self.x, self.u], self.evaluate_constants(expr))
