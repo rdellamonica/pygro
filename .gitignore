@@ -1,7 +1,6 @@
 build/
 dist/
 pygro/__pycache__/
-pygro/default_metrics/__pycache__/
 PyGRO.egg-info/
 test.py
 pygro/default_metrics/__pycache__/
