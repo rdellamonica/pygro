@@ -49,15 +49,24 @@ class GeodesicEngine(object):
     def stopping_criterion(self, x):
         return True
 
-    def set_stopping_criterion(self, f):
-        self.stopping_criterion = f
+    def set_stopping_criterion(self, expr):
+        expr_s = sp.parse_expr(expr)
+        free_symbols = list(expr_s.free_symbols-set(self.metric.x))
+        for symbol in free_symbols:
+            if str(symbol) in globals():
+                print(globals()[str(symbol)])
+                expr_s = expr_s.subs(symbol, globals()[str(symbol)])
+            elif str(symbol) in locals():
+                expr_s.subs(symbol, locals()[str(symbol)])
+            else:
+                raise TypeError("Unkwnown symbol {}".format(str(symbol)))
+        self.stopping_criterion = sp.lambdify([*self.metric.x, *self.metric.u], expr_s)
 
     def integrate(self, geo, tauf, verbose=False, direction = "fw", **params):
         if verbose:
             print("Integrating...")
 
-        
-        integrator = integrators.CashKarp(self.motion_eq, **params)
+        integrator = integrators.CashKarp(self.motion_eq, stopping_criterion = self.stopping_criterion, verbose = verbose, **params)
 
         if direction == "bw":
             h = -h

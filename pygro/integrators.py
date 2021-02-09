@@ -6,7 +6,7 @@ class Integrator():
         pass
 
 class CashKarp(Integrator):
-    def __init__(self, f, initial_step = 1, AccuracyGoal = 10, PrecisionGoal = 0, twiddle1 = 1.1, twiddle2 = 1.5, quit1 = 100, quit2 = 100, SF = 0.9, interpolate = False):
+    def __init__(self, f, initial_step = 1, AccuracyGoal = 10, PrecisionGoal = 0, twiddle1 = 1.1, twiddle2 = 1.5, quit1 = 100, quit2 = 100, SF = 0.9, interpolate = False, stopping_criterion = "none", verbose = False):
 
         self.twiddle1 = twiddle1
         self.twiddle2 = twiddle2
@@ -19,6 +19,7 @@ class CashKarp(Integrator):
         self.Rtol = 10**(-PrecisionGoal)
         self.initial_step = initial_step
         self.interpolate = interpolate
+        self.verbose = verbose
 
         self.a = np.array([
             [0, 0, 0, 0, 0, 0],
@@ -41,6 +42,11 @@ class CashKarp(Integrator):
             0, 1/5, 3/10, 3/5, 1, 7/8
         ])
 
+        if stopping_criterion == "none":
+            self.stopping_criterion = lambda geo: True
+        else:
+            self.stopping_criterion = stopping_criterion
+
     def integrate(self, x_start, x_end, y_start):
 
         x = [x_start]
@@ -52,7 +58,9 @@ class CashKarp(Integrator):
         quit1 = self.quit1
         quit2 = self.quit2
 
-        while x[-1] <= x_end:
+        while x[-1] <= x_end and self.stopping_criterion(*y[-1]):
+            if self.verbose:
+                print("{:.4f}".format(x[-1]), end= "\r")
             next = self.next_step(x[-1], y[-1], h, twiddle1, twiddle2, quit1, quit2)
             x.append(next[0])
             y.append(next[1])
@@ -166,43 +174,6 @@ class CashKarp(Integrator):
         else:
             v = y1-y2
             return abs(v/(self.Atol+self.Rtol*v))**(1/(1+i))
-
-
-def ck4(self, x, u, tau, h, Rtol, Atol):
-    delta = Atol
-    rho = 0
-    h1 = h
-    while rho < 1:
-        k1 = h1*self.motion_eq(x, u)
-        k2 = h1*self.motion_eq(x+k1[0]/5, u+k1[1]/5)
-        k3 = h1*self.motion_eq(x+(3*k1[0]/40+9*k2[0]/40), u+(3*k1[1]/40+9*k2[1]/40))
-        k4 = h1*self.motion_eq(x+(3/10*k1[0]-9/10*k2[0]+6/5*k3[0]), u+(3/10*k1[1]-9/10*k2[1]+6/5*k3[1]))
-        k5 = h1*self.motion_eq(x+(-11/54*k1[0]+5/2*k2[0]-70/27*k3[0]+35/27*k4[0]), u+(-11/54*k1[1]+5/2*k2[1]-70/27*k3[1]+35/27*k4[1]))
-        k6 = h1*self.motion_eq(x+(1631/55296*k1[0]+175/512*k2[0]+575/13824*k3[0]+44275/110529*k4[0]+253/4096*k5[0]), u + (1631/55296*k1[1]+175/512*k2[1]+575/13824*k3[1]+44275/110529*k4[1]+253/4096*k5[1]))
-        
-        S0 = 2825/27648*k1[0] + 18575/48384*k3[0] + 13525/55296*k4[0] + 277/14336*k5[0] + 1/4*k6[0]
-        S1 = 2825/27648*k1[1] + 18575/48384*k3[1] + 13525/55296*k4[1] + 277/14336*k5[1] + 1/4*k6[1]
-
-        S2 = 37/378*k1[0] + 250/621*k3[0] + 125/594*k4[0] + 512/1771*k6[0]
-        S3 = 37/378*k1[1] + 250/621*k3[1] + 125/594*k4[1] + 512/1771*k6[1]
-        
-        x4 = x + S0
-        u4 = u + S1
-
-        x5 = x + S2
-        u5 = u + S3
-
-        epsilon = np.linalg.norm(np.concatenate((x5,u5))-np.concatenate((x4,u4)), ord = np.inf)
-
-        if epsilon != 0:
-            rho = delta/epsilon
-            h1 = 0.9*h1*rho**0.25
-        else:
-            rho = 1
-
-    tau1 = tau + h1
-
-    return [x5, u5, tau1, h1]
 
 def dp4(self, x, u, tau, h, Atol, Rtol):
     rho = 0
