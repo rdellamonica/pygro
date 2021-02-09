@@ -47,7 +47,7 @@ class CashKarp(Integrator):
         else:
             self.stopping_criterion = stopping_criterion
 
-    def integrate(self, x_start, x_end, y_start):
+    def integrate(self, x_start, x_end, y_start, initial_step):
 
         x = [x_start]
         y = [y_start]
