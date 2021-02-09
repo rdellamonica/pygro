@@ -14,25 +14,32 @@ pip install pygro
 
 or by cloning this GitHub repository.
 
+## Documentation
+The complete documentation for PyGRO is available on [docs](https://github.com/rdellamonica/pigro/tree/master).
+
 ***
 ## Minimal example
 
 PyGRO comes with several built-in spacetimes that can be used to study the motion of test massive and mass-less particles undergoing geodesic motion.
 
-This is an example of time-like geodesic around a Kerr black hole in Boyer-Lindquist coordinates ()
+This is an example of time-like geodesic around a Kerr black hole in Boyer-Lindquist coordinates (`default_metrics.KerrBL()`)
 
 ```python
 import pygro
+import numpy as np
 
 metric = pygro.default_metrics(m = 1, a = 0.95)
 geo_engine = pygro.GeodesicEngine(metric)
 
 geo = pygro.Geodesic("time-like", geo_engine)
-geo.set_starting_point(0, 50, pygro.pi/2, 0)
+geo.set_starting_point(0, 50, np.pi/2, 0)
 geo.set_starting_velocity_direction(0, 90, v = 0.1, angles = "deg")
 
-geo_engine.integrate(geo, 1000)
+geo_engine.integrate(geo, 10000, initial_step = 1)
 ```
+Which returns integrated coordinates in the `Geodesic` object.
+
+![alt text](img/example1.png "Integrated time-like geodesic in the Kerr spacetime.")
 
 ***
 ## Copyright
