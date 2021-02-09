@@ -46,7 +46,7 @@ class GeodesicEngine(object):
         if verbose:
             print("Metric linking complete.")
 
-    def stopping_criterion(self, x):
+    def stopping_criterion(self, *x):
         return True
 
     def set_stopping_criterion(self, expr):
