@@ -60,7 +60,7 @@ class Metric():
                     while True:
                         try:
                             component = input("g[{},{}]: ".format(i, j))
-                            component_symb = parse_expr(component)
+                            component_symb = sp.parse_expr(component)
                         except:
                             print("Please insert a valid expression for the component.")
                             continue
@@ -75,7 +75,7 @@ class Metric():
             while True:
                 try:
                     ds2_str = input("ds^2 = ")
-                    ds2_sym = expand(parse_expr(ds2_str))
+                    ds2_sym = sp.expand(sp.parse_expr(ds2_str))
                 except:
                     print("Please insert a valid expression for the line element.")
                     continue
@@ -134,7 +134,7 @@ class Metric():
 
         self.initialized = 1
         self.constants = {}
-        self.transform_functions = []
+        
 
         free_sym = list(self.g.free_symbols-set(self.x))
 
@@ -143,6 +143,34 @@ class Metric():
                 self.add_constant(str(sym))
                 value = float(input("Insert value for {}: ".format(str(sym))))
                 self.set_constant(**{str(sym): value})
+
+        while True:
+            case = input("Want to insert transform functions to pseudo-cartesian coordiantes? [y/n] ")
+
+            if case == "y":
+                self.transform_s = []
+                self.transform_functions = []
+                for x in ["t", "x", "y", "z"]:
+                    while True:
+                        try:
+                            x_inpt = input(f"{x} = ")
+                            x_symb = sp.parse_expr(x_inpt)
+                        except KeyboardInterrupt:
+                            raise SystemExit
+                        except:
+                            print("Insert a valid expression.")
+                            continue
+                        else:
+                            self.transform_s.append(x_symb)
+                            self.transform_functions.append(sp.lambdify([self.x], self.evaluate_constants(x_symb), 'numpy'))
+                            break
+                break
+                            
+            elif case == "n":
+                break
+            else:
+                print("Not a valid input.")
+                continue
 
         self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
         self.g_inv_f = sp.lambdify([self.x], self.evaluate_constants(self.g_inv))
@@ -242,13 +270,11 @@ class Metric():
 
         self.transform_functions = []
         
-        '''
         if load['transform']:
             for i in range(3):
                 transf = load['transform'][i]
-                transform_function = parse_expr(transf)
-                self.transform_functions.append(lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function)))
-        '''
+                transform_function = sp.parse_expr(transf)
+                self.transform_functions.append(sp.lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function)))
 
         self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
         self.g_inv_f = sp.lambdify([self.x], self.evaluate_constants(self.g_inv))
@@ -311,9 +337,17 @@ class Metric():
         
         self.initialized = 1
         self.constants = {}
+        self.transform_functions = []
+
+        if "transform" in load:
+            for i in range(3):
+                transf = load['transform'][i]
+                transform_function = sp.parse_expr(transf)
+                self.transform_functions.append(sp.lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function)))
+
 
         free_sym = list(self.g.free_symbols-set(self.x))
-
+        
         if(len(free_sym)) > 0:
             for sym in free_sym:
                 self.add_constant(str(sym))
@@ -322,16 +356,6 @@ class Metric():
                 else:
                     value = float(input("Insert value for {}: ".format(str(sym))))
                     self.set_constant(**{str(sym): value})
-
-        self.transform_functions = []
-        
-        '''
-        if load['transform']:
-            for i in range(3):
-                transf = load['transform'][i]
-                transform_function = parse_expr(transf)
-                self.transform_functions.append(lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function)))
-        '''
 
         self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
         self.g_inv_f = sp.lambdify([self.x], self.evaluate_constants(self.g_inv))
@@ -358,6 +382,8 @@ class Metric():
             self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
             if self.geodesic_engine_linked:
                 self.geodesic_engine.evaluate_constants()
+            if self.transform_functions:
+                self.transform_functions.append(sp.lambdify([self.x], self.evaluate_constants(x_symb)))
         else:
             print("Inizialize (initialize_metric) or load (load_metric) a metric before adding constants.")
 
@@ -379,18 +405,28 @@ class Metric():
         return ch
 
     def set_coordinate_transformation(self):
-        print("Define tranforamtion to pseudo-cartesian coordinates (useful for plotting):")
-        self.transform_functions = []
-        self.transform_functions_str = []
-        coords = ["x", "y", "z"]
-        for i in range(3):
-            transf = input("{} = ".format(coords[i]))
-            transform_function = sp.parse_expr(transf)
-            self.transform_functions_str.append(transf)
-            self.transform_functions.append(sp.lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function)))
+            self.transform_s = []
+            self.transform_functions = []
+            for x in ["t", "x", "y", "z"]:
+                while True:
+                    try:
+                        x_inpt = input(f"{x} = ")
+                        x_symb = sp.parse_expr(x_inpt)
+                    except KeyboardInterrupt:
+                        raise SystemExit
+                    except:
+                        print("Insert a valid expression.")
+                        continue
+                    else:
+                        self.transform_s.append(x_symb)
+                        self.transform_functions.append(sp.lambdify([self.x], self.evaluate_constants(x_symb), 'numpy'))
+                        break
 
     def transform(self, X):
-        return self.transform_functions[0](X[0], X[1], X[2]), self.transform_functions[1](X[0], X[1], X[2]), self.transform_functions[2](X[0], X[1], X[2])
+        if self.transform_functions:
+            return self.transform_functions[0](X[0], X[1], X[2]), self.transform_functions[1](X[0], X[1], X[2]), self.transform_functions[2](X[0], X[1], X[2])
+        else:
+            raise TypeError("Coordinate transformations not set. Consider using .set_coordinate_transformation method in Metric class.")
 
     def norm4(self, x, v):
         norm = 0
