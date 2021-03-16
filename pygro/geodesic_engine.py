@@ -77,7 +77,7 @@ class GeodesicEngine():
         if verbose:
             time_start = time.perf_counter()
 
-        tau, xu = integrator.integrate(0, tauf, np.array([*geo.initial_x, *geo.initial_u]), initial_step)
+        tau, xu = integrator.integrate(0, tauf, np.array([*geo.initial_x, *geo.initial_u]), h)
                 
         if verbose:
             time_elapsed = (time.perf_counter() - time_start)

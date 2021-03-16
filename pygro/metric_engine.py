@@ -134,6 +134,8 @@ class Metric():
 
         self.initialized = 1
         self.constants = {}
+        self.transform_s = []
+        self.transform_functions = []
         
 
         free_sym = list(self.g.free_symbols-set(self.x))
@@ -148,8 +150,6 @@ class Metric():
             case = input("Want to insert transform functions to pseudo-cartesian coordiantes? [y/n] ")
 
             if case == "y":
-                self.transform_s = []
-                self.transform_functions = []
                 for x in ["t", "x", "y", "z"]:
                     while True:
                         try:

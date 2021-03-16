@@ -58,7 +58,7 @@ class CashKarp(Integrator):
         quit1 = self.quit1
         quit2 = self.quit2
 
-        while x[-1] <= x_end and self.stopping_criterion(*y[-1]):
+        while abs(x[-1]) <= abs(x_end) and self.stopping_criterion(*y[-1]):
             if self.verbose:
                 print("{:.4f}".format(x[-1]), end= "\r")
             next = self.next_step(x[-1], y[-1], h, twiddle1, twiddle2, quit1, quit2)
@@ -100,7 +100,7 @@ class CashKarp(Integrator):
 
             if E2 > TWIDDLE2*QUIT2:
                 if E1 < 1:
-                    if abs(1/10*(k[0]+k[1])) < self.tolerance:
+                    if abs(1/10*max(k[0]+k[1])) < self.tolerance:
                         x = x + h1*self.c[1]
                         h1 = h1/5
                         return x, y2, h1, TWIDDLE1, TWIDDLE2, QUIT1, QUIT2
@@ -126,13 +126,13 @@ class CashKarp(Integrator):
                 if E2/QUIT2 < TWIDDLE2:
                     TWIDDLE2 = max(1.1, E2/QUIT2)
                 if E2 < 1:
-                    if abs(1/10*(k[0]-2*k[2]+k[3])) < self.tolerance:
+                    if abs(1/10*max(k[0]-2*k[2]+k[3])) < self.tolerance:
                         x = x + h1*self.c[3]
                         h1 = h1*self.c[3]
                         return x, y3, h1, TWIDDLE1, TWIDDLE2, QUIT1, QUIT2
                 else:
                     if E1 < 1:
-                        if abs(1/10*(k[0]+k[1])) < self.tolerance:
+                        if abs(1/10*max(k[0]+k[1])) < self.tolerance:
                             x = x + h1*self.c[1]
                             h1 = h1*self.c[1]
                             return x, y2, h1, TWIDDLE1, TWIDDLE2, QUIT1, QUIT2
