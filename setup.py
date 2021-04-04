@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
   name='PyGRO',
-  version='0.0.4.4',
+  version='0.0.5',
   author='Riccardo Della Monica',
   author_email='dellamonicariccardo@gmail.com',
   packages=find_packages(),
@@ -12,7 +12,9 @@ setup(
   long_description_content_type='text/markdown',
   install_requires=[
     "sympy",
-    "numpy"
+    "numpy",
+    "scipy",
+    "cython"
   ],
   keywords=['python', 'first package'],
   classifiers= [

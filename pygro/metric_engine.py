@@ -1,6 +1,7 @@
 import sympy as sp
 import numpy as np
 import json
+from sympy.utilities.autowrap import autowrap
 
 #########################################################################################
 #                               METRIC OBJECT                                           #
@@ -21,6 +22,7 @@ import json
 class Metric():
     def __init__(self):
         self.initialized = 0
+        self.initialized_metric = 0
         self.geodesic_engine_linked = False
     
     def initialize_metric(self):
@@ -269,6 +271,7 @@ class Metric():
                     self.set_constant(**{str(sym): value})
 
         self.transform_functions = []
+        self.transform_s = []
         
         if load['transform']:
             for i in range(3):
@@ -335,9 +338,9 @@ class Metric():
         self.u0_s_null = sp.parse_expr(load['u0_null'])
         self.u0_s_timelike = sp.parse_expr(load['u0_timelike'])
         
-        self.initialized = 1
         self.constants = {}
         self.transform_functions = []
+        self.transform_s = []
 
         if "transform" in load:
             for i in range(3):
@@ -348,6 +351,8 @@ class Metric():
 
         free_sym = list(self.g.free_symbols-set(self.x))
         
+        self.initialized = 1
+
         if(len(free_sym)) > 0:
             for sym in free_sym:
                 self.add_constant(str(sym))
@@ -359,6 +364,8 @@ class Metric():
 
         self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
         self.g_inv_f = sp.lambdify([self.x], self.evaluate_constants(self.g_inv))
+
+        self.initialized_metric = 1
         
         if verbose:
             print("The metric_engine has been initialized.")
@@ -379,11 +386,15 @@ class Metric():
                 except:
                     print(f"No constant named '{symbol}' in the metric_engine.")
                     break
-            self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
+            if self.initialized_metric:
+                self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
+                self.g_inv_f = sp.lambdify([self.x], self.evaluate_constants(self.g_inv))
             if self.geodesic_engine_linked:
                 self.geodesic_engine.evaluate_constants()
-            if self.transform_functions:
-                self.transform_functions.append(sp.lambdify([self.x], self.evaluate_constants(x_symb)))
+            if self.transform_s:
+                self.transform_functions = []
+                for x_symb in self.transform_s:
+                    self.transform_functions.append(sp.lambdify([self.x], self.evaluate_constants(x_symb), 'numpy'))
         else:
             print("Inizialize (initialize_metric) or load (load_metric) a metric before adding constants.")
 
@@ -424,7 +435,7 @@ class Metric():
 
     def transform(self, X):
         if self.transform_functions:
-            return self.transform_functions[0](X[0], X[1], X[2]), self.transform_functions[1](X[0], X[1], X[2]), self.transform_functions[2](X[0], X[1], X[2])
+            return self.transform_functions[0](X), self.transform_functions[1](X), self.transform_functions[2](X), self.transform_functions[3](X)
         else:
             raise TypeError("Coordinate transformations not set. Consider using .set_coordinate_transformation method in Metric class.")
 

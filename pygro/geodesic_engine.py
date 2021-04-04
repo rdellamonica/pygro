@@ -2,6 +2,7 @@ import numpy as np
 import time
 import sympy as sp
 import pygro.integrators as integrators
+from sympy.utilities.autowrap import autowrap
 
 #########################################################################################
 #                               GEODESIC ENGINE                                         #
@@ -23,9 +24,10 @@ import pygro.integrators as integrators
 
 class GeodesicEngine():
 
-    def __init__(self, metric, verbose = True):
+    def __init__(self, metric, verbose = True, integrator = "rkf45"):
 
         self.link_metrics(metric, verbose)
+        self.integrator = integrator 
     
     def link_metrics(self, g, verbose):
         if verbose:
@@ -66,7 +68,8 @@ class GeodesicEngine():
         if verbose:
             print("Integrating...")
 
-        integrator = integrators.CashKarp(self.motion_eq, stopping_criterion = self.stopping_criterion, verbose = verbose, **params)
+        integrator = integrators.get_integrator(self.integrator, self.motion_eq, stopping_criterion = self.stopping_criterion, verbose = verbose, **params)
+        #integrator = integrators.DormandPrince45(self.motion_eq, stopping_criterion = self.stopping_criterion, verbose = verbose, **params)
 
         if direction == "bw":
             h = -initial_step
@@ -89,14 +92,14 @@ class GeodesicEngine():
     
     def evaluate_constants(self):
 
-        eq_u = []
-        for eq in self.eq_u:
-            eq_u.append(self.metric.evaluate_constants(eq))
+        motion_eq_f = []
+        for eq in [*self.eq_x, *self.eq_u]:
+            motion_eq_f.append(autowrap(self.metric.evaluate_constants(eq), backend='cython', args = [*self.metric.x, *self.metric.u]))
 
-        motion_eq_f = sp.lambdify([*self.metric.x, *self.metric.u], [*self.eq_x, *eq_u], 'numpy')
+        #motion_eq_f = sp.lambdify([*self.metric.x, *self.metric.u], [*self.eq_x, *eq_u], 'numpy')
 
         def f(tau, xu):
-            return np.array(motion_eq_f(*xu))
+            return np.array([motion_eq_f[i](*xu) for i in range(8)])
 
         self.motion_eq = f
         
@@ -105,3 +108,6 @@ class GeodesicEngine():
 
         self.u0_f_null = sp.lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0_null, 'numpy')
         self.u0_f_timelike = sp.lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0_timelike, 'numpy')
+    
+    def set_integrator(self, integrator):
+        self.integrator = integrator
