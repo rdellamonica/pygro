@@ -3,6 +3,11 @@ PyGRO - Pyhton integrator for General Relativistic Orbits
 CHANGELOG
 |---------------------------------------------------------------------------|
 
+Version 0.0.6:
+- Redefined the constants in the Metric() object and the way they are handled in the GeodesicEngine().
+
+
 Version 0.0.3.2:
 
 - Added new method for metric definition from line element.
+

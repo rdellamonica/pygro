@@ -287,6 +287,7 @@ class Metric():
 
     def load_metric_from_json(self, metric_json, verbose = True, **params):
 
+        self.json = metric_json
         load = metric_json
 
         self.name = load['name']
@@ -342,13 +343,6 @@ class Metric():
         self.transform_functions = []
         self.transform_s = []
 
-        if "transform" in load:
-            for i in range(3):
-                transf = load['transform'][i]
-                transform_function = sp.parse_expr(transf)
-                self.transform_functions.append(sp.lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function)))
-
-
         free_sym = list(self.g.free_symbols-set(self.x))
         
         self.initialized = 1
@@ -367,6 +361,13 @@ class Metric():
 
         self.initialized_metric = 1
         
+        if "transform" in load:
+            for i in range(4):
+                transf = load['transform'][i]
+                transform_function = sp.parse_expr(transf)
+                self.transform_s.append(transform_function)
+                self.transform_functions.append(sp.lambdify([self.x], self.evaluate_constants(transform_function), 'numpy'))
+
         if verbose:
             print("The metric_engine has been initialized.")
 
@@ -374,6 +375,7 @@ class Metric():
         if self.initialized:
             self.constants[symbol] = {}
             self.constants[symbol]['symbol'] = symbol
+            self.constants[symbol]['symbolic'] = sp.symbols(symbol)
             self.constants[symbol]['value'] = None
         else:
             print("Inizialize (initialize_metric) or load (load_metric) a metric before adding constants.")
@@ -397,6 +399,12 @@ class Metric():
                     self.transform_functions.append(sp.lambdify([self.x], self.evaluate_constants(x_symb), 'numpy'))
         else:
             print("Inizialize (initialize_metric) or load (load_metric) a metric before adding constants.")
+
+    def get_constants_symb(self):
+        return [self.constants[constant]['symbolic'] for constant in self.constants]
+
+    def get_constants_val(self):
+        return [self.constants[constant]['value'] for constant in self.constants]
 
     def evaluate_constants(self, expr):
         if any(x['value'] == None for x in self.constants.values()):

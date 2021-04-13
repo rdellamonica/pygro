@@ -3,6 +3,7 @@ import time
 import sympy as sp
 import pygro.integrators as integrators
 from sympy.utilities.autowrap import autowrap
+import scipy.interpolate as sp_int
 
 #########################################################################################
 #                               GEODESIC ENGINE                                         #
@@ -24,7 +25,7 @@ from sympy.utilities.autowrap import autowrap
 
 class GeodesicEngine():
 
-    def __init__(self, metric, verbose = True, integrator = "rkf45"):
+    def __init__(self, metric, verbose = True, integrator = "dp45"):
 
         self.link_metrics(metric, verbose)
         self.integrator = integrator 
@@ -43,6 +44,10 @@ class GeodesicEngine():
         self.metric.geodesic_engine_linked = True
         self.metric.geodesic_engine = self
 
+        self.motion_eq_f = []
+        for eq in [*self.eq_x, *self.eq_u]:
+            self.motion_eq_f.append(autowrap(eq, backend='cython', args = [*self.metric.x, *self.metric.u, *self.metric.get_constants_symb()]))
+
         self.evaluate_constants()
 
         if verbose:
@@ -54,22 +59,25 @@ class GeodesicEngine():
     def set_stopping_criterion(self, expr):
         expr_s = sp.parse_expr(expr)
         free_symbols = list(expr_s.free_symbols-set(self.metric.x))
+        check = True
         for symbol in free_symbols:
-            if str(symbol) in globals():
-                print(globals()[str(symbol)])
-                expr_s = expr_s.subs(symbol, globals()[str(symbol)])
-            elif str(symbol) in locals():
-                expr_s.subs(symbol, locals()[str(symbol)])
-            else:
-                raise TypeError("Unkwnown symbol {}".format(str(symbol)))
-        self.stopping_criterion = sp.lambdify([*self.metric.x, *self.metric.u], expr_s)
+            if symbol in self.metric.get_constants_symb():
+                check &= True
+        if check == True:
+            stopping_criterion = sp.lambdify([*self.metric.x, *self.metric.u, *self.metric.get_constants_symb()], expr_s)
+            def f(*xu):
+                return stopping_criterion(*xu, *self.metric.get_constants_val())
 
-    def integrate(self, geo, tauf, initial_step, verbose=False, direction = "fw", **params):
+            self.stopping_criterion = f
+        else:
+            raise TypeError("Unkwnown symbol {}".format(str(symbol)))
+        
+
+    def integrate(self, geo, tauf, initial_step, verbose=False, direction = "fw", interpolate = False, **params):
         if verbose:
             print("Integrating...")
 
         integrator = integrators.get_integrator(self.integrator, self.motion_eq, stopping_criterion = self.stopping_criterion, verbose = verbose, **params)
-        #integrator = integrators.DormandPrince45(self.motion_eq, stopping_criterion = self.stopping_criterion, verbose = verbose, **params)
 
         if direction == "bw":
             h = -initial_step
@@ -89,17 +97,15 @@ class GeodesicEngine():
         geo.tau = tau
         geo.x = np.stack(xu[:,:4])
         geo.u = np.stack(xu[:,4:])
+
+        if interpolate == True:
+            geo.x_int = sp_int.interp1d(geo.tau, geo.x, axis = 0, kind = "cubic")
+            geo.u_int = sp_int.interp1d(geo.tau, geo.u, axis = 0, kind = "cubic")
     
     def evaluate_constants(self):
 
-        motion_eq_f = []
-        for eq in [*self.eq_x, *self.eq_u]:
-            motion_eq_f.append(autowrap(self.metric.evaluate_constants(eq), backend='cython', args = [*self.metric.x, *self.metric.u]))
-
-        #motion_eq_f = sp.lambdify([*self.metric.x, *self.metric.u], [*self.eq_x, *eq_u], 'numpy')
-
         def f(tau, xu):
-            return np.array([motion_eq_f[i](*xu) for i in range(8)])
+            return np.array([self.motion_eq_f[i](*xu, *self.metric.get_constants_val()) for i in range(8)])
 
         self.motion_eq = f
         
