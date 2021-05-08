@@ -296,6 +296,7 @@ class Metric():
             print("Loading {}".format(self.name))
         
         self.x = []
+        self.dx = []
         self.x_str = []
         self.u = []
 
@@ -309,6 +310,10 @@ class Metric():
             velocity = "u_" + coordinate
             setattr(self, velocity, sp.symbols(velocity))
             self.u.append(self.__dict__[velocity])
+
+            differential = "d" + coordinate
+            setattr(self, differential, sp.symbols(differential))
+            self.dx.append(self.__dict__[differential])
         
         self.g = sp.zeros(4, 4)
         self.g_inv = sp.zeros(4, 4)

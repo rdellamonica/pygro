@@ -346,9 +346,9 @@ class RungeKuttaFehlberg45():
                 continue
             else:
                 if err == 0:
-                    h2 = max(self.hmax, 2*h1)
+                    h2 = min(self.hmax, 2*h1)
                     break
-                h2 = max(self.hmax, h1*self.SF*err**(-0.2))
+                h2 = min(self.hmax, h1*self.SF*err**(-0.2))
                 break
         x1 = x + h1
         return x1, y5, h2
@@ -432,9 +432,15 @@ class DormandPrince45():
                 continue
             else:
                 if err == 0:
-                    h2 = min(self.hmax, 2*h1)
+                    if self.hmax > 0:
+                        h2 = min(self.hmax, 2*h1)
+                    else:
+                        h2 = max(self.hmax, 2*h1)
                     break
-                h2 = min(self.hmax, h1*self.SF*err**(-0.2))
+                if self.hmax > 0:
+                    h2 = min(self.hmax, h1*self.SF*err**(-0.2))
+                else:
+                    h2 = max(self.hmax, h1*self.SF*err**(-0.2))
                 break
         x1 = x + h1
         return x1, y5, h2
