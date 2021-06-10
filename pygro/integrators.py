@@ -442,5 +442,6 @@ class DormandPrince45():
                 else:
                     h2 = max(self.hmax, h1*self.SF*err**(-0.2))
                 break
+            
         x1 = x + h1
         return x1, y5, h2

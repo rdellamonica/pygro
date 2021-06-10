@@ -138,6 +138,7 @@ class Metric():
         self.constants = {}
         self.transform_s = []
         self.transform_functions = []
+        self.transform_functions_str = []
         
 
         free_sym = list(self.g.free_symbols-set(self.x))
@@ -164,6 +165,7 @@ class Metric():
                             continue
                         else:
                             self.transform_s.append(x_symb)
+                            self.transform_functions_str.append(x_inpt)
                             self.transform_functions.append(sp.lambdify([self.x], self.evaluate_constants(x_symb), 'numpy'))
                             break
                 break
@@ -194,7 +196,7 @@ class Metric():
                 output['u0_null'] = str(self.u0_s_null)
                 
                 if(self.transform_functions):
-                    output['transform'] = self.self.transform_functions_str
+                    output['transform'] = self.transform_functions_str
 
                 json.dump(output, f)
 
@@ -207,84 +209,9 @@ class Metric():
 
         load = json.load(f)
 
-        self.name = load['name']
+        self.load_metric_from_json(load, verbose, **params)
 
-        if verbose:
-            print("Loading {}".format(self.name))
         
-        self.x = []
-        self.x_str = []
-        self.u = []
-
-        for i in range(4):
-
-            coordinate = load['x'][i]
-            setattr(self, coordinate, sp.symbols(coordinate))
-            self.x.append(self.__dict__[coordinate])
-            self.x_str.append(coordinate)
-
-            velocity = "u" + coordinate
-            setattr(self, velocity, sp.symbols(velocity))
-            self.u.append(self.__dict__[velocity])
-        
-        self.g = sp.zeros(4, 4)
-        self.g_inv = sp.zeros(4, 4)
-        self.eq_u = []
-        self.eq_x = []
-        
-        self.g_str = np.zeros([4,4], dtype = object)
-        self.g_inv_str = np.zeros([4,4], dtype = object)
-        self.eq_u_str = np.zeros(4, dtype = object)
-        self.eq_x_str = np.zeros(4, dtype = object)
-
-        for i in range(4):
-
-            for j in range(4):
-
-                component = load['g'][i][j]
-                self.g[i,j] = sp.parse_expr(component)
-                self.g_str[i,j] = component
-                component = load['g_inv'][i][j]
-                self.g_inv[i,j] = sp.parse_expr(component)
-                self.g_inv_str[i,j] = component
-
-            self.eq_u.append(sp.parse_expr(load['eq_u'][i]))
-            self.eq_x.append(sp.parse_expr(load['eq_x'][i]))
-            self.eq_u_str[i] = load['eq_u'][i]
-            self.eq_x_str[i] = load['eq_x'][i]
-        
-        self.u0_s_null = sp.parse_expr(load['u0_null'])
-        self.u0_s_timelike = sp.parse_expr(load['u0_timelike'])
-        
-        self.initialized = 1
-        self.constants = {}
-
-        free_sym = list(self.g.free_symbols-set(self.x))
-
-        if(len(free_sym)) > 0:
-            for sym in free_sym:
-                self.add_constant(str(sym))
-                if str(sym) in params:
-                    self.set_constant(**{str(sym): params.get(str(sym))})
-                else:
-                    value = float(input("Insert value for {}: ".format(str(sym))))
-                    self.set_constant(**{str(sym): value})
-
-        self.transform_functions = []
-        self.transform_s = []
-        
-        if load['transform']:
-            for i in range(3):
-                transf = load['transform'][i]
-                transform_function = sp.parse_expr(transf)
-                self.transform_functions.append(sp.lambdify([self.x[1], self.x[2], self.x[3]], self.evaluate_constants(transform_function)))
-
-        self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
-        self.g_inv_f = sp.lambdify([self.x], self.evaluate_constants(self.g_inv))
-        
-        if verbose:
-            print("The metric_engine has been initialized.")
-
     def load_metric_from_json(self, metric_json, verbose = True, **params):
 
         self.json = metric_json

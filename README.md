@@ -28,7 +28,7 @@ This is an example of time-like geodesic around a Kerr black hole in Boyer-Lindq
 import pygro
 import numpy as np
 
-metric = pygro.default_metrics(m = 1, a = 0.95)
+metric = pygro.default_metrics.KerrBL(m = 1, a = 0.95)
 geo_engine = pygro.GeodesicEngine(metric)
 
 geo = pygro.Geodesic("time-like", geo_engine)
