@@ -3,6 +3,7 @@ import time
 import sympy as sp
 import pygro.integrators as integrators
 from sympy.utilities.autowrap import autowrap
+from sympy.utilities.lambdify import lambdify
 import scipy.interpolate as sp_int
 
 #########################################################################################
@@ -28,7 +29,8 @@ class GeodesicEngine():
     def __init__(self, metric, verbose = True, integrator = "dp45"):
 
         self.link_metrics(metric, verbose)
-        self.integrator = integrator 
+        self.integrator = integrator
+        self.wrapper = None
     
     def link_metrics(self, g, verbose):
         if verbose:
@@ -44,11 +46,20 @@ class GeodesicEngine():
         self.metric.geodesic_engine_linked = True
         self.metric.geodesic_engine = self
 
-        self.motion_eq_f = []
-        for eq in [*self.eq_x, *self.eq_u]:
-            self.motion_eq_f.append(autowrap(eq, backend='cython', args = [*self.metric.x, *self.metric.u, *self.metric.get_constants_symb()]))
+        if len(self.metric.get_parameters_functions()) > 0:
+            self.wrapper = "lambdify"
+        else:
+            self.wrapper = "autowrap"
 
-        self.evaluate_constants()
+        self.motion_eq_f = []
+
+        for eq in [*self.eq_x, *self.eq_u]:
+            if self.wrapper == "autowrap":
+                self.motion_eq_f.append(autowrap(self.metric.subs_functions(eq), backend='cython', args = [*self.metric.x, *self.metric.u, *self.metric.get_parameters_symb()]))
+            else:
+                self.motion_eq_f.append(lambdify([*self.metric.x, *self.metric.u, *self.metric.get_parameters_symb()], self.metric.subs_functions(eq)))
+
+        self.evaluate_parameters()
 
         if verbose:
             print("Metric linking complete.")
@@ -61,12 +72,12 @@ class GeodesicEngine():
         free_symbols = list(expr_s.free_symbols-set(self.metric.x))
         check = True
         for symbol in free_symbols:
-            if symbol in self.metric.get_constants_symb():
+            if symbol in self.metric.get_parameters_symb():
                 check &= True
         if check == True:
-            stopping_criterion = sp.lambdify([*self.metric.x, *self.metric.u, *self.metric.get_constants_symb()], expr_s)
+            stopping_criterion = sp.lambdify([*self.metric.x, *self.metric.u, *self.metric.get_parameters_symb()], expr_s)
             def f(*xu):
-                return stopping_criterion(*xu, *self.metric.get_constants_val())
+                return stopping_criterion(*xu, *self.metric.get_parameters_val())
 
             self.stopping_criterion = f
         else:
@@ -102,15 +113,15 @@ class GeodesicEngine():
             geo.x_int = sp_int.interp1d(geo.tau, geo.x, axis = 0, kind = "cubic")
             geo.u_int = sp_int.interp1d(geo.tau, geo.u, axis = 0, kind = "cubic")
     
-    def evaluate_constants(self):
+    def evaluate_parameters(self):
 
         def f(tau, xu):
-            return np.array([self.motion_eq_f[i](*xu, *self.metric.get_constants_val()) for i in range(8)])
+            return np.array([self.motion_eq_f[i](*xu, *self.metric.get_parameters_val()) for i in range(8)])
 
         self.motion_eq = f
         
-        u0_timelike = self.metric.evaluate_constants(self.u0_s_timelike)
-        u0_null = self.metric.evaluate_constants(self.u0_s_null)
+        u0_timelike = self.metric.evaluate_parameters(self.u0_s_timelike)
+        u0_null = self.metric.evaluate_parameters(self.u0_s_null)
 
         self.u0_f_null = sp.lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0_null, 'numpy')
         self.u0_f_timelike = sp.lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0_timelike, 'numpy')

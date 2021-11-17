@@ -1,6 +1,7 @@
 import numpy as np
 import time
 import sympy as sp
+from sympy.utilities.lambdify import lambdify, implemented_function
 
 ################################################################
 #   The geodesic object needs as arguments:                    #
@@ -46,20 +47,21 @@ class Geodesic():
     def set_starting_velocity_direction(self, theta, phi, v = 1, angles="rad"):
         self.u = []
         if(len(self.initial_x)>0):
+            g_f = lambdify([self.metric.x], self.metric.evaluate_parameters(self.metric.g))
             if self.verbose:
                 print("Setting pointing direction")
             if angles == "rad":
-                u1 = -v*np.cos(theta)*np.cos(phi)/np.sqrt(self.metric.g_f(self.initial_x)[1,1])
-                u2 = -v*np.sin(theta)/np.sqrt(self.metric.g_f(self.initial_x)[2,2])
-                u3 = -v*np.cos(theta)*np.sin(phi)/np.sqrt(self.metric.g_f(self.initial_x)[3,3])
+                u1 = -v*np.cos(theta)*np.cos(phi)/np.sqrt(g_f(self.initial_x)[1,1])
+                u2 = -v*np.sin(theta)/np.sqrt(g_f(self.initial_x)[2,2])
+                u3 = -v*np.cos(theta)*np.sin(phi)/np.sqrt(g_f(self.initial_x)[3,3])
                 u0 = self.get_initial_u0(u1, u2, u3)
                 self.initial_u = np.array([u0, u1, u2, u3])
             elif angles == "deg":
                 theta = np.deg2rad(theta)
                 phi = np.deg2rad(phi)
-                u1 = -v*np.cos(theta)*np.cos(phi)/np.sqrt(self.metric.g_f(self.initial_x)[1,1])
-                u2 = -v*np.sin(theta)/np.sqrt(self.metric.g_f(self.initial_x)[2,2])
-                u3 = -v*np.cos(theta)*np.sin(phi)/np.sqrt(self.metric.g_f(self.initial_x)[3,3])
+                u1 = -v*np.cos(theta)*np.cos(phi)/np.sqrt(g_f(self.initial_x)[1,1])
+                u2 = -v*np.sin(theta)/np.sqrt(g_f(self.initial_x)[2,2])
+                u3 = -v*np.cos(theta)*np.sin(phi)/np.sqrt(g_f(self.initial_x)[3,3])
                 u0 = self.get_initial_u0(u1, u2, u3)
                 self.initial_u = np.array([u0, u1, u2, u3])
             else:

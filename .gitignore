@@ -8,3 +8,4 @@ pygro/default_metrics/__pycache__/
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 test_integrator.py
+*.metric

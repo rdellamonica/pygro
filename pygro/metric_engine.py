@@ -2,13 +2,15 @@ import sympy as sp
 import numpy as np
 import json
 from sympy.utilities.autowrap import autowrap
+from sympy.utilities.lambdify import lambdify, implemented_function
+from sympy.core.function import AppliedUndef
 
 #########################################################################################
 #                               METRIC OBJECT                                           #
 #                                                                                       #
 #   The metric object contains the symbolic expresison of a generic metric tensor       #
 #   and symbolically retrieves the inverse metric and all is needed to compute the      #
-#   Christhoffel symbols.                                                               #
+#   Christoffel symbols.                                                                #
 #   Its main contents are:                                                              #
 #    -  g: the metrics tensor symbolic expression;                                      #
 #    -  g_inv: the inverse metrics;                                                     #
@@ -93,7 +95,6 @@ class Metric():
         
         print("Calculating inverse metric...")
         self.g_inv = self.g.inv()
-
         self.g_inv_str = np.zeros([4,4], dtype = object)
         
         for i in range(4):
@@ -112,7 +113,7 @@ class Metric():
             eq = 0
             for mu in range(4):
                 for nu in range(4):
-                    eq += -self.chr(mu, nu, rho)*self.u[mu]*self.u[nu]
+                    eq += -self.Christoffel(mu, nu, rho)*self.u[mu]*self.u[nu]
             self.eq_u.append(eq)
             self.eq_u_str[rho] = str(eq)
 
@@ -135,19 +136,55 @@ class Metric():
         self.u0_s_timelike = sp.solve(eq, self.u[0], simplify=False, rational=False)[0]
 
         self.initialized = 1
-        self.constants = {}
+        self.parameters = {}
         self.transform_s = []
         self.transform_functions = []
         self.transform_functions_str = []
         
-
         free_sym = list(self.g.free_symbols-set(self.x))
+        free_func = list(self.g.atoms(AppliedUndef))
 
         if len(free_sym) > 0:
             for sym in free_sym:
-                self.add_constant(str(sym))
+                self.add_parameter(str(sym))
                 value = float(input("Insert value for {}: ".format(str(sym))))
                 self.set_constant(**{str(sym): value})
+
+        if len(free_func) > 0:
+            for func in free_func:
+                self.add_parameter(str(func))
+                kind = input("Define kind for function {} [expr/py]: ".format(str(func)))
+
+                if kind == "expr":
+                    self.parameters[str(func)]['kind'] = "expression"
+                    expr_str = input("{} = ".format(str(func)))
+                    expr_sym = sp.expand(sp.parse_expr(expr_str))
+
+                    self.parameters[str(func)]['value'] = expr_sym
+
+                    expr_free_sym = expr_sym.free_symbols-set([self.parameters[parameter]["symbolic"] for parameter in self.parameters])-set(self.x)
+
+                    for sym in expr_free_sym:
+                        self.add_parameter(str(sym))
+                        value = float(input("Insert value for {}: ".format(str(sym))))
+                        self.set_constant(**{str(sym): value})
+
+
+                    for arg in list(func.args):
+                        self.parameters[str(func)][f"d{str(func.func)}d{str(arg)}"] = expr_sym.diff(arg)
+
+
+                elif kind == "py":
+
+                    self.parameters[str(func)]['kind'] = "pyfunc"
+
+                    print(f"Remember to set the Python function for {str(func)} and its derivatives with")
+                    
+                    derlist = ""
+                    for arg in list(func.args):
+                        derlist += f", d{str(func.func)}d{str(arg)} = func"
+                    
+                    print(f"set_function_to_parameter({str(func)}, f = func{derlist})")
 
         while True:
             case = input("Want to insert transform functions to pseudo-cartesian coordiantes? [y/n] ")
@@ -166,7 +203,7 @@ class Metric():
                         else:
                             self.transform_s.append(x_symb)
                             self.transform_functions_str.append(x_inpt)
-                            self.transform_functions.append(sp.lambdify([self.x], self.evaluate_constants(x_symb), 'numpy'))
+                            self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
                             break
                 break
                             
@@ -176,14 +213,11 @@ class Metric():
                 print("Not a valid input.")
                 continue
 
-        self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
-        self.g_inv_f = sp.lambdify([self.x], self.evaluate_constants(self.g_inv))
-
         print("The metric_engine has been initialized.")
 
     def save_metric(self, filename):
         if self.initialized:
-            with open(filename, "w+") as f:
+            with open(filename, "w+") as file:
                 output = {}
                 
                 output['name'] = self.name
@@ -194,14 +228,28 @@ class Metric():
                 output['eq_u'] = self.eq_u_str.tolist()
                 output['u0_timelike'] = str(self.u0_s_timelike)
                 output['u0_null'] = str(self.u0_s_null)
+
+                output["expressions"] = []
+
+                expressions = self.get_parameters_expressions()
+
+                for f in expressions:
+                    output["expressions"].append({'name': expressions[f]['symbol'], 'value': str(expressions[f]['value'])})
+                
+                output["functions"] = []
+
+                functions = self.get_parameters_functions()
+
+                for f in functions:
+                    output["functions"].append({'name': functions[f]['symbol']})
                 
                 if(self.transform_functions):
                     output['transform'] = self.transform_functions_str
-
-                json.dump(output, f)
+                
+                json.dump(output, file)
 
         else:
-            print("Inizialize (initialize_metric) or load (load_metric) a metric before saving.")
+            print("Initialize (initialize_metric) or load (load_metric) a metric before saving.")
     
     def load_metric(self, filename, verbose = True, **params):
 
@@ -271,7 +319,7 @@ class Metric():
         self.u0_s_null = sp.parse_expr(load['u0_null'])
         self.u0_s_timelike = sp.parse_expr(load['u0_timelike'])
         
-        self.constants = {}
+        self.parameters = {}
         self.transform_functions = []
         self.transform_s = []
 
@@ -281,15 +329,60 @@ class Metric():
 
         if(len(free_sym)) > 0:
             for sym in free_sym:
-                self.add_constant(str(sym))
+                self.add_parameter(str(sym))
+                if str(sym) in params:
+                    self.set_constant(**{str(sym): params.get(str(sym))})
+                else:
+                    value = float(input("Insert value for {}: ".format(str(sym))))
+                    self.set_constant(**{str(sym): value})
+        
+        for expression in load["expressions"]:
+            self.add_parameter(expression['name'])
+
+            self.parameters[expression['name']]['kind'] = "expression"
+
+            func_sym = sp.parse_expr(expression['name'])
+
+            expr_str = expression['value']
+            expr_sym = sp.expand(sp.parse_expr(expr_str))
+
+            self.parameters[expression['name']]['value'] = expr_sym
+
+            expr_free_sym = expr_sym.free_symbols-set([self.parameters[parameter]["symbolic"] for parameter in self.parameters])-set(self.x)
+
+            for sym in expr_free_sym:
+                self.add_parameter(str(sym))
                 if str(sym) in params:
                     self.set_constant(**{str(sym): params.get(str(sym))})
                 else:
                     value = float(input("Insert value for {}: ".format(str(sym))))
                     self.set_constant(**{str(sym): value})
 
-        self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
-        self.g_inv_f = sp.lambdify([self.x], self.evaluate_constants(self.g_inv))
+            for arg in list(func_sym.args):
+                self.parameters[expression['name']][f"d{str(func_sym.func)}d{str(arg)}"] = expr_sym.diff(arg)
+
+        for function in load["functions"]:
+
+            self.add_parameter(function['name'])
+            self.parameters[function['name']]['kind'] = "pyfunc"
+
+            func_sym = sp.parse_expr(function['name'])
+
+            func = str(func_sym.func)
+            args = list(func_sym.args)
+
+            if str(func) in params:
+                self.parameters[function['name']]['value'] = params[str(func)]
+            else:
+                print(f"Remember to set the Python function for {str(func)}.")
+            
+            for arg in args:
+                dername = f"d{func}d{str(arg)}"
+
+                if dername in params:
+                    self.parameters[function['name']][dername] = params[dername]
+                else:
+                    print(f"Remember to set the Python function for {dername}.")
 
         self.initialized_metric = 1
         
@@ -298,62 +391,139 @@ class Metric():
                 transf = load['transform'][i]
                 transform_function = sp.parse_expr(transf)
                 self.transform_s.append(transform_function)
-                self.transform_functions.append(sp.lambdify([self.x], self.evaluate_constants(transform_function), 'numpy'))
+                self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(transform_function), 'numpy'))
 
         if verbose:
             print("The metric_engine has been initialized.")
 
-    def add_constant(self, symbol):
+    def add_parameter(self, symbol):
         if self.initialized:
-            self.constants[symbol] = {}
-            self.constants[symbol]['symbol'] = symbol
-            self.constants[symbol]['symbolic'] = sp.symbols(symbol)
-            self.constants[symbol]['value'] = None
+            self.parameters[symbol] = {}
+            self.parameters[symbol]['symbol'] = symbol
+            self.parameters[symbol]['symbolic'] = sp.parse_expr(symbol)
+            self.parameters[symbol]['value'] = None
+            self.parameters[symbol]['kind'] = None
         else:
-            print("Inizialize (initialize_metric) or load (load_metric) a metric before adding constants.")
+            print("Initialize (initialize_metric) or load (load_metric) a metric before adding parameters.")
     
     def set_constant(self, **params):
         if self.initialized:
             for param in params:
                 try:
-                    self.constants[str(param)]['value'] = params[param]
+                    self.parameters[str(param)]['value'] = params[param]
+                    self.parameters[str(param)]['kind'] = "constant"
                 except:
-                    print(f"No constant named '{symbol}' in the metric_engine.")
+                    print(f"No parameter named '{str(param)}' in the metric_engine.")
                     break
-            if self.initialized_metric:
-                self.g_f = sp.lambdify([self.x], self.evaluate_constants(self.g))
-                self.g_inv_f = sp.lambdify([self.x], self.evaluate_constants(self.g_inv))
-            if self.geodesic_engine_linked:
-                self.geodesic_engine.evaluate_constants()
-            if self.transform_s:
-                self.transform_functions = []
-                for x_symb in self.transform_s:
-                    self.transform_functions.append(sp.lambdify([self.x], self.evaluate_constants(x_symb), 'numpy'))
         else:
-            print("Inizialize (initialize_metric) or load (load_metric) a metric before adding constants.")
+            print("Initialize (initialize_metric) or load (load_metric) a metric before adding parameters.")
+    
+    def set_expression_to_parameter(self, param, expr_str):
+        if self.initialized:
+            if param in self.parameters:
+                self.parameters[str(param)]['value'] = sp.parse_expr(expr_str)
+                self.parameters[str(param)]['kind'] = "expression"
+                func = self.parameters[str(param)]['symbolic']
 
-    def get_constants_symb(self):
-        return [self.constants[constant]['symbolic'] for constant in self.constants]
+                expr_sym = sp.expand(sp.parse_expr(expr_str))
 
-    def get_constants_val(self):
-        return [self.constants[constant]['value'] for constant in self.constants]
+                self.parameters[str(param)]['value'] = expr_sym
 
-    def evaluate_constants(self, expr):
-        if any(x['value'] == None for x in self.constants.values()):
+                expr_free_sym = expr_sym.free_symbols-set([self.parameters[parameter]["symbolic"] for parameter in self.parameters])-set(self.x)
+
+                for sym in expr_free_sym:
+                    self.add_parameter(str(sym))
+                    value = float(input("Insert value for {}: ".format(str(sym))))
+                    self.set_constant(**{str(sym): value})
+
+
+                for arg in list(func.args):
+                    self.parameters[str(param)][f"d{str(func.func)}d{str(arg)}"] = expr_sym.diff(arg)
+
+            else:
+                raise TypeError(f"No parameter named '{str(param)}' in the metric_engine.")
+        else:
+            print("Initialize (initialize_metric) or load (load_metric) a metric before adding parameters.")
+
+
+    def set_function_to_parameter(self, param, function, **derivatives):
+        if self.initialized:
+            
+            args = list(self.parameters[str(param)]['symbolic'].args)
+            func = self.parameters[str(param)]['symbolic'].func
+            self.parameters[str(param)]['kind'] = "pyfunc"
+
+            self.parameters[str(param)]['value'] = implemented_function(f"{func}_func", function)
+
+            for arg in args:
+                der = f"d{func}d{arg}"
+                if not der in derivatives:
+                    raise KeyError(f"Specify a meethod for the derivative of the function with respect to {arg}")
+                else:
+                    self.parameters[str(param)][der] = implemented_function(f"d{func}d{arg}_func", derivatives[der])
+        else:
+            print("Initialize (initialize_metric) or load (load_metric) a metric before adding parameters.")
+
+    def get_parameters_symb(self):
+        return [self.parameters[constant]['symbolic'] for constant in self.parameters if self.parameters[constant]['kind'] == "constant"]
+
+    def get_parameters_val(self):
+        return [self.parameters[constant]['value'] for constant in self.parameters if self.parameters[constant]['kind'] == "constant"]
+
+    def get_parameters_constants(self):
+        return {self.parameters[constant]['symbol']: self.parameters[constant] for constant in self.parameters if self.parameters[constant]["kind"] == "constant"}
+    
+    def get_parameters_expressions(self):
+        return {self.parameters[constant]['symbol']: self.parameters[constant] for constant in self.parameters if self.parameters[constant]["kind"] == "expression"}
+
+    def get_parameters_functions(self):
+        return {self.parameters[constant]['symbol']: self.parameters[constant] for constant in self.parameters if self.parameters[constant]["kind"] == "pyfunc"}
+
+    def subs_functions(self, expr):
+        functions = self.get_parameters_expressions()
+
+        if len(functions) > 0:
+            for func in functions:
+
+                subs = []
+                f = functions[func]['symbolic']
+
+                for arg in f.args:
+                    subs.append((sp.Derivative(f, arg), functions[func][f"d{f.func}d{arg}"]))
+                
+                expr = expr.subs(subs)
+            
+            expr = expr.subs(f, functions[func]['value'])
+        
+        functions = self.get_parameters_functions()
+
+        if len(functions) > 0:
+            for func in functions:
+
+                subs = []
+                f = functions[func]['symbolic']
+
+                for arg in f.args:
+                    subs.append((sp.Derivative(f, arg), functions[func][f"d{f.func}d{arg}"](*self.x)))
+                
+                expr = expr.subs(subs)
+            
+            expr = expr.subs(f, functions[func]['value'](*self.x))
+        
+        return expr
+
+
+    def evaluate_parameters(self, expr):
+        if any(x['value'] == None for x in self.parameters.values()):
             print("You must set_constant for every constant value in your metric, before evaluating.")
         else:
             subs = []
-            for c in self.constants.values():
-                x = c['symbol']
-                y = c['value']
+            const = self.get_parameters_constants()
+            for c in const:
+                x = const[c]['symbol']
+                y = const[c]['value']
                 subs.append([x,y])
-            return expr.subs(subs)
-    
-    def chr(self, mu, nu, rho):
-        ch = 0
-        for sigma in range(4):
-            ch += self.g_inv[rho,sigma]*(self.g[sigma, nu].diff(self.x[mu])+self.g[mu, sigma].diff(self.x[nu])-self.g[mu, nu].diff(self.x[sigma]))/2
-        return ch
+            return self.subs_functions(expr).subs(subs)
 
     def set_coordinate_transformation(self):
             self.transform_s = []
@@ -370,7 +540,7 @@ class Metric():
                         continue
                     else:
                         self.transform_s.append(x_symb)
-                        self.transform_functions.append(sp.lambdify([self.x], self.evaluate_constants(x_symb), 'numpy'))
+                        self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
                         break
 
     def transform(self, X):
@@ -379,14 +549,17 @@ class Metric():
         else:
             raise TypeError("Coordinate transformations not set. Consider using .set_coordinate_transformation method in Metric class.")
 
-    def norm4(self, x, v):
+    '''def norm4(self, x, v):
         norm = 0
         
         for mu in range(4):
             for nu in range(4):
                 norm += self.g_f(x)[mu, nu]*v[mu]*v[nu]
         
-        return norm
-
-    def set_constant_of_motion(self, name, expr):
-        self.constants_of_motion[name] = sp.lambdify([self.x, self.u], self.evaluate_constants(expr))
+        return norm'''
+    
+    def Christoffel(self, mu, nu, rho):
+        ch = 0
+        for sigma in range(4):
+            ch += self.g_inv[rho,sigma]*(self.g[sigma, nu].diff(self.x[mu])+self.g[mu, sigma].diff(self.x[nu])-self.g[mu, nu].diff(self.x[sigma]))/2
+        return ch
