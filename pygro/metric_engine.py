@@ -267,6 +267,12 @@ class Metric():
 
         self.name = load['name']
 
+        if not "expressions" in load:
+            load["expressions"] = []
+        
+        if not "functions" in load:
+            load["functions"] = []
+
         if verbose:
             print("Loading {}".format(self.name))
         
@@ -558,6 +564,9 @@ class Metric():
         
         return norm'''
     
+    def g_f(self, x):
+        return lambdify([*self.x, *self.get_parameters_symb()], self.subs_functions(self.g))(*x, *self.get_parameters_val())
+
     def Christoffel(self, mu, nu, rho):
         ch = 0
         for sigma in range(4):

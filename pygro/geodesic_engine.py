@@ -59,8 +59,24 @@ class GeodesicEngine():
             else:
                 self.motion_eq_f.append(lambdify([*self.metric.x, *self.metric.u, *self.metric.get_parameters_symb()], self.metric.subs_functions(eq)))
 
-        self.evaluate_parameters()
+        def f_eq(tau, xu):
+            return np.array([self.motion_eq_f[i](*xu, *self.metric.get_parameters_val()) for i in range(8)])
 
+        self.motion_eq = f_eq
+        
+        u0_f_timelike = lambdify([*self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3], *self.metric.get_parameters_symb()], self.metric.subs_functions(g.u0_s_timelike))
+        
+        def f_u0_timelike(initial_x, u1, u2, u3):
+            return abs(u0_f_timelike(*initial_x, u1, u2, u3, *self.metric.get_parameters_val()))
+
+        u0_f_null = lambdify([*self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3], *self.metric.get_parameters_symb()], self.metric.subs_functions(g.u0_s_null))
+
+        def f_u0_null(initial_x, u1, u2, u3):
+            return abs(u0_f_null(*initial_x, u1, u2, u3, *self.metric.get_parameters_val()))
+
+        self.u0_f_timelike = f_u0_timelike
+        self.u0_f_null = f_u0_null
+        
         if verbose:
             print("Metric linking complete.")
 
@@ -111,20 +127,7 @@ class GeodesicEngine():
 
         if interpolate == True:
             geo.x_int = sp_int.interp1d(geo.tau, geo.x, axis = 0, kind = "cubic")
-            geo.u_int = sp_int.interp1d(geo.tau, geo.u, axis = 0, kind = "cubic")
-    
-    def evaluate_parameters(self):
-
-        def f(tau, xu):
-            return np.array([self.motion_eq_f[i](*xu, *self.metric.get_parameters_val()) for i in range(8)])
-
-        self.motion_eq = f
-        
-        u0_timelike = self.metric.evaluate_parameters(self.u0_s_timelike)
-        u0_null = self.metric.evaluate_parameters(self.u0_s_null)
-
-        self.u0_f_null = sp.lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0_null, 'numpy')
-        self.u0_f_timelike = sp.lambdify([self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3]], u0_timelike, 'numpy')
+            geo.u_int = sp_int.interp1d(geo.tau, geo.u, axis = 0, kind = "cubic")        
     
     def set_integrator(self, integrator):
         self.integrator = integrator
