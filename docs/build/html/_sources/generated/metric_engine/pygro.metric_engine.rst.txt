@@ -1,0 +1,35 @@
+﻿pygro.metric\_engine
+====================
+
+.. automodule:: pygro.metric_engine
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      parse_expr
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Metric
+   
+   
+
+   
+   
+   
+
+
+
