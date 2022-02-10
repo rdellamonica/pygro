@@ -12,3 +12,5 @@ test_integrator.py
 docs/source
 docs/make.bat
 docs/Makefile
+docs/docsenv
+.vscode
