@@ -25,7 +25,51 @@ import scipy.interpolate as sp_int
 
 
 class GeodesicEngine():
+    r"""This is the main symbolic tool within PyGRO to perform tensorial calculations
+    starting from the spacetime metric. The ``Metric`` object can be initialized in two separate ways:
 
+    .. rubric:: Interactive mode
+    
+    In this case the ``Metric`` has to be initialized without any additional argument.
+    Later the :py:func:`Metric.initialize_metric` method should be called without additional arguments in order to enter the interactive mode.
+    During this phase the user will be asked to input:
+
+    * The ``name`` of the spacetime.
+    * The symbolic ``coordinates`` in which the metric is expressed.
+    * The symbolic expression of the spacetime metric which can be either expressed as a line elemnt :math:`ds^2 = g_{\mu\nu}dx^\mu dx^\nu` or as the single components :math:`g_{\mu\nu}` of the metric tensor.
+    * The symbolix expression of ``transformation functions`` to pseudo-cartesian coordinates which can be useful to :doc:`visualize`.
+
+    After the insertion of all the required information the metric is initialized.
+
+    .. rubric:: Functional mode
+
+    In this case the ``Metric`` object is initialized without interactive input by the user. The arguments to build the metric can be either passed to the ``Metric`` constructor upon class initialization,
+    
+    >>> spacetime_metric = pygro.Metric(**kwargs)
+
+    or as arguments to the  :py:func:`Metric.initialize_metric` method:
+
+    >>> spacetime_metric = pygro.Metric()
+    >>> spacetime_metric.initialize_metric(**kwargs)
+
+    The ``**kwargs`` that can be passed to initialize a ``Metric`` object are the following:
+
+    :param name: The name of the metric to initialize.
+    :type name: str
+    :param coordinates: Four-dimensional list containing the symbolic expression of the space-time coordinates in which the `line_element` argument is written.
+    :type coordinates: list of str
+    :param line_element: A string containing the symbolic expression of the line element (that will be parsed using `sympy`) expressed in the space-time coordinates defined in the `coordinates` argument.
+    :type line_element: str
+
+    .. note::
+        Test
+    
+    After successful initialization, the ``Metric`` instance has the following attributes:
+
+    :ivar g: The symbolic representation of the metric tensor. It is a :math:`4\times4` ``sympy.Matrix`` object.
+    :type g: sympy.Matric
+
+    """
     def __init__(self, metric, verbose = True, integrator = "dp45"):
 
         self.link_metrics(metric, verbose)

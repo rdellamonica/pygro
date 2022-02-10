@@ -25,6 +25,51 @@ def parse_expr(expr):
     return sp.parse_expr(expr)
 
 class Metric():
+    r"""This is the main symbolic tool within PyGRO to perform tensorial calculations
+    starting from the spacetime metric. The ``Metric`` object can be initialized in two separate ways:
+
+    .. rubric:: Interactive mode
+    
+    In this case the ``Metric`` has to be initialized without any additional argument.
+    Later the :py:func:`Metric.initialize_metric` method should be called without additional arguments in order to enter the interactive mode.
+    During this phase the user will be asked to input:
+
+    * The ``name`` of the spacetime.
+    * The symbolic ``coordinates`` in which the metric is expressed.
+    * The symbolic expression of the spacetime metric which can be either expressed as a line elemnt :math:`ds^2 = g_{\mu\nu}dx^\mu dx^\nu` or as the single components :math:`g_{\mu\nu}` of the metric tensor.
+    * The symbolix expression of ``transformation functions`` to pseudo-cartesian coordinates which can be useful to :doc:`visualize`.
+
+    After the insertion of all the required information the metric is initialized.
+
+    .. rubric:: Functional mode
+
+    In this case the ``Metric`` object is initialized without interactive input by the user. The arguments to build the metric can be either passed to the ``Metric`` constructor upon class initialization,
+    
+    >>> spacetime_metric = pygro.Metric(**kwargs)
+
+    or as arguments to the  :py:func:`Metric.initialize_metric` method:
+
+    >>> spacetime_metric = pygro.Metric()
+    >>> spacetime_metric.initialize_metric(**kwargs)
+
+    The ``**kwargs`` that can be passed to initialize a ``Metric`` object are the following:
+
+    :param name: The name of the metric to initialize.
+    :type name: str
+    :param coordinates: Four-dimensional list containing the symbolic expression of the space-time coordinates in which the `line_element` argument is written.
+    :type coordinates: list of str
+    :param line_element: A string containing the symbolic expression of the line element (that will be parsed using `sympy`) expressed in the space-time coordinates defined in the `coordinates` argument.
+    :type line_element: str
+
+    .. note::
+        Test
+    
+    After successful initialization, the ``Metric`` instance has the following attributes:
+
+    :ivar g: The symbolic representation of the metric tensor. It is a :math:`4\times4` ``sympy.Matrix`` object.
+    :type g: sympy.Matric
+
+    """
     def __init__(self, **kwargs):
         self.initialized = 0
         self.initialized_metric = 0
@@ -36,6 +81,12 @@ class Metric():
             self.initialize_metric(**kwargs)
     
     def initialize_metric(self, **kwargs):
+        """Initializes the `Metric` either in *Interactive* or *Functional* mode. 
+
+        :param \**kwargs:
+            to pass only to access *Functional* mode. In this case, required parameters are ``name``, ``coordinates`` and ``line_element``,
+            but additional parameters can and *must* be passed on occasions (see :doc:`create_metric` to see examples). 
+        """
 
         self.x = []
         self.dx = []
@@ -324,6 +375,11 @@ class Metric():
         print("The metric_engine has been initialized.")
 
     def save_metric(self, filename):
+        r"""Saves the metric into a *.metric* file which can later be loaded with the :py:func:`Metric.load_metric` method.
+
+        :param filename: The name of the *.metric* file in which to save the metric.
+        :type filename: str
+        """
         if self.initialized:
             with open(filename, "w+") as file:
                 output = {}
@@ -360,7 +416,11 @@ class Metric():
             print("Initialize (initialize_metric) or load (load_metric) a metric before saving.")
     
     def load_metric(self, filename, verbose = True, **params):
+        r"""Loads the metric from a *.metric* file which has been saved through the :py:func:`Metric.save_metric` method.
 
+        :param filename: The name of the *.metric* file from which to load the metric.
+        :type filename: str
+        """
         f = open(filename, "r")
 
         load = json.load(f)
@@ -510,7 +570,17 @@ class Metric():
         if verbose:
             print("The metric_engine has been initialized.")
 
+<<<<<<< HEAD
     def add_parameter(self, symbol, value = None):
+=======
+    def add_parameter(self, symbol):
+        r"""Adds a parameter to the `Metric.parameters` dictionary.
+        Default is kind `{"kind": "constant", "value": None, "symbolic": sympy.parse_expr(symbol)}`
+
+        :param symbol: The symbolic representative inside the metric of the new parameter
+        :type symbol: str
+        """
+>>>>>>> 82390d0e78b4ec3a1fc1fe78fbd9e01f3cbf5561
         if self.initialized:
             self.parameters[symbol] = {}
             self.parameters[symbol]['symbol'] = symbol
@@ -536,6 +606,14 @@ class Metric():
             print("Initialize (initialize_metric) or load (load_metric) a metric before adding parameters.")
     
     def set_expression_to_parameter(self, param, expr_str):
+        r"""Selects the ``param`` element from the ``metric.parameters`` dictionary, sets its kind to ``"expr"`` and assignes to it a value which is the sybolic parsed
+        espresion in the `expr_str` argument.
+        
+        :param param: The symbolic name of the parameter to modify.
+        :type param: str
+        :param expr_str: The symbolic expresison to assign to this parameter.
+        :type expr_str: str
+        """
         if self.initialized:
             if param in self.parameters:
                 self.parameters[str(param)]['value'] = sp.parse_expr(expr_str)
@@ -564,6 +642,22 @@ class Metric():
 
 
     def set_function_to_parameter(self, param, function, **derivatives):
+        r"""Selects the ``param`` element from the ``metric.parameters`` dictionary, sets its kind to ``"py"`` and assignes as its value
+        the ``function`` method that is passed as argument. 
+
+        .. note::
+            The ``function`` argument **must** be a method which admits four floats and returns a single float as results.
+            However, in the ``line_element`` argument, upon initialization of the ``Metric``, only explicit coordinate dependences of the
+            functional parameter must be indicated. Moreover, for each of the explicit coordinate dependence of the function its derivative should also
+            be passed in argument
+
+            :Example:
+        
+        :param param: The symbolic name of the parameter to modify.
+        :type param: str
+        :param expr_str: The symbolic expresison to assign to this parameter.
+        :type expr_str: str
+        """
         if self.initialized:
             
             args = list(self.parameters[str(param)]['symbolic'].args)
@@ -694,6 +788,8 @@ class Metric():
         return lambdify([*self.x, *self.get_parameters_symb()], self.subs_functions(self.g))(*x, *self.get_parameters_val())
 
     def Christoffel(self, mu, nu, rho):
+        """The mu-nu-rho Christoffel symbol, :math:`\Gamma^{\mu}_{\nu\rho}` related to the metric tensor.
+        """
         ch = 0
         for sigma in range(4):
             ch += self.g_inv[rho,sigma]*(self.g[sigma, nu].diff(self.x[mu])+self.g[mu, sigma].diff(self.x[nu])-self.g[mu, nu].diff(self.x[sigma]))/2
