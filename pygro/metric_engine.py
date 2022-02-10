@@ -570,17 +570,7 @@ class Metric():
         if verbose:
             print("The metric_engine has been initialized.")
 
-<<<<<<< HEAD
     def add_parameter(self, symbol, value = None):
-=======
-    def add_parameter(self, symbol):
-        r"""Adds a parameter to the `Metric.parameters` dictionary.
-        Default is kind `{"kind": "constant", "value": None, "symbolic": sympy.parse_expr(symbol)}`
-
-        :param symbol: The symbolic representative inside the metric of the new parameter
-        :type symbol: str
-        """
->>>>>>> 82390d0e78b4ec3a1fc1fe78fbd9e01f3cbf5561
         if self.initialized:
             self.parameters[symbol] = {}
             self.parameters[symbol]['symbol'] = symbol
