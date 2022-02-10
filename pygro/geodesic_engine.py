@@ -32,7 +32,7 @@ class GeodesicEngine():
         self.integrator = integrator
         self.wrapper = None
     
-    def link_metrics(self, g, verbose):
+    def link_metrics(self, g, verbose = "True", backend = "autowrap"):
         if verbose:
             print("Linking {} to the Geodesic Engine".format(g.name))
 
@@ -46,7 +46,7 @@ class GeodesicEngine():
         self.metric.geodesic_engine_linked = True
         self.metric.geodesic_engine = self
 
-        if len(self.metric.get_parameters_functions()) > 0:
+        if (backend == "lambdify") or len(self.metric.get_parameters_functions()) > 0:
             self.wrapper = "lambdify"
         else:
             self.wrapper = "autowrap"

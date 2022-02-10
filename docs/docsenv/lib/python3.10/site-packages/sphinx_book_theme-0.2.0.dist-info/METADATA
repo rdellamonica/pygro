@@ -1,0 +1,106 @@
+Metadata-Version: 2.1
+Name: sphinx-book-theme
+Version: 0.2.0
+Summary: A clean book theme for scientific explanations and documentation with Sphinx
+Home-page: https://sphinx-book-theme.readthedocs.org/
+Author: Executable Books
+Author-email: executablebooks@gmail.com
+License: BSD
+Project-URL: Documentation, https://sphinx-book-theme.readthedocs.org/
+Project-URL: Funding, https://executablebooks.org
+Project-URL: Source, https://github.com/executablebooks/sphinx-book-theme/
+Project-URL: Tracker, https://github.com/executablebooks/sphinx-book-theme/issues
+Keywords: reproducible science jupyter books sphinx scholarship notebook
+Platform: UNKNOWN
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: beautifulsoup4 (<5,>=4.6.1)
+Requires-Dist: docutils (<0.17,>=0.15)
+Requires-Dist: pydata-sphinx-theme (~=0.7.2)
+Requires-Dist: pyyaml
+Requires-Dist: sphinx (<5,>=3)
+Requires-Dist: importlib-resources (<3.5,>=3.0) ; python_version < "3.7"
+Provides-Extra: code_style
+Requires-Dist: pre-commit (~=2.7.0) ; extra == 'code_style'
+Provides-Extra: live-dev
+Requires-Dist: sphinx-autobuild ; extra == 'live-dev'
+Requires-Dist: web-compile (~=0.2.1) ; extra == 'live-dev'
+Provides-Extra: sphinx
+Requires-Dist: ablog (~=0.10.13) ; extra == 'sphinx'
+Requires-Dist: ipywidgets ; extra == 'sphinx'
+Requires-Dist: folium ; extra == 'sphinx'
+Requires-Dist: numpy ; extra == 'sphinx'
+Requires-Dist: matplotlib ; extra == 'sphinx'
+Requires-Dist: myst-nb (~=0.13) ; extra == 'sphinx'
+Requires-Dist: nbclient ; extra == 'sphinx'
+Requires-Dist: pandas ; extra == 'sphinx'
+Requires-Dist: plotly ; extra == 'sphinx'
+Requires-Dist: sphinx (~=4.0) ; extra == 'sphinx'
+Requires-Dist: sphinx-design ; extra == 'sphinx'
+Requires-Dist: sphinx-copybutton ; extra == 'sphinx'
+Requires-Dist: sphinx-togglebutton (>=0.2.1) ; extra == 'sphinx'
+Requires-Dist: sphinx-thebe ; extra == 'sphinx'
+Requires-Dist: sphinxcontrib-bibtex (~=2.2) ; extra == 'sphinx'
+Requires-Dist: sphinxext-opengraph ; extra == 'sphinx'
+Provides-Extra: testing
+Requires-Dist: coverage ; extra == 'testing'
+Requires-Dist: myst-nb (~=0.13) ; extra == 'testing'
+Requires-Dist: pytest (~=6.0.1) ; extra == 'testing'
+Requires-Dist: pytest-cov ; extra == 'testing'
+Requires-Dist: pytest-regressions (~=2.0.1) ; extra == 'testing'
+Requires-Dist: sphinx-thebe ; extra == 'testing'
+
+# sphinx-book-theme
+
+[![codecov][codecov-badge]][codecov-link] [![Documentation Status][rtd-badge]][rtd-link] [![PyPI][pypi-badge]][pypi-link]
+
+**An interactive book theme for Sphinx**.
+
+This is a lightweight Sphinx theme designed to mimic the look-and-feel of an
+interactive book. It has the following primary features:
+
+* **Bootstrap 4**
+  for visual elements and functionality.
+* **Flexible content layout** that is inspired by beautiful online books,
+  such as [the Edward Tufte CSS guide](https://edwardtufte.github.io/tufte-css/)
+* **Visual classes designed for Jupyter Notebooks**. Cell inputs, outputs,
+  and interactive functionality are all supported.
+* **Launch buttons for online interactivity**. For pages that are built with
+  computational material, connect your site to an online BinderHub for interactive content.
+
+## Get started
+
+To get started with `sphinx-book-theme`, first install it with `pip`:
+
+```
+pip install sphinx-book-theme
+```
+
+then, activate the theme in your Sphinx configuration (`conf.py`):
+
+```
+...
+html_theme = "sphinx_book_theme"
+...
+```
+
+This will activate the Sphinx Book Theme for your documentation. Note that you may
+need to change your `html_theme_options` configuration depending on your previous
+theme. See the pages to the left for information about what you can configure with
+`sphinx-book-theme`.
+
+## Documentation
+
+See [the Sphinx Book Theme documentation](https://sphinx-book-theme.readthedocs.io/en/latest/)
+for more information.
+
+[codecov-badge]: https://codecov.io/gh/executablebooks/sphinx-book-theme/branch/master/graph/badge.svg
+[codecov-link]: https://codecov.io/gh/executablebooks/sphinx-book-theme
+
+[rtd-badge]: https://readthedocs.org/projects/sphinx-book-theme/badge/?version=latest
+[rtd-link]: https://sphinx-book-theme.readthedocs.io/en/latest/?badge=latest
+
+[pypi-badge]: https://img.shields.io/pypi/v/sphinx-book-theme.svg
+[pypi-link]: https://pypi.org/project/sphinx-book-theme
+
+

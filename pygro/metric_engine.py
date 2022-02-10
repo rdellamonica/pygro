@@ -510,13 +510,16 @@ class Metric():
         if verbose:
             print("The metric_engine has been initialized.")
 
-    def add_parameter(self, symbol):
+    def add_parameter(self, symbol, value = None):
         if self.initialized:
             self.parameters[symbol] = {}
             self.parameters[symbol]['symbol'] = symbol
             self.parameters[symbol]['symbolic'] = sp.parse_expr(symbol)
-            self.parameters[symbol]['value'] = None
-            self.parameters[symbol]['kind'] = None
+            self.parameters[symbol]['value'] = value
+            if value != None:
+                self.parameters[symbol]['kind'] = "constant"
+            else:
+                self.parameters[symbol]['kind'] = None
         else:
             print("Initialize (initialize_metric) or load (load_metric) a metric before adding parameters.")
     
@@ -578,6 +581,8 @@ class Metric():
         else:
             print("Initialize (initialize_metric) or load (load_metric) a metric before adding parameters.")
 
+    # Getters
+
     def get_parameters_symb(self):
         return [self.parameters[constant]['symbolic'] for constant in self.parameters if self.parameters[constant]['kind'] == "constant"]
 
@@ -592,6 +597,16 @@ class Metric():
 
     def get_parameters_functions(self):
         return {self.parameters[constant]['symbol']: self.parameters[constant] for constant in self.parameters if self.parameters[constant]["kind"] == "pyfunc"}
+    
+    def get_constant(self, parameter):
+        """Returns the value of the constant ``parameter``, if defined.
+        """
+        if self.parameters[parameter]["kind"] == "constant":
+            return self.parameters[parameter]["value"]
+        else:
+            raise TypeError(f"Unknown constant {parameter}")
+
+    # Auxiliary functions
 
     def subs_functions(self, expr):
         functions = self.get_parameters_expressions()

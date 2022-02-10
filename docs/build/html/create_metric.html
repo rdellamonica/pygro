@@ -2,7 +2,7 @@
 <html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Visualize the results" href="visualize.html" /><link rel="prev" title="Installation" href="installation.html" />
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Intagrate a geodesic in PyGRO" href="integrate_geodesic.html" /><link rel="prev" title="Installation" href="installation.html" />
 
     <meta name="generator" content="sphinx-4.4.0, furo 2022.01.02"/>
         <title>Define your own-spacetime - PyGRO 0.0.10 documentation</title>
@@ -160,11 +160,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Define your own-spacetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="integrate_geodesic.html">Intagrate a geodesic in PyGRO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualize.html">Visualize the results</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="metricengine.html">The <cite>metric_engine</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="metricengine.html"><cite>Metric()</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="geodesicengine.html"><cite>GeodesicEngine()</cite></a></li>
 </ul>
 
 </div>
@@ -201,7 +203,7 @@ When expressed in Schwarzschild coordinates <span class="math notranslate nohigh
 <p>where we have assumed that <span class="math notranslate nohighlight">\(G=c=1\)</span> and, hence, the radial coordinate and spatial distances are expressed in units of gravitational radii <span class="math notranslate nohighlight">\(r_g = GM/c^2\)</span>.</p>
 <div class="section" id="purely-symbolic-approach">
 <h2>Purely symbolic approach<a class="headerlink" href="#purely-symbolic-approach" title="Permalink to this headline">¶</a></h2>
-<p>In this approach, the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> object will be generated starting from a line element (<code class="docutils literal notranslate"><span class="pre">str</span></code>) which is a function that depends <strong>explicitly</strong> only on the space-time coordinates
+<p id="symb">In this approach, the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> object will be generated starting from a line element (<code class="docutils literal notranslate"><span class="pre">str</span></code>) which is a function that depends <strong>explicitly</strong> only on the space-time coordinates
 and on a given number of <code class="docutils literal notranslate"><span class="pre">constant</span></code> parameters. This means that no <em>auxiliary</em> function of the space-time coordinates is introduced, as will be done in the <a class="reference internal" href="#aux-expr"><span class="std std-ref">Auxiliary expressions approach</span></a>
 or <a class="reference internal" href="#aux-func"><span class="std std-ref">Auxiliary functions approach</span></a>.
 In order to initialize the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a>, we use the <em>functional approach</em> for its initialization (see the documentation for the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> object).
@@ -259,11 +261,11 @@ The metric_engine has been initialized.
 \[\ddot{x}^\mu = \Gamma^{\mu}_{\nu\rho}\dot{x}^\nu\dot{x}^\rho\]</div></div>
 </dd>
 </dl>
-<p>where, <span class="math notranslate nohighlight">\(\Gamma^{\mu}_{\nu\rho}\)</span> are the Christoffel symbols accessible via <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric.Christoffel" title="pygro.metric_engine.Metric.Christoffel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Christoffel()</span></code></a>.
+<p>where, <span class="math notranslate nohighlight">\(\Gamma^{\mu}_{\nu\rho}\)</span> are the Christoffel symbols accessible via <code class="xref py py-meth docutils literal notranslate"><span class="pre">Christoffel()</span></code>.
 These four equations are stored into a list accessible via <code class="xref py py-attr docutils literal notranslate"><span class="pre">Metric.eq_u</span></code>.</p>
 </li>
 <li><dl>
-<dt>Two symbolic functions to express the <span class="math notranslate nohighlight">\(\dot{x}^0\)</span> component of the four velocity starting from the normalization conditions:</dt><dd><div class="math-wrapper"><div class="math notranslate nohighlight">
+<dt>Two symbolic algebraic expressions for the <span class="math notranslate nohighlight">\(\dot{x}^0\)</span> component of the four velocity derived from the normalization conditions:</dt><dd><div class="math-wrapper"><div class="math notranslate nohighlight">
 \[\begin{split}g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu = \left\{\begin{array}{ll}
 &amp;-1&amp;\qquad\textrm{time-like curve}\\
 &amp;0&amp;\qquad\textrm{null curve}\\
@@ -271,17 +273,97 @@ These four equations are stored into a list accessible via <code class="xref py 
 </dd>
 </dl>
 <p>These are particularly useful when one needs to retrieve the time-like component of the four-velocity of a massive particle (or, equivalently, the time-like component of a photon wave-vector)
-knowing the spatial components of the velocity (which is usually the case).</p>
+knowing the spatial components of the velocity (which is usually the case). See <a class="reference internal" href="integrate_geodesic.html"><span class="doc">Intagrate a geodesic in PyGRO</span></a> for a working example.</p>
 </li>
 </ul>
 </div>
 <div class="section" id="auxiliary-expressions-approach">
 <h2>Auxiliary expressions approach<a class="headerlink" href="#auxiliary-expressions-approach" title="Permalink to this headline">¶</a></h2>
-<p id="aux-expr">askfdmaslkfnaslkjfnasknflkas</p>
+<p id="aux-expr">In this section we review a different symbolic approach to generate a <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> object which, differently than
+before, relies on an auxiliary function which has a closed analytical form. Suppose, for the sake of simplicity, that one desires to generate
+the same Schwarzschild metric that has been computed in the <a class="reference internal" href="#symb"><span class="std std-ref">Purely symbolic approach</span></a>, but instead of defining it purely symbolically,
+one wants to write it using the following expression</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[ds^2 = -A(r)dt^2+\frac{1}{A(r)}dr^2+r^2(d\theta^2+\sin^2\theta d\phi^2),\]</div></div>
+<p>where:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[A(r) = \left(1-\frac{2M}{r}\right).\]</div></div>
+<p>Clearly the new expression is formally equivalent to that in the previous section and one might think that this reformulation is not useful. However, for much more complicated metrics, having the possibility to inject into the metric auxiliary functions whose actual analytic expression is indicated elsewhere can be really useful and allow for neater formulation of the problem. For this reason, in PyGRO a functionality to accept auxiliary functions as part of the metric expression has been introduced. It can be easily accessed by specifying the auxiliary function and its dependency from the spacetime coordinates (e.g. <code class="docutils literal notranslate"><span class="pre">A(r)</span></code> in our case) in the <code class="docutils literal notranslate"><span class="pre">line_element</span></code> and later passing as additional keyword argument, whose name is the functional part of the function, to the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> constructor a <code class="docutils literal notranslate"><span class="pre">str</span></code> containing the symbolic expression of the function (e.g. <code class="docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">A</span> <span class="pre">=</span> <span class="pre">"1-2*M/r")</span></code>). Again, any constant parameter that is used in the auxiliary expression must be specified as additional keyword argument (e.g. <code class="docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">M</span> <span class="pre">=</span> <span class="pre">1)</span></code>).</p>
+<p>Here is what a <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> initialization would look like in this case:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">"Schwarzschild spacetime"</span>
+<span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"t"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="s2">"theta"</span><span class="p">,</span> <span class="s2">"phi"</span><span class="p">]</span>
+
+<span class="n">transform_functions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"t"</span><span class="p">,</span>
+    <span class="s2">"r*sin(theta)*cos(phi)"</span><span class="p">,</span>
+    <span class="s2">"r*sin(theta)*sin(phi)"</span><span class="p">,</span>
+    <span class="s2">"r*cos(theta)"</span>
+<span class="p">]</span>
+
+<span class="n">line_element</span> <span class="o">=</span> <span class="s2">"-A(r)*dt**2+1/A(r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)"</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="s2">"1-2*M/r"</span>
+
+<span class="n">metric</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Metric</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span>
+    <span class="n">coordinates</span> <span class="o">=</span> <span class="n">coordinates</span><span class="p">,</span>
+    <span class="n">line_element</span> <span class="o">=</span> <span class="n">line_element</span><span class="p">,</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">transform_functions</span><span class="p">,</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="p">,</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Auxiliary expression can also rely on <em>other</em> auxiliary expressions, as long as on metric initialization they are all properly passed to the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> constructor. For example, the previous metric could also be defined as <code class="docutils literal notranslate"><span class="pre">line_element</span> <span class="pre">=</span> <span class="pre">"-A(r)*dt**2+B(r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)"</span></code>, provided that the initialization is done with <code class="docutils literal notranslate"><span class="pre">metric</span> <span class="pre">=</span> <span class="pre">pygro.Metric(...,</span> <span class="pre">line_element</span> <span class="pre">=</span> <span class="pre">line_element,</span> <span class="pre">transform</span> <span class="pre">=</span> <span class="pre">transform_functions,</span> <span class="pre">A</span> <span class="pre">=</span> <span class="pre">"1-2*M/r",</span> <span class="pre">B</span> <span class="pre">=</span> <span class="pre">"1/A(r)",</span> <span class="pre">M</span> <span class="pre">=</span> <span class="pre">1)</span></code>.</p>
+</div>
 </div>
 <div class="section" id="auxiliary-functions-approach">
 <h2>Auxiliary functions approach<a class="headerlink" href="#auxiliary-functions-approach" title="Permalink to this headline">¶</a></h2>
-<p id="aux-func">asòfjaskfjaslkfjlk</p>
+<p id="aux-func">Finally, we have a last approach for the metric initialization, which relies on auxiliary <code class="docutils literal notranslate"><span class="pre">pyfunc</span></code> methods as parts of the line element. This approach is particularly useful when we wish to introduce in the metric functions of the coordinates that do not have an analytic expression and rely on, for example, the solution of an integral or on an interpolated/tabulated function which is not available within the <code class="docutils literal notranslate"><span class="pre">sympy</span></code> module. This approach allows to use any function defined in the <code class="docutils literal notranslate"><span class="pre">__main__</span></code> body of your script as auxiliary function.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>We suggest using the <em>Auxiliary functions approach</em> only when strictly dictated by the problem you want to solve, i.e. only if it is necessary to rely on an external function that cannot be expressed symbolically with an analytic expression. This is because PyGRO reaches its best performances when integrating geodesic equations expressed in a completely symbolic way. More specifically, upon linking of a <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> element to a <a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GeodesicEngine()</span></code></a>, PyGRO makes use of the built-in <code class="docutils literal notranslate"><span class="pre">sympy</span></code> method <code class="docutils literal notranslate"><span class="pre">autowrap</span></code>, which converts the call to a specific symbolic expression into a C-precompiled binary executable. This <strong>drastically</strong> improves the integration performances.</p>
+</div>
+<p>In order to correctly initialize a metric using the <em>Auxiliary functions approach</em> the user must take into account the fact that Christoffel symbols and, hence, geodesic equations are computed from the derivatives of the metric coefficients. This means that, while in the purely symbolic approaches the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> deals autonomously with the computation of such derivatives, in the auxiliary functions approach the user should not only pass to the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> constructor the <code class="docutils literal notranslate"><span class="pre">pyfunc</span></code> corresponding to the auxiliary functions reported in the line element, but also its derivatives with respect to all the coordinates on which it explicitly depends. These must be passed as keyword arguments to the metric constructor corresponding to the following syntax:</p>
+<p>&gt; <code class="docutils literal notranslate"><span class="pre">"A(r)"</span> <span class="pre">-&gt;</span> <span class="pre">Metric(...,</span> <span class="pre">A</span> <span class="pre">=</span> <span class="pre">[...],</span> <span class="pre">dAdr</span> <span class="pre">=</span> <span class="pre">[...])</span></code></p>
+<p>It is important to notice that the <code class="docutils literal notranslate"><span class="pre">pyfunc</span></code> to pass to the metric must be defined as a method depending on four arguments, one for each coordinate, that has to be ordered exactly as the coordinates of the metric.</p>
+<p>Here, for example, we initialize the same Schwarzschild metric of the previous examples but using the auxiliary functions approach:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">"Schwarzschild spacetime"</span>
+<span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"t"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="s2">"theta"</span><span class="p">,</span> <span class="s2">"phi"</span><span class="p">]</span>
+<span class="n">line_element</span> <span class="o">=</span> <span class="s2">"-A(r)*dt**2+1/A(r)*dr**2+r**2*(dtheta**2+dphi**2)"</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"t"</span><span class="p">,</span>
+    <span class="s2">"r*sin(theta)*cos(phi)"</span><span class="p">,</span>
+    <span class="s2">"r*sin(theta)*sin(phi)"</span><span class="p">,</span>
+    <span class="s2">"r*cos(theta)"</span>
+<span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">A</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="n">get_constant</span><span class="p">(</span><span class="s2">"M"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">M</span><span class="o">/</span><span class="n">r</span>
+
+<span class="k">def</span> <span class="nf">dAdr</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="n">get_constant</span><span class="p">(</span><span class="s2">"M"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">M</span><span class="o">/</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">metric</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Metric</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span>
+    <span class="n">line_element</span> <span class="o">=</span> <span class="n">line_element</span><span class="p">,</span>
+    <span class="n">coordinates</span> <span class="o">=</span> <span class="n">coordinates</span><span class="p">,</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="p">,</span>
+    <span class="n">dAdr</span> <span class="o">=</span> <span class="n">dAdr</span><span class="p">,</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+<span class="p">)</span>
+
+<span class="n">metric</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span><span class="s2">"M"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Notice how we have made use of the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric.get_constant" title="pygro.metric_engine.Metric.get_constant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_constant()</span></code></a> method to access the <cite>M</cite> parameter inside the metric. In particular, since now the symbolic expression of the line element does not contain any <span class="math notranslate nohighlight">\(M\)</span>, we had to manually add this parameter to the metric bi using the <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_parameter()</span></code> method. Using this approach, now we can link symbolic parameter of the metric to ones that we need to access from the auxiliary functions.</p>
+</div>
 </div>
 </div>
 
@@ -290,12 +372,12 @@ knowing the spatial components of the velocity (which is usually the case).</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="visualize.html">
+          <a class="next-page" href="integrate_geodesic.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Visualize the results</div>
+                <div class="title">Intagrate a geodesic in PyGRO</div>
               </div>
               <svg><use href="#svg-arrow-right"></use></svg>
             </a>
