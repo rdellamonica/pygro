@@ -23,7 +23,7 @@ copyright = '2022, Riccardo Della Monica'
 author = 'Riccardo Della Monica'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.10'
+release = '0.0.11'
 
 
 # -- General configuration ---------------------------------------------------
@@ -58,4 +58,7 @@ html_theme = "furo"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-html_logo = "_static/PyGROLogo.png"
+html_theme_options = {
+    "light_logo": "PyGROLogo.png",
+    "dark_logo": "PyGROLogo_dark.png",
+}

@@ -70,9 +70,9 @@ class GeodesicEngine():
     :type g: sympy.Matric
 
     """
-    def __init__(self, metric, verbose = True, integrator = "dp45"):
+    def __init__(self, metric, verbose = True, backend = "autowrap", integrator = "dp45"):
 
-        self.link_metrics(metric, verbose)
+        self.link_metrics(metric, verbose, backend)
         self.integrator = integrator
         self.wrapper = None
     
@@ -127,7 +127,7 @@ class GeodesicEngine():
     def stopping_criterion(self, *x):
         return True
 
-    def set_stopping_criterion(self, expr):
+    def set_stopping_criterion(self, expr, exit_str = "none"):
         expr_s = sp.parse_expr(expr)
         free_symbols = list(expr_s.free_symbols-set(self.metric.x))
         check = True
@@ -139,7 +139,7 @@ class GeodesicEngine():
             def f(*xu):
                 return stopping_criterion(*xu, *self.metric.get_parameters_val())
 
-            self.stopping_criterion = f
+            self.stopping_criterion = StoppingCriterion(f, exit_str)
         else:
             raise TypeError("Unkwnown symbol {}".format(str(symbol)))
         
@@ -159,7 +159,7 @@ class GeodesicEngine():
         if verbose:
             time_start = time.perf_counter()
 
-        tau, xu = integrator.integrate(0, tauf, np.array([*geo.initial_x, *geo.initial_u]), h)
+        tau, xu, exit = integrator.integrate(0, tauf, np.array([*geo.initial_x, *geo.initial_u]), h)
                 
         if verbose:
             time_elapsed = (time.perf_counter() - time_start)
@@ -168,6 +168,7 @@ class GeodesicEngine():
         geo.tau = tau
         geo.x = np.stack(xu[:,:4])
         geo.u = np.stack(xu[:,4:])
+        geo.exit = exit
 
         if interpolate == True:
             geo.x_int = sp_int.interp1d(geo.tau, geo.x, axis = 0, kind = "cubic")
@@ -175,3 +176,13 @@ class GeodesicEngine():
     
     def set_integrator(self, integrator):
         self.integrator = integrator
+    
+
+class StoppingCriterion:
+
+    def __init__(self, stopping_criterion, exit_str):
+        self.stopping_criterion = stopping_criterion
+        self.exit = exit_str
+    
+    def __call__(self, *geo):
+        return self.stopping_criterion(*geo)

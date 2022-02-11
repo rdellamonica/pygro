@@ -65,20 +65,30 @@ class CashKarp45():
         quit1 = self.quit1
         quit2 = self.quit2
 
-        while abs(x[-1]) <= abs(x_end) and self.stopping_criterion(*y[-1]):
+        try:
+            while abs(x[-1]) <= abs(x_end) and self.stopping_criterion(*y[-1]):
+                if self.verbose:
+                    print("{:.4f}".format(x[-1]), end= "\r")
+                next = self.next_step(x[-1], y[-1], h, twiddle1, twiddle2, quit1, quit2)
+                x.append(next[0])
+                y.append(next[1])
+                h = next[2]
+                twiddle1 = next[3]
+                twiddle2 = next[4]
+                quit1 = next[5]
+                quit2 = next[6]
+            
+            if not self.stopping_criterion(*y[-1]):
+                exit = self.stopping_criterion.exit
+            else:
+                exit = "done"
+        except KeyboardInterrupt:
             if self.verbose:
-                print("{:.4f}".format(x[-1]), end= "\r")
-            next = self.next_step(x[-1], y[-1], h, twiddle1, twiddle2, quit1, quit2)
-            x.append(next[0])
-            y.append(next[1])
-            h = next[2]
-            twiddle1 = next[3]
-            twiddle2 = next[4]
-            quit1 = next[5]
-            quit2 = next[6]
+                print("Integration stopped.")
+            exit = "stopped"
         
         if not self.interpolate:
-            return np.array(x), np.array(y)
+            return np.array(x), np.array(y), exit
         else:
             return sp_int.interp1d(np.array(x), np.array(y), kind = 'cubic')
 
@@ -232,16 +242,26 @@ class RungeKuttaFehlberg78():
 
         h = initial_step
 
-        while abs(x[-1]) <= abs(x_end) and self.stopping_criterion(*y[-1]):
+        try:
+            while abs(x[-1]) <= abs(x_end) and self.stopping_criterion(*y[-1]):
+                if self.verbose:
+                    print("{:.4f}".format(x[-1]), end= "\r")
+                next = self.next_step(x[-1], y[-1], h)
+                x.append(next[0])
+                y.append(next[1])
+                h = next[2]
+            
+            if not self.stopping_criterion(*y[-1]):
+                exit = self.stopping_criterion.exit
+            else:
+                exit = "done"
+        except KeyboardInterrupt:
             if self.verbose:
-                print("{:.4f}".format(x[-1]), end= "\r")
-            next = self.next_step(x[-1], y[-1], h)
-            x.append(next[0])
-            y.append(next[1])
-            h = next[2]
+                print("Integration stopped.")
+            exit = "stopped"
         
         if not self.interpolate:
-            return np.array(x), np.array(y)
+            return np.array(x), np.array(y), exit
         else:
             return sp_int.interp1d(np.array(x), np.array(y), kind = 'cubic')
 
@@ -313,16 +333,26 @@ class RungeKuttaFehlberg45():
 
         h = initial_step
 
-        while abs(x[-1]) <= abs(x_end) and self.stopping_criterion(*y[-1]):
+        try:
+            while abs(x[-1]) <= abs(x_end) and self.stopping_criterion(*y[-1]):
+                if self.verbose:
+                    print("{:.4f}".format(x[-1]), end= "\r")
+                next = self.next_step(x[-1], y[-1], h)
+                x.append(next[0])
+                y.append(next[1])
+                h = next[2]
+            
+            if not self.stopping_criterion(*y[-1]):
+                exit = self.stopping_criterion.exit
+            else:
+                exit = "done"
+        except KeyboardInterrupt:
             if self.verbose:
-                print("{:.4f}".format(x[-1]), end= "\r")
-            next = self.next_step(x[-1], y[-1], h)
-            x.append(next[0])
-            y.append(next[1])
-            h = next[2]
-        
+                print("Integration stopped.")
+            exit = "stopped"
+
         if not self.interpolate:
-            return np.array(x), np.array(y)
+            return np.array(x), np.array(y), exit
         else:
             return sp_int.interp1d(np.array(x), np.array(y), kind = 'cubic')
 
@@ -398,16 +428,26 @@ class DormandPrince45():
 
         h = initial_step
 
-        while abs(x[-1]) <= abs(x_end) and self.stopping_criterion(*y[-1]):
+        try:
+            while abs(x[-1]) <= abs(x_end) and self.stopping_criterion(*y[-1]):
+                if self.verbose:
+                    print("{:.4f}".format(x[-1]), end= "\r")
+                next = self.next_step(x[-1], y[-1], h)
+                x.append(next[0])
+                y.append(next[1])
+                h = next[2]
+
+            if not self.stopping_criterion(*y[-1]):
+                exit = self.stopping_criterion.exit
+            else:
+                exit = "done"
+        except KeyboardInterrupt:
             if self.verbose:
-                print("{:.4f}".format(x[-1]), end= "\r")
-            next = self.next_step(x[-1], y[-1], h)
-            x.append(next[0])
-            y.append(next[1])
-            h = next[2]
+                print("Integration stopped.")
+            exit = "stopped"
         
         if not self.interpolate:
-            return np.array(x), np.array(y)
+            return np.array(x), np.array(y), exit
         else:
             return sp_int.interp1d(np.array(x), np.array(y), kind = 'cubic')
 

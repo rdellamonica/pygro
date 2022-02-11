@@ -15,7 +15,7 @@ pip install pygro
 or by cloning [PyGRO GitHub repository](https://github.com/rdellamonica/pigro/tree/master).
 
 ## Documentation
-The complete documentation for PyGRO is available on [docs](https://rdellamonica.github.io/pygro/build/html/create_metric.html) (still work in progress).
+The complete documentation for PyGRO is available on [docs](https://rdellamonica.github.io/pygro/build/html/index.html) (still work in progress).
 
 ## Copyright
 

@@ -12,7 +12,7 @@ PyGRO [pronounced /'pi.gro/, from the italian **pigro**: *lazy*] is a Python lib
 Check out the :doc:`installation` section for getting started.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Tutorials:
 
    installation
@@ -28,6 +28,8 @@ Check out the :doc:`installation` section for getting started.
 
    metricengine
    geodesicengine
+   geodesic
+   integrators
 
 
 

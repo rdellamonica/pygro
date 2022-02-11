@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Geodesic()" href="geodesic.html" /><link rel="prev" title="Metric()" href="metricengine.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Geodesic()" href="geodesic.html" />
 
     <meta name="generator" content="sphinx-4.4.0, furo 2022.01.02"/>
-        <title>GeodesicEngine() - PyGRO 0.0.11 documentation</title>
+        <title>Integrators - PyGRO 0.0.11 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=df49af52631e7917044a9c21a57f7b83170a6dd0" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=fade93df149f7c5fedb3ff897f799dc7d283b420" />
@@ -172,8 +172,9 @@
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="metricengine.html"><cite>Metric()</cite></a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#"><cite>GeodesicEngine()</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="geodesicengine.html"><cite>GeodesicEngine()</cite></a></li>
 <li class="toctree-l1"><a class="reference internal" href="geodesic.html"><cite>Geodesic()</cite></a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Integrators</a></li>
 </ul>
 
 </div>
@@ -200,56 +201,8 @@
           </label>
         </div>
         <article role="main">
-          <section id="geodesicengine">
-<h1><cite>GeodesicEngine()</cite><a class="headerlink" href="#geodesicengine" title="Permalink to this headline">¶</a></h1>
-<p>The main object in PyGRO is the <cite>metric_engine</cite> object which is used to describe the spacetime metric.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="pygro.geodesic_engine.GeodesicEngine">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygro.geodesic_engine.</span></span><span class="sig-name descname"><span class="pre">GeodesicEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'autowrap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">integrator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dp45'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygro.geodesic_engine.GeodesicEngine" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is the main symbolic tool within PyGRO to perform tensorial calculations
-starting from the spacetime metric. The <code class="docutils literal notranslate"><span class="pre">Metric</span></code> object can be initialized in two separate ways:</p>
-<p class="rubric">Interactive mode</p>
-<p>In this case the <code class="docutils literal notranslate"><span class="pre">Metric</span></code> has to be initialized without any additional argument.
-Later the <code class="xref py py-func docutils literal notranslate"><span class="pre">Metric.initialize_metric()</span></code> method should be called without additional arguments in order to enter the interactive mode.
-During this phase the user will be asked to input:</p>
-<ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">name</span></code> of the spacetime.</p></li>
-<li><p>The symbolic <code class="docutils literal notranslate"><span class="pre">coordinates</span></code> in which the metric is expressed.</p></li>
-<li><p>The symbolic expression of the spacetime metric which can be either expressed as a line elemnt <span class="math notranslate nohighlight">\(ds^2 = g_{\mu\nu}dx^\mu dx^\nu\)</span> or as the single components <span class="math notranslate nohighlight">\(g_{\mu\nu}\)</span> of the metric tensor.</p></li>
-<li><p>The symbolix expression of <code class="docutils literal notranslate"><span class="pre">transformation</span> <span class="pre">functions</span></code> to pseudo-cartesian coordinates which can be useful to <a class="reference internal" href="visualize.html"><span class="doc">Visualize the results</span></a>.</p></li>
-</ul>
-<p>After the insertion of all the required information the metric is initialized.</p>
-<p class="rubric">Functional mode</p>
-<p>In this case the <code class="docutils literal notranslate"><span class="pre">Metric</span></code> object is initialized without interactive input by the user. The arguments to build the metric can be either passed to the <code class="docutils literal notranslate"><span class="pre">Metric</span></code> constructor upon class initialization,</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spacetime_metric</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Metric</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>or as arguments to the  <code class="xref py py-func docutils literal notranslate"><span class="pre">Metric.initialize_metric()</span></code> method:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spacetime_metric</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Metric</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">spacetime_metric</span><span class="o">.</span><span class="n">initialize_metric</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> that can be passed to initialize a <code class="docutils literal notranslate"><span class="pre">Metric</span></code> object are the following:</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str</em>) – The name of the metric to initialize.</p></li>
-<li><p><strong>coordinates</strong> (<em>list of str</em>) – Four-dimensional list containing the symbolic expression of the space-time coordinates in which the <cite>line_element</cite> argument is written.</p></li>
-<li><p><strong>line_element</strong> (<em>str</em>) – A string containing the symbolic expression of the line element (that will be parsed using <cite>sympy</cite>) expressed in the space-time coordinates defined in the <cite>coordinates</cite> argument.</p></li>
-</ul>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Test</p>
-</div>
-<p>After successful initialization, the <code class="docutils literal notranslate"><span class="pre">Metric</span></code> instance has the following attributes:</p>
-<dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><strong>g</strong> – The symbolic representation of the metric tensor. It is a <span class="math notranslate nohighlight">\(4\times4\)</span> <code class="docutils literal notranslate"><span class="pre">sympy.Matrix</span></code> object.</p>
-</dd>
-</dl>
-</dd></dl>
+          <section id="integrators">
+<h1>Integrators<a class="headerlink" href="#integrators" title="Permalink to this headline">¶</a></h1>
 </section>
 
         </article>
@@ -257,23 +210,15 @@ During this phase the user will be asked to input:</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="geodesic.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title"><cite>Geodesic()</cite></div>
-              </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="metricengine.html">
+          
+          <a class="prev-page" href="geodesic.html">
               <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><cite>Metric()</cite></div>
+                <div class="title"><cite>Geodesic()</cite></div>
                 
               </div>
             </a>
@@ -283,7 +228,7 @@ During this phase the user will be asked to input:</p>
               Copyright &#169; 2022, Riccardo Della Monica |
           Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
           <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
-            | <a class="muted-link" href="_sources/geodesicengine.rst.txt"
+            | <a class="muted-link" href="_sources/integrators.rst.txt"
                rel="nofollow">
               Show Source
             </a>
@@ -302,6 +247,5 @@ During this phase the user will be asked to input:</p>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/scripts/furo.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>
