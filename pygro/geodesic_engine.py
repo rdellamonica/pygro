@@ -163,7 +163,7 @@ class GeodesicEngine():
                 
         if verbose:
             time_elapsed = (time.perf_counter() - time_start)
-            print("Integration time = {} s".format(time_elapsed))
+            print(f"Integration completed in {time_elapsed:.5} s with result '{exit}'")
 
         geo.tau = tau
         geo.x = np.stack(xu[:,:4])
