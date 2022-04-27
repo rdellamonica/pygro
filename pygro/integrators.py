@@ -291,7 +291,7 @@ class RungeKuttaFehlberg78():
         return x1, y8, h1
 
 class RungeKuttaFehlberg45():
-    def __init__(self, f, initial_step = 1, AccuracyGoal = 10, PrecisionGoal = 0, SF = 0.9, interpolate = False, stopping_criterion = "none", verbose = False, hmax = 1e+16):
+    def __init__(self, f, initial_step = 1, AccuracyGoal = 10, PrecisionGoal = 0, SF = 0.84, interpolate = False, stopping_criterion = "none", verbose = False, hmax = 1e+16):
 
         self.f = f
         self.tolerance = 1
@@ -309,7 +309,7 @@ class RungeKuttaFehlberg45():
             [3/32, 9/32, 0, 0, 0, 0],
             [1932/2197, -7200/2197, 7296/2197, 0, 0, 0],
             [439/216, -8, 3680/513, -845/4104, 0, 0],
-            [-8/27, 2, -3544/2565, 1859/4104, -11/40, 0]
+            [-8/27, 2, -3544/2565, 1859/4104, -11/40, 0],
         ])
 
         self.b = np.array([
@@ -341,7 +341,7 @@ class RungeKuttaFehlberg45():
                 x.append(next[0])
                 y.append(next[1])
                 h = next[2]
-            
+
             if not self.stopping_criterion(*y[-1]):
                 exit = self.stopping_criterion.exit
             else:
@@ -350,7 +350,7 @@ class RungeKuttaFehlberg45():
             if self.verbose:
                 print("Integration stopped.")
             exit = "stopped"
-
+        
         if not self.interpolate:
             return np.array(x), np.array(y), exit
         else:
@@ -368,20 +368,33 @@ class RungeKuttaFehlberg45():
             y5 = y + np.dot(self.b[0], k)
             
             v = y4-y5
-            w = abs(v)/(self.Atol+self.Rtol*abs(y4))
 
-            err = max(w)
+            err = np.linalg.norm(v)/h1/self.Atol
+
             if err > 1:
-                h1 *= self.SF*err**(-0.25)
+                delta = self.SF*err**(-0.2)
+                if delta <= 0.1:
+                    h1 *= 0.1
+                elif delta >= 4:
+                    h1 *= 4
+                else:
+                    h1 *= delta
                 continue
             else:
                 if err == 0:
-                    h2 = min(self.hmax, 2*h1)
+                    if self.hmax > 0:
+                        h2 = min(self.hmax, 2*h1)
+                    else:
+                        h2 = max(self.hmax, 2*h1)
                     break
-                h2 = min(self.hmax, h1*self.SF*err**(-0.2))
+                if self.hmax > 0:
+                    h2 = min(self.hmax, h1*self.SF*err**(-0.2))
+                else:
+                    h2 = max(self.hmax, h1*self.SF*err**(-0.2))
                 break
+            
         x1 = x + h1
-        return x1, y5, h2
+        return x1, y4, h2
 
 
 class DormandPrince45():

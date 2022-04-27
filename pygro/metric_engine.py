@@ -327,49 +327,49 @@ class Metric():
 
                         self.set_function_to_parameter(str(func), kwargs[str(func.func)], **arg_derlist)
 
-            if interactive_metric_insertion:
-                while True:
-                    case = input("Want to insert transform functions to pseudo-cartesian coordiantes? [y/n] ")
+        if interactive_metric_insertion:
+            while True:
+                case = input("Want to insert transform functions to pseudo-cartesian coordiantes? [y/n] ")
 
-                    if case == "y":
-                        for x in ["t", "x", "y", "z"]:
-                            while True:
-                                try:
-                                    x_inpt = input(f"{x} = ")
-                                    x_symb = sp.parse_expr(x_inpt)
-                                except KeyboardInterrupt:
-                                    raise SystemExit
-                                except:
-                                    print("Insert a valid expression.")
-                                    continue
-                                else:
-                                    self.transform_s.append(x_symb)
-                                    self.transform_functions_str.append(x_inpt)
-                                    self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
-                                    break
-                        break
-                                    
-                    elif case == "n":
-                        break
+                if case == "y":
+                    for x in ["t", "x", "y", "z"]:
+                        while True:
+                            try:
+                                x_inpt = input(f"{x} = ")
+                                x_symb = sp.parse_expr(x_inpt)
+                            except KeyboardInterrupt:
+                                raise SystemExit
+                            except:
+                                print("Insert a valid expression.")
+                                continue
+                            else:
+                                self.transform_s.append(x_symb)
+                                self.transform_functions_str.append(x_inpt)
+                                self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
+                                break
+                    break
+                                
+                elif case == "n":
+                    break
+                else:
+                    print("Not a valid input.")
+                    continue
+        else:
+            if "transform" in kwargs:
+                transform = kwargs["transform"]
+                if len(transform) != 4:
+                    raise ValueError('"transform" should be a 4-dimensional list of strings')
+                
+                for i, x in enumerate(["t", "x", "y", "z"]):
+                    try:
+                        x_inpt = transform[i]
+                        x_symb = sp.parse_expr(x_inpt)
+                    except:
+                        raise ValueError(f"Insert a valid expression for transform function {x}")
                     else:
-                        print("Not a valid input.")
-                        continue
-            else:
-                if "transform" in kwargs:
-                    transform = kwargs["transform"]
-                    if len(transform) != 4:
-                        raise ValueError('"transform" should be a 4-dimensional list of strings')
-                    
-                    for i, x in enumerate(["t", "x", "y", "z"]):
-                        try:
-                            x_inpt = transform[i]
-                            x_symb = sp.parse_expr(x_inpt)
-                        except:
-                            raise ValueError(f"Insert a valid expression for transform function {x}")
-                        else:
-                            self.transform_s.append(x_symb)
-                            self.transform_functions_str.append(x_inpt)
-                            self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
+                        self.transform_s.append(x_symb)
+                        self.transform_functions_str.append(x_inpt)
+                        self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
                     
 
         print("The metric_engine has been initialized.")
