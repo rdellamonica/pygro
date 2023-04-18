@@ -25,6 +25,7 @@ def parse_expr(expr):
     return sp.parse_expr(expr)
 
 class Metric():
+    instances = []
     r"""This is the main symbolic tool within PyGRO to perform tensorial calculations
     starting from the spacetime metric. The ``Metric`` object can be initialized in two separate ways:
 
@@ -79,6 +80,8 @@ class Metric():
             if "load" in kwargs:
                 self.load_metric(kwargs["load"])
             self.initialize_metric(**kwargs)
+        
+        Metric.instances.append(self)
     
     def initialize_metric(self, **kwargs):
         """Initializes the `Metric` either in *Interactive* or *Functional* mode. 
@@ -784,3 +787,19 @@ class Metric():
         for sigma in range(4):
             ch += self.g_inv[rho,sigma]*(self.g[sigma, nu].diff(self.x[mu])+self.g[mu, sigma].diff(self.x[nu])-self.g[mu, nu].diff(self.x[sigma]))/2
         return ch
+    
+    def Lagrangian(self):
+        lagrangian = 0
+
+        for i in range(4):
+            for j in range(4):
+                lagrangian += self.g[i,j]*self.u[i]*self.u[j]/2
+        
+        return lagrangian
+    
+    def norm(self, x, vec):
+        n = 0
+        for i in range(4):
+            for j in range(4):
+                n += self.g_f(x)[i,j]*vec[i]*vec[j]
+        return n

@@ -25,6 +25,7 @@ import scipy.interpolate as sp_int
 
 
 class GeodesicEngine():
+    instances = []
     r"""This is the main symbolic tool within PyGRO to perform tensorial calculations
     starting from the spacetime metric. The ``Metric`` object can be initialized in two separate ways:
 
@@ -75,6 +76,7 @@ class GeodesicEngine():
         self.link_metrics(metric, verbose, backend)
         self.integrator = integrator
         self.wrapper = None
+        GeodesicEngine.instances.append(self)
     
     def link_metrics(self, g, verbose = "True", backend = "autowrap"):
         if verbose:

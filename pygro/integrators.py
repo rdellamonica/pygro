@@ -193,7 +193,7 @@ class CashKarp45():
             return abs(v/(self.Atol+self.Rtol*y1))**(1/(1+i))
 
 class RungeKuttaFehlberg78():
-    def __init__(self, f, initial_step = 1, AccuracyGoal = 10, PrecisionGoal = 0, SF = 0.9, interpolate = False, stopping_criterion = "none", verbose = False):
+    def __init__(self, f, initial_step = 1, AccuracyGoal = 10, PrecisionGoal = 0, SF = 0.9, interpolate = False, stopping_criterion = "none", verbose = False, hmax = np.inf):
 
         self.f = f
         self.tolerance = 1
@@ -203,6 +203,7 @@ class RungeKuttaFehlberg78():
         self.interpolate = interpolate
         self.verbose = verbose
         self.SF = SF
+        self.hmax = hmax
 
         self.c = [0, 2/27,  1/9, 1/6, 5/12, 1/2, 5/6, 1/6, 2/3, 1/3, 1, 0, 1]
         
@@ -225,8 +226,8 @@ class RungeKuttaFehlberg78():
 
         self.b = np.array(
             [
-                [41/840, 0, 0, 0, 0, 34/105, 9/35, 9/35, 9/280, 9/280, 41/180, 0, 0],
-                [0, 0, 0, 0, 0, 34/105, 9/35, 9/35, 9/280, 9/280, 0, 41/180, 41/180]
+                [41/840, 0, 0, 0, 0, 34/105, 9/35, 9/35, 9/280, 9/280, 41/840, 0, 0],
+                [0, 0, 0, 0, 0, 34/105, 9/35, 9/35, 9/280, 9/280, 0, 41/840, 41/840]
             ]
         )
 
@@ -250,7 +251,7 @@ class RungeKuttaFehlberg78():
                 x.append(next[0])
                 y.append(next[1])
                 h = next[2]
-            
+
             if not self.stopping_criterion(*y[-1]):
                 exit = self.stopping_criterion.exit
             else:
@@ -267,28 +268,45 @@ class RungeKuttaFehlberg78():
 
     def next_step(self, x, y, h):
         k = np.zeros(13, dtype = object)
-        h1 = h
-        while True:
-            
-            for i in range(13):
-                k[i] = h1*self.f(x+self.c[i]*h1, y + np.dot(k, self.a[i]))
-            
-            y7 = y + np.dot(self.b[0], k)
-            y8 = y + np.dot(self.b[1], k)
-            
-            v = y8-y7
-            w = abs(v)/(self.Atol+self.Rtol*abs(y7))
+        h1 = h*1
+        ATTEMPTS = 1000
 
-            err = max(w)
-            print(err)
-            if err > 1:
-                h1 *= self.SF*err**(-1/7)
+        while True:
+            for i in range(13):
+                k[i] = self.f(x+self.c[i]*h1, y + h1*np.dot(k, self.a[i]))
+            
+            y7 = y + h1*np.dot(self.b[0], k)
+            y8 = y + h1*np.dot(self.b[1], k)
+            
+            v = y7-y8
+            w = abs(v)/(self.Atol+self.Rtol*abs(np.maximum(y7,y8)))
+
+            err = np.linalg.norm(w) / w.size ** 0.5
+
+            #print(err, end = "\r")
+
+            scale_min = 0.125
+            scale_max = 4
+
+            if err == 0:
+                scale = scale_max
+                h1 *= scale
+                h1 = np.min([h1, self.hmax])
+            else:                
+
+                scale = 0.8*(1/err)**(1/7)
+                scale = min(max(scale, scale_min), scale_max)
+                
+                h1 *= scale
+                h1 = np.min([h1, self.hmax])
+                if err <= 1:
+                    break
                 continue
-            else:
-                h1 *= self.SF*err**(-1/8)
-                break
+        
+        #print("------------------  Step done")
+            
         x1 = x + h1
-        return x1, y8, h1
+        return x1, y7, h1
 
 class RungeKuttaFehlberg45():
     def __init__(self, f, initial_step = 1, AccuracyGoal = 10, PrecisionGoal = 0, SF = 0.84, interpolate = False, stopping_criterion = "none", verbose = False, hmax = 1e+16):
