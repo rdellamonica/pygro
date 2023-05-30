@@ -374,7 +374,8 @@ class Metric():
                         self.transform_functions_str.append(x_inpt)
                         self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
                     
-
+        self.g_ff = lambdify([*self.x, *self.get_parameters_symb()], self.subs_functions(self.g))
+        
         print("The metric_engine has been initialized.")
 
     def save_metric(self, filename):
@@ -778,7 +779,7 @@ class Metric():
         return norm'''
     
     def g_f(self, x):
-        return lambdify([*self.x, *self.get_parameters_symb()], self.subs_functions(self.g))(*x, *self.get_parameters_val())
+        return self.g_ff(*x, *self.get_parameters_val())
 
     def Christoffel(self, mu, nu, rho):
         """The mu-nu-rho Christoffel symbol, :math:`\Gamma^{\mu}_{\nu\rho}` related to the metric tensor.
