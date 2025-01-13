@@ -1,69 +1,33 @@
 import sympy as sp
 import numpy as np
 import json
-from sympy.utilities.autowrap import autowrap
+import logging
 from sympy.utilities.lambdify import lambdify, implemented_function
 from sympy.core.function import AppliedUndef
 
-#########################################################################################
-#                               METRIC OBJECT                                           #
-#                                                                                       #
-#   The metric object contains the symbolic expresison of a generic metric tensor       #
-#   and symbolically retrieves the inverse metric and all is needed to compute the      #
-#   Christoffel symbols.                                                                #
-#   Its main contents are:                                                              #
-#    -  g: the metrics tensor symbolic expression;                                      #
-#    -  g_inv: the inverse metrics;                                                     #
-#    -  x: an array of coordinates;                                                     #
-#    -  u: an array of derivatives of x w.r.t. to the affine parameter;                 #
-#                                                                                       #   
-#   g and x are user inputs.                                                            #
-#                                                                                       #
-#########################################################################################
+diag = sp.diag
 
 def parse_expr(expr):
     return sp.parse_expr(expr)
 
 class Metric():
-    instances = []
     r"""This is the main symbolic tool within PyGRO to perform tensorial calculations
-    starting from the spacetime metric. The ``Metric`` object can be initialized in two separate ways:
-
-    .. rubric:: Interactive mode
-    
-    In this case the ``Metric`` has to be initialized without any additional argument.
-    Later the :py:func:`Metric.initialize_metric` method should be called without additional arguments in order to enter the interactive mode.
-    During this phase the user will be asked to input:
-
-    * The ``name`` of the spacetime.
-    * The symbolic ``coordinates`` in which the metric is expressed.
-    * The symbolic expression of the spacetime metric which can be either expressed as a line elemnt :math:`ds^2 = g_{\mu\nu}dx^\mu dx^\nu` or as the single components :math:`g_{\mu\nu}` of the metric tensor.
-    * The symbolix expression of ``transformation functions`` to pseudo-cartesian coordinates which can be useful to :doc:`visualize`.
-
-    After the insertion of all the required information the metric is initialized.
-
-    .. rubric:: Functional mode
-
-    In this case the ``Metric`` object is initialized without interactive input by the user. The arguments to build the metric can be either passed to the ``Metric`` constructor upon class initialization,
+    starting from the spacetime metric. To instantiate a new `Metric` object call
     
     >>> spacetime_metric = pygro.Metric(**kwargs)
-
-    or as arguments to the  :py:func:`Metric.initialize_metric` method:
-
-    >>> spacetime_metric = pygro.Metric()
-    >>> spacetime_metric.initialize_metric(**kwargs)
-
-    The ``**kwargs`` that can be passed to initialize a ``Metric`` object are the following:
+    
+    with accepted ``**kwargs`` being:
 
     :param name: The name of the metric to initialize.
     :type name: str
     :param coordinates: Four-dimensional list containing the symbolic expression of the space-time coordinates in which the `line_element` argument is written.
     :type coordinates: list of str
-    :param line_element: A string containing the symbolic expression of the line element (that will be parsed using `sympy`) expressed in the space-time coordinates defined in the `coordinates` argument.
+    :param line_element: A string containing the symbolic expression of the line element (that will be parsed using `sympy`) expressed in the space-time coordinates defined in the 
+    `coordinates` argument.
+    :type line_element: str
+    :param matrix: A sympy matrix containing the symbolic expression of the matrix rappresentation of the metric tensor in the given space-time coordinets.
     :type line_element: str
 
-    .. note::
-        Test
     
     After successful initialization, the ``Metric`` instance has the following attributes:
 
@@ -71,9 +35,13 @@ class Metric():
     :type g: sympy.Matric
 
     """
+    instances = []
+    MINIMAL_KWARGS = ["name", "coordinates"]
+    METRIC_KWARGS = ["line_element", "tensor"]
+    
     def __init__(self, **kwargs):
-        self.initialized = 0
-        self.initialized_metric = 0
+        self.initialized = False
+        self.initialized_metric = False
         self.geodesic_engine_linked = False
 
         if len(kwargs) > 0:
@@ -84,10 +52,10 @@ class Metric():
         Metric.instances.append(self)
     
     def initialize_metric(self, **kwargs):
-        """Initializes the `Metric` either in *Interactive* or *Functional* mode. 
+        """Initializes the `Metric`. 
 
         :param \**kwargs:
-            to pass only to access *Functional* mode. In this case, required parameters are ``name``, ``coordinates`` and ``line_element``,
+            Required parameters are ``name``, ``coordinates`` and one between ``line_element`` or ``tensor``,
             but additional parameters can and *must* be passed on occasions (see :doc:`create_metric` to see examples). 
         """
 
@@ -96,115 +64,60 @@ class Metric():
         self.x_str = []
         self.u = []
 
-        interactive_metric_insertion = len(kwargs) == 0        
+        minimal_arguments_check = True
+        for kwarg in Metric.MINIMAL_KWARGS:
+            minimal_arguments_check &= kwarg in kwargs
+        minimal_arguments_check &= any([kwarg in Metric.METRIC_KWARGS for kwarg in kwargs])
+        
+        if not minimal_arguments_check:
+            raise ValueError('initialize_metric needs at least "name", "coordinates", and one between "line_element" and "tensors" as arguments.')
+        
 
-        if not interactive_metric_insertion:
+        self.name = kwargs['name']
+        coordinates_input = kwargs["coordinates"]
+        
+        logging.info(f"Initializing {self.name}.")
+        
+        if len(coordinates_input) != 4:
+            raise ValueError('coordinates should be a 4-dimensional list of strings')
+        
+        for coordinate in coordinates_input:
+            self.x.append(sp.symbols(coordinate))
+            self.x_str.append(coordinate)
 
-            minimal_kwargs = ["name", "coordinates", "line_element"]
+            velocity = "u_" + coordinate
+            self.u.append(sp.symbols(velocity))
 
-            for kwarg in minimal_kwargs:
-                if not kwarg in kwargs:
-                    raise ValueError('initialize_metric in non-interactive mode should have "name", "coordinates", "line_element" as minimal arguments')
-
-            self.name = kwargs['name']
-
-            coordinates_input = kwargs["coordinates"]
-            
-            if len(coordinates_input) != 4:
-                raise ValueError('coordinates should be a 4-dimensional list of strings')
-            
-            for coordinate in coordinates_input:
-                setattr(self, coordinate, sp.symbols(coordinate))
-                self.x.append(self.__dict__[coordinate])
-                self.x_str.append(coordinate)
-
-                velocity = "u_" + coordinate
-                setattr(self, velocity, sp.symbols(velocity))
-                self.u.append(self.__dict__[velocity])
-
-                differential = "d" + coordinate
-                setattr(self, differential, sp.symbols(differential))
-                self.dx.append(self.__dict__[differential])
-            
+            differential = "d" + coordinate
+            self.dx.append(sp.symbols(differential))
+        
+        if "line_element" in kwargs:
             self.g = sp.zeros(4, 4)
-            self.g_str = np.zeros([4,4], dtype = object)
-
+            self.g_str = np.zeros((4, 4), dtype=object)
+                    
             try:
                 ds2_str = kwargs["line_element"]
                 ds2_sym = sp.expand(sp.parse_expr(ds2_str))
             except:
                 raise ValueError("Please insert a valid expression for the line element.")
             else:
-                self.ds2 = ds2_sym
                 for i, dx1 in enumerate(self.dx):
                     for j, dx2 in enumerate(self.dx):
-                        self.g[i,j] = self.ds2.coeff(dx1*dx2,1)
+                        self.g[i,j] = ds2_sym.coeff(dx1*dx2,1)
                         self.g_str[i,j] = str(self.g[i,j])
 
-        else:
-            self.name = input("Insert the name of the spacetime (e.g. 'Kerr metric'): ")
-
-            print("Initialazing {}".format(self.name))
-            
-            print("Define coordinates symbols:")
-            
-            for i in range(4):
-                coordinate = input("Coordinate {}: ".format(i))
-                setattr(self, coordinate, sp.symbols(coordinate))
-                self.x.append(self.__dict__[coordinate])
-                self.x_str.append(coordinate)
-
-                velocity = "u_" + coordinate
-                setattr(self, velocity, sp.symbols(velocity))
-                self.u.append(self.__dict__[velocity])
-
-                differential = "d" + coordinate
-                setattr(self, differential, sp.symbols(differential))
-                self.dx.append(self.__dict__[differential])
-            
-
-            case = input("From? [tensor/line element]: ")
-
-            if case == "tensor":
-                print("Define metric tensor components:")
-                self.g = sp.zeros(4, 4)
-                self.g_str = np.zeros([4,4], dtype = object)
-
+        elif "tensor" in kwargs:
+            tensor = kwargs['tensor']
+            self.g_str = np.zeros((4, 4), dtype=str)
+            if isinstance(tensor, sp.Matrix) and tensor.shape == (4,4):
+                self.g = kwargs['tensor']
                 for i in range(4):
                     for j in range(4):
-                        while True:
-                            try:
-                                component = input("g[{},{}]: ".format(i, j))
-                                component_symb = sp.parse_expr(component)
-                            except:
-                                print("Please insert a valid expression for the component.")
-                                continue
-                            else:
-                                self.g[i,j] = component_symb
-                                self.g_str[i,j] = component
-                                break
-                        
-            elif case == "line element":
-                self.g = sp.zeros(4, 4)
-                self.g_str = np.zeros([4,4], dtype = object)
-                while True:
-                    try:
-                        ds2_str = input("ds^2 = ")
-                        ds2_sym = sp.expand(sp.parse_expr(ds2_str))
-                    except:
-                        print("Please insert a valid expression for the line element.")
-                        continue
-                    else:
-                        self.ds2 = ds2_sym
-                        for i, dx1 in enumerate(self.dx):
-                            for j, dx2 in enumerate(self.dx):
-                                self.g[i,j] = self.ds2.coeff(dx1*dx2,1)
-                                self.g_str[i,j] = str(self.g[i,j])
-                        break
+                        self.g_str[i,j] = str(self.g[i,j])
             else:
-                raise("Only 'tensor' or 'line element' are accepted method for parsing the metric.")
-            
-        print("Calculating inverse metric...")
+                raise ValueError("Please insert a valid expression for the metric tensor.")
+                
+        logging.info("Calculating inverse metric.")
         self.g_inv = self.g.inv()
         self.g_inv_str = np.zeros([4,4], dtype = object)
         
@@ -212,7 +125,7 @@ class Metric():
             for j in range(4):
                 self.g_inv_str[i,j] = str(self.g_inv[i,j])
         
-        print("Calculating symbolic equations of motion:")
+        logging.info("Calculating symbolic equations of motion.")
         self.eq_u = []
         self.eq_u_str = np.zeros(4, dtype = object)
 
@@ -220,7 +133,6 @@ class Metric():
         self.eq_x_str = np.zeros(4, dtype = object)
 
         for rho in range(4):
-            print("- {}/4".format(rho+1))
             eq = 0
             for mu in range(4):
                 for nu in range(4):
@@ -231,8 +143,7 @@ class Metric():
             self.eq_x.append(self.u[rho])
             self.eq_x_str[rho] = str(self.u[rho])
 
-
-        print("Adding to class a method to get initial u_0...")
+        logging.info("Computing helper function to normalize 4-velocity.")
 
         eq = 0
 
@@ -245,8 +156,9 @@ class Metric():
         eq += 1
 
         self.u0_s_timelike = sp.solve(eq, self.u[0], simplify=False, rational=False)[0]
+            
 
-        self.initialized = 1
+        self.initialized = True
         self.parameters = {}
         self.transform_s = []
         self.transform_functions = []
@@ -261,30 +173,24 @@ class Metric():
                 if str(sym) in kwargs:
                     self.set_constant(**{str(sym): kwargs.get(str(sym))})
                 else:
-                    value = float(input("Insert value for {}: ".format(str(sym))))
+                    value = float(input(f"Insert value for {str(sym)}: "))
                     self.set_constant(**{str(sym): value})
 
         if len(free_func) > 0:
             for func in free_func:
                 self.add_parameter(str(func))
                 
-                if interactive_metric_insertion:
-                    kind = input("Define kind for function {} [expr/py]: ".format(str(func)))
-                else:
-                    if not str(func.func) in kwargs:
-                        raise ValueError("Auxiliary functions shoudld be passed as arguments, either as strings (expression mode) or as python methods (functional mode).")
-                    
-                    if isinstance(kwargs[str(func.func)], str):
-                        kind = "expr"
-                    elif callable(kwargs[str(func.func)]):
-                        kind = "py"
+                if not str(func.func) in kwargs:
+                    raise ValueError("Auxiliary functions shoudld be passed as arguments, either as strings (expression mode) or as python methods (functional mode).")
+                
+                if isinstance(kwargs[str(func.func)], str):
+                    kind = "expr"
+                elif callable(kwargs[str(func.func)]):
+                    kind = "py"
 
                 if kind == "expr":
                     self.parameters[str(func)]['kind'] = "expression"
-                    if interactive_metric_insertion:
-                        expr_str = input("{} = ".format(str(func)))
-                    else:
-                        expr_str = kwargs[str(func.func)]
+                    expr_str = kwargs[str(func.func)]
 
                     expr_sym = sp.expand(sp.parse_expr(expr_str))
 
@@ -306,77 +212,39 @@ class Metric():
                 elif kind == "py":
 
                     self.parameters[str(func)]['kind'] = "pyfunc"
-
-                    if interactive_metric_insertion:
-                        print(f"Remember to set the Python function for {str(func)} and its derivatives with")
                     
-                        derlist = ""
-                        for arg in list(func.args):
-                            derlist += f", d{str(func.func)}d{str(arg)} = func"
-                        
-                        print(f"set_function_to_parameter({str(func)}, f = func{derlist})")
+                    args = list(func.args)
+                    derlist = [f"d{str(func.func)}d{str(arg)}" for arg in args]
 
-                    else:
-                        args = list(func.args)
-                        derlist = [f"d{str(func.func)}d{str(arg)}" for arg in args]
+                    arg_derlist = {}
 
-                        arg_derlist = {}
+                    for der in derlist:
+                        if not der in kwargs:
+                            raise ValueError(f"Functional derivatives of auxiliary functions are required as extra-arguments. In this case '{der}' is missing.")
+                        else:
+                            arg_derlist[der] = kwargs[der]
 
-                        for der in derlist:
-                            if not der in kwargs:
-                                raise ValueError(f"In functional mode pass as arguments functional derivatives  of auxiliary functions. In this case '{der}' is missing.")
-                            else:
-                                arg_derlist[der] = kwargs[der]
+                    self.set_function_to_parameter(str(func), kwargs[str(func.func)], **arg_derlist)
 
-                        self.set_function_to_parameter(str(func), kwargs[str(func.func)], **arg_derlist)
-
-        if interactive_metric_insertion:
-            while True:
-                case = input("Want to insert transform functions to pseudo-cartesian coordiantes? [y/n] ")
-
-                if case == "y":
-                    for x in ["t", "x", "y", "z"]:
-                        while True:
-                            try:
-                                x_inpt = input(f"{x} = ")
-                                x_symb = sp.parse_expr(x_inpt)
-                            except KeyboardInterrupt:
-                                raise SystemExit
-                            except:
-                                print("Insert a valid expression.")
-                                continue
-                            else:
-                                self.transform_s.append(x_symb)
-                                self.transform_functions_str.append(x_inpt)
-                                self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
-                                break
-                    break
-                                
-                elif case == "n":
-                    break
+        if "transform" in kwargs:
+            transform = kwargs["transform"]
+            if len(transform) != 4:
+                raise ValueError('"transform" should be a 4-dimensional list of strings')
+            
+            for i, x in enumerate(["t", "x", "y", "z"]):
+                try:
+                    x_inpt = transform[i]
+                    x_symb = sp.parse_expr(x_inpt)
+                except:
+                    raise ValueError(f"Insert a valid expression for transform function {x}")
                 else:
-                    print("Not a valid input.")
-                    continue
-        else:
-            if "transform" in kwargs:
-                transform = kwargs["transform"]
-                if len(transform) != 4:
-                    raise ValueError('"transform" should be a 4-dimensional list of strings')
-                
-                for i, x in enumerate(["t", "x", "y", "z"]):
-                    try:
-                        x_inpt = transform[i]
-                        x_symb = sp.parse_expr(x_inpt)
-                    except:
-                        raise ValueError(f"Insert a valid expression for transform function {x}")
-                    else:
-                        self.transform_s.append(x_symb)
-                        self.transform_functions_str.append(x_inpt)
-                        self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
+                    self.transform_s.append(x_symb)
+                    self.transform_functions_str.append(x_inpt)
+                    self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
                     
         self.g_ff = lambdify([*self.x, *self.get_parameters_symb()], self.subs_functions(self.g))
         
-        print("The metric_engine has been initialized.")
+        logging.info(f"The Metric ({self.name}) has been initialized.")
 
     def save_metric(self, filename):
         r"""Saves the metric into a *.metric* file which can later be loaded with the :py:func:`Metric.load_metric` method.
@@ -417,9 +285,9 @@ class Metric():
                 json.dump(output, file)
 
         else:
-            print("Initialize (initialize_metric) or load (load_metric) a metric before saving.")
+            logging.info("Initialize or load a metric before saving.")
     
-    def load_metric(self, filename, verbose = True, **params):
+    def load_metric(self, filename, **params):
         r"""Loads the metric from a *.metric* file which has been saved through the :py:func:`Metric.save_metric` method.
 
         :param filename: The name of the *.metric* file from which to load the metric.
@@ -429,10 +297,10 @@ class Metric():
 
         load = json.load(f)
 
-        self.load_metric_from_json(load, verbose, **params)
+        self.load_metric_from_json(load, **params)
 
         
-    def load_metric_from_json(self, metric_json, verbose = True, **params):
+    def load_metric_from_json(self, metric_json, **params):
 
         self.json = metric_json
         load = metric_json
@@ -445,8 +313,7 @@ class Metric():
         if not "functions" in load:
             load["functions"] = []
 
-        if verbose:
-            print("Loading {}".format(self.name))
+        logging.info("Loading {}".format(self.name))
         
         self.x = []
         self.dx = []
@@ -456,17 +323,14 @@ class Metric():
         for i in range(4):
 
             coordinate = load['x'][i]
-            setattr(self, coordinate, sp.symbols(coordinate))
-            self.x.append(self.__dict__[coordinate])
+            self.x.append(sp.symbols(coordinate))
             self.x_str.append(coordinate)
 
             velocity = "u_" + coordinate
-            setattr(self, velocity, sp.symbols(velocity))
-            self.u.append(self.__dict__[velocity])
+            self.u.append(sp.symbols(velocity))
 
             differential = "d" + coordinate
-            setattr(self, differential, sp.symbols(differential))
-            self.dx.append(self.__dict__[differential])
+            self.dx.append(sp.symbols(differential))
         
         self.g = sp.zeros(4, 4)
         self.g_inv = sp.zeros(4, 4)
@@ -479,7 +343,6 @@ class Metric():
         self.eq_x_str = np.zeros(4, dtype = object)
 
         for i in range(4):
-
             for j in range(4):
 
                 component = load['g'][i][j]
@@ -503,7 +366,7 @@ class Metric():
 
         free_sym = list(self.g.free_symbols-set(self.x))
         
-        self.initialized = 1
+        self.initialized = True
 
         if(len(free_sym)) > 0:
             for sym in free_sym:
@@ -552,7 +415,7 @@ class Metric():
             if str(func) in params:
                 self.parameters[function['name']]['value'] = params[str(func)]
             else:
-                print(f"Remember to set the Python function for {str(func)}.")
+                logging.warning(f"Remember to set the Python function for {str(func)}.")
             
             for arg in args:
                 dername = f"d{func}d{str(arg)}"
@@ -560,9 +423,9 @@ class Metric():
                 if dername in params:
                     self.parameters[function['name']][dername] = params[dername]
                 else:
-                    print(f"Remember to set the Python function for {dername}.")
+                    logging.warning(f"Remember to set the Python function for {dername}.")
 
-        self.initialized_metric = 1
+        self.initialized_metric = True
         
         if "transform" in load:
             for i in range(4):
@@ -571,8 +434,7 @@ class Metric():
                 self.transform_s.append(transform_function)
                 self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(transform_function), 'numpy'))
 
-        if verbose:
-            print("The metric_engine has been initialized.")
+        logging.info(f"The Metric ({self.name}) has been initialized.")
 
     def add_parameter(self, symbol, value = None):
         if self.initialized:
@@ -585,7 +447,7 @@ class Metric():
             else:
                 self.parameters[symbol]['kind'] = None
         else:
-            print("Initialize (initialize_metric) or load (load_metric) a metric before adding parameters.")
+            logging.error("Initialize or load a metric before adding parameters.")
     
     def set_constant(self, **params):
         if self.initialized:
@@ -594,14 +456,14 @@ class Metric():
                     self.parameters[str(param)]['value'] = params[param]
                     self.parameters[str(param)]['kind'] = "constant"
                 except:
-                    print(f"No parameter named '{str(param)}' in the metric_engine.")
+                    logging.error(f"No parameter named '{str(param)}' in the Metric.")
                     break
         else:
-            print("Initialize (initialize_metric) or load (load_metric) a metric before adding parameters.")
+            logging.error("Initialize or load a metric before adding parameters.")
     
     def set_expression_to_parameter(self, param, expr_str):
         r"""Selects the ``param`` element from the ``metric.parameters`` dictionary, sets its kind to ``"expr"`` and assignes to it a value which is the sybolic parsed
-        espresion in the `expr_str` argument.
+        expression in the `expr_str` argument.
         
         :param param: The symbolic name of the parameter to modify.
         :type param: str
@@ -630,9 +492,9 @@ class Metric():
                     self.parameters[str(param)][f"d{str(func.func)}d{str(arg)}"] = expr_sym.diff(arg)
 
             else:
-                raise TypeError(f"No parameter named '{str(param)}' in the metric_engine.")
+                raise TypeError(f"No parameter named '{str(param)}' in the Metric.")
         else:
-            print("Initialize (initialize_metric) or load (load_metric) a metric before adding parameters.")
+            logging.warning("Initialize or load a metric before adding parameters.")
 
 
     def set_function_to_parameter(self, param, function, **derivatives):
@@ -667,7 +529,7 @@ class Metric():
                 else:
                     self.parameters[str(param)][der] = implemented_function(f"d{func}d{arg}_func", derivatives[der])
         else:
-            print("Initialize (initialize_metric) or load (load_metric) a metric before adding parameters.")
+            logging.info("Initialize or load a metric before adding parameters.")
 
     # Getters
 
@@ -732,7 +594,7 @@ class Metric():
 
     def evaluate_parameters(self, expr):
         if any(x['value'] == None for x in self.parameters.values()):
-            print("You must set_constant for every constant value in your metric, before evaluating.")
+            logging.error("You must set_constant for every constant value in your metric, before evaluating.")
         else:
             subs = []
             const = self.get_parameters_constants()
@@ -742,23 +604,17 @@ class Metric():
                 subs.append([x,y])
             return self.subs_functions(expr).subs(subs)
 
-    def set_coordinate_transformation(self):
+    def set_coordinate_transformation(self, transform_functions):
             self.transform_s = []
             self.transform_functions = []
-            for x in ["t", "x", "y", "z"]:
-                while True:
-                    try:
-                        x_inpt = input(f"{x} = ")
-                        x_symb = sp.parse_expr(x_inpt)
-                    except KeyboardInterrupt:
-                        raise SystemExit
-                    except:
-                        print("Insert a valid expression.")
-                        continue
-                    else:
-                        self.transform_s.append(x_symb)
-                        self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
-                        break
+            for i, x in enumerate(["t", "x", "y", "z"]):
+                try:
+                    x_symb = sp.parse_expr(transform_functions)
+                except:
+                    raise ValueError(f"Insert a valid expression for transformation to the cartesian coordinate: {x}")
+                
+                self.transform_s.append(x_symb)
+                self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
     
     def parse_expr(self, expr):
         return sp.parse_expr(expr)
@@ -767,17 +623,8 @@ class Metric():
         if self.transform_functions:
             return self.transform_functions[0](X), self.transform_functions[1](X), self.transform_functions[2](X), self.transform_functions[3](X)
         else:
-            raise TypeError("Coordinate transformations not set. Consider using .set_coordinate_transformation method in Metric class.")
-
-    '''def norm4(self, x, v):
-        norm = 0
+            raise TypeError("Coordinate transformations not set. Use .set_coordinate_transformation method in Metric class.")
         
-        for mu in range(4):
-            for nu in range(4):
-                norm += self.g_f(x)[mu, nu]*v[mu]*v[nu]
-        
-        return norm'''
-    
     def g_f(self, x):
         return self.g_ff(*x, *self.get_parameters_val())
 

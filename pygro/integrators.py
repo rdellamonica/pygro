@@ -302,8 +302,6 @@ class RungeKuttaFehlberg78():
                 if err <= 1:
                     break
                 continue
-        
-        #print("------------------  Step done")
             
         x1 = x + h1
         return x1, y7, h1

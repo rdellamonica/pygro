@@ -1,31 +1,19 @@
 import numpy as np
+import numpy.typing as npt
 import time
 import sympy as sp
 import pygro.integrators as integrators
+from pygro.metric_engine import Metric
+from pygro.geodesic import Geodesic
 from sympy.utilities.autowrap import autowrap
 from sympy.utilities.lambdify import lambdify
 import scipy.interpolate as sp_int
+import logging
+from typing import Optional, Literal, Union, Callable
 
-#########################################################################################
-#                               GEODESIC ENGINE                                         #
-#                                                                                       #
-#   This is the main engine for numerical integration of the geodesic equation.         #
-#   Two classes are defined:                                                            #
-#    - The integration engine itself, which is linked to a metric object and            #
-#      retrieves the equation of motion symbolically.                                   #
-#    - The geodesic object, in which the numerical integration result is stored         #
-#                                                                                       #
-#########################################################################################
-
-
-################################################################
-#   The geodesic_engine object needs as argument               #
-#    a metric object which is linked to the metric             #
-################################################################
-
+_BACKEND_TYPES = Literal["autowrap", "lambdify"]
 
 class GeodesicEngine():
-    instances = []
     r"""This is the main symbolic tool within PyGRO to perform tensorial calculations
     starting from the spacetime metric. The ``Metric`` object can be initialized in two separate ways:
 
@@ -71,16 +59,20 @@ class GeodesicEngine():
     :type g: sympy.Matric
 
     """
-    def __init__(self, metric, verbose = True, backend = "autowrap", integrator = "dp45"):
-
-        self.link_metrics(metric, verbose, backend)
+    instances = []
+    
+    def __init__(self, metric: Optional[Metric] = None, backend: _BACKEND_TYPES = "autowrap", integrator = "dp45"):
+        if metric == None:
+            if isinstance(Metric.instances[-1], Metric):
+                metric = Metric.instances[-1]
+                logging.warning(f"No Metric object passed to the Geodesic Engine constructor. Using last initialized Metric ({metric.name}) instead")
+                
+        self.link_metric(metric, backend)
         self.integrator = integrator
-        self.wrapper = None
         GeodesicEngine.instances.append(self)
     
-    def link_metrics(self, g, verbose = "True", backend = "autowrap"):
-        if verbose:
-            print("Linking {} to the Geodesic Engine".format(g.name))
+    def link_metric(self, g: Metric, backend: _BACKEND_TYPES):
+        logging.info(f"Linking {g.name} to the Geodesic Engine")
 
         self.metric = g
         self.eq_x = g.eq_x
@@ -93,22 +85,22 @@ class GeodesicEngine():
         self.metric.geodesic_engine = self
 
         if (backend == "lambdify") or len(self.metric.get_parameters_functions()) > 0:
-            self.wrapper = "lambdify"
+            self._wrapper = "lambdify"
         else:
-            self.wrapper = "autowrap"
+            self._wrapper = "autowrap"
 
-        self.motion_eq_f = []
+        self._motion_eq_f = []
 
         for eq in [*self.eq_x, *self.eq_u]:
-            if self.wrapper == "autowrap":
-                self.motion_eq_f.append(autowrap(self.metric.subs_functions(eq), backend='cython', args = [*self.metric.x, *self.metric.u, *self.metric.get_parameters_symb()]))
+            if self._wrapper == "autowrap":
+                self._motion_eq_f.append(autowrap(self.metric.subs_functions(eq), backend='cython', args = [*self.metric.x, *self.metric.u, *self.metric.get_parameters_symb()]))
             else:
-                self.motion_eq_f.append(lambdify([*self.metric.x, *self.metric.u, *self.metric.get_parameters_symb()], self.metric.subs_functions(eq)))
+                self._motion_eq_f.append(lambdify([*self.metric.x, *self.metric.u, *self.metric.get_parameters_symb()], self.metric.subs_functions(eq)))
 
-        def f_eq(tau, xu):
-            return np.array([self.motion_eq_f[i](*xu, *self.metric.get_parameters_val()) for i in range(8)])
+        def _f_eq(tau, xu):
+            return np.array([self._motion_eq_f[i](*xu, *self.metric.get_parameters_val()) for i in range(8)])
 
-        self.motion_eq = f_eq
+        self.motion_eq = _f_eq
         
         u0_f_timelike = lambdify([*self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3], *self.metric.get_parameters_symb()], self.metric.subs_functions(g.u0_s_timelike))
         
@@ -123,13 +115,15 @@ class GeodesicEngine():
         self.u0_f_timelike = f_u0_timelike
         self.u0_f_null = f_u0_null
         
-        if verbose:
-            print("Metric linking complete.")
+        self.stopping_criterion = StoppingCriterionList([])
+        
+        logging.info("Metric linking complete.")
 
-    def stopping_criterion(self, *x):
-        return True
-
-    def set_stopping_criterion(self, expr, exit_str = "none"):
+    def set_stopping_criterion(self, expr: str, exit_str: str = "none"):
+        self.stopping_criterion = StoppingCriterionList([])
+        self.add_stopping_criterion(expr, exit_str)
+        
+    def add_stopping_criterion(self, expr: str, exit_str: str = "none"):
         expr_s = sp.parse_expr(expr)
         free_symbols = list(expr_s.free_symbols-set(self.metric.x))
         check = True
@@ -141,16 +135,16 @@ class GeodesicEngine():
             def f(*xu):
                 return stopping_criterion(*xu, *self.metric.get_parameters_val())
 
-            self.stopping_criterion = StoppingCriterion(f, exit_str)
+            self.stopping_criterion.append(StoppingCriterion(f, expr, exit_str))
         else:
-            raise TypeError("Unkwnown symbol {}".format(str(symbol)))
+            raise TypeError(f"Unkwnown symbol {str(symbol)}")
         
 
-    def integrate(self, geo, tauf, initial_step, verbose=False, direction = "fw", interpolate = False, **params):
+    def integrate(self, geo: Geodesic, tauf: float, initial_step: float, verbose: bool = False, direction: Literal["fw", "bw"] = "fw", interpolate: bool = False, **integrator_kwargs):
         if verbose:
-            print("Integrating...")
+            logging.info("Integrating...")
 
-        integrator = integrators.get_integrator(self.integrator, self.motion_eq, stopping_criterion = self.stopping_criterion, verbose = verbose, **params)
+        integrator = integrators.get_integrator(self.integrator, self.motion_eq, stopping_criterion = self.stopping_criterion, verbose = verbose, **integrator_kwargs)
 
         if direction == "bw":
             h = -initial_step
@@ -165,26 +159,44 @@ class GeodesicEngine():
                 
         if verbose:
             time_elapsed = (time.perf_counter() - time_start)
-            print(f"Integration completed in {time_elapsed:.5} s with result '{exit}'")
+            logging.info(f"Integration completed in {time_elapsed:.5} s with result '{exit}'")
 
         geo.tau = tau
         geo.x = np.stack(xu[:,:4])
         geo.u = np.stack(xu[:,4:])
-        geo.exit = exit
-
-        if interpolate == True:
-            geo.x_int = sp_int.interp1d(geo.tau, geo.x, axis = 0, kind = "cubic")
-            geo.u_int = sp_int.interp1d(geo.tau, geo.u, axis = 0, kind = "cubic")        
+        geo.exit = exit     
     
     def set_integrator(self, integrator):
         self.integrator = integrator
-    
 
 class StoppingCriterion:
-
-    def __init__(self, stopping_criterion, exit_str):
+    def __init__(self, stopping_criterion: Callable[[npt.ArrayLike], bool], expr: str, exit_str: str):
         self.stopping_criterion = stopping_criterion
         self.exit = exit_str
+        self.expr = expr
+        
+    def __repr__(self):
+        return f"<StoppingCriterion: {self.expr}>"
     
-    def __call__(self, *geo):
+    def __call__(self, *geo: npt.ArrayLike) -> bool:
         return self.stopping_criterion(*geo)
+
+class StoppingCriterionList:
+    def __init__(self, stopping_criterions: list[StoppingCriterion]):
+        self.stopping_criterions = stopping_criterions
+        self.exit = None
+        
+    def append(self, stopping_criterion: StoppingCriterion):
+        self.stopping_criterions.append(stopping_criterion)
+        
+    def __repr__(self):
+        return f"<StoppingCriterions: [{', '.join([f'{s_c.expr}' for s_c in self.stopping_criterions])}]>"
+        
+    def __call__(self, *geo: npt.ArrayLike) -> bool:
+        check = True
+        for stopping_criterion in self.stopping_criterions:
+            check &= stopping_criterion(*geo)
+            if not check:
+                self.exit = stopping_criterion.exit
+
+        return check
