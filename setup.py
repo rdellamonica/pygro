@@ -2,16 +2,19 @@ from setuptools import setup, find_packages
 
 setup(
   name='PyGRO',
-  version='0.0.3.1',
+  version='0.1.1',
   author='Riccardo Della Monica',
   author_email='dellamonicariccardo@gmail.com',
   packages=find_packages(),
   license='LICENSE.txt',
   description='A Python Integrator for General Relativistic Orbits',
   long_description=open('README.md').read(),
+  long_description_content_type='text/markdown',
   install_requires=[
     "sympy",
-    "numpy"
+    "numpy",
+    "scipy",
+    "cython"
   ],
   keywords=['python', 'first package'],
   classifiers= [
