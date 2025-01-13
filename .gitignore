@@ -16,4 +16,4 @@ docs/docsenv
 .vscode
 .gitignore
 .DS_Store
-pygro/.DS_Store
+**/.DS_Store
