@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="GeodesicEngine()" href="geodesicengine.html" /><link rel="prev" title="Visualize the results" href="visualize.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="GeodesicEngine" href="geodesicengine.html" /><link rel="prev" title="Visualize the results" href="visualize.html" />
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Metric - PyGRO 1.0.0 documentation</title>
@@ -205,7 +205,7 @@
   <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="create_metric.html">Define your own-spacetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_metric.html">Define your own space-time</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="integrate_geodesic.html">Integrate a geodesic in PyGRO</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Integrate a geodesic in PyGRO</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="geodesics/null_geodesic.html"><cite>Null geodesic integration</cite></a></li>
 <li class="toctree-l2"><a class="reference internal" href="geodesics/timelike_geodesic.html"><cite>Time-like geodesic integration</cite></a></li>
@@ -216,8 +216,8 @@
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
 <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#"><cite>Metric</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="geodesicengine.html"><cite>GeodesicEngine()</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="geodesic.html"><cite>Geodesic()</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="geodesicengine.html"><cite>GeodesicEngine</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="geodesic.html"><cite>Geodesic</cite></a></li>
 <li class="toctree-l1"><a class="reference internal" href="integrators.html">Integrators</a></li>
 </ul>
 
@@ -306,7 +306,7 @@ starting from the space-time metric.</p>
 </ul>
 </dd>
 </dl>
-<p>see <a class="reference internal" href="create_metric.html"><span class="doc">Define your own-spacetime</span></a> for a detailed documentation on how to correctly define a space-time metric.</p>
+<p>see <a class="reference internal" href="create_metric.html"><span class="doc">Define your own space-time</span></a> for a detailed documentation on how to correctly define a space-time metric.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -538,7 +538,7 @@ expression in the <cite>expr_str</cite> argument.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">function</span></code> argument <strong>must</strong> be a method which admits four floats and returns a single float as results.
 However, in the <code class="docutils literal notranslate"><span class="pre">line_element</span></code> argument, upon initialization of the <code class="docutils literal notranslate"><span class="pre">Metric</span></code>, only explicit coordinate dependences of the
 functional parameter must be indicated. Moreover, for each of the explicit coordinate dependence of the function its derivative should also
-be passed in argument (see <a class="reference internal" href="create_metric.html"><span class="doc">Define your own-spacetime</span></a> for a tutorial on how to do this).</p>
+be passed in argument (see <a class="reference internal" href="create_metric.html"><span class="doc">Define your own space-time</span></a> for a tutorial on how to do this).</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Example<span class="colon">:</span></dt>
@@ -611,7 +611,7 @@ be passed in argument (see <a class="reference internal" href="create_metric.htm
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><cite>GeodesicEngine()</cite></div>
+                <div class="title"><cite>GeodesicEngine</cite></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
