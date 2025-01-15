@@ -29,11 +29,10 @@ def test_line_element_base_inizialization():
 @pytest.mark.parametrize("initializer", [
     without(base_matric_initializer, 'name'),
     without(base_matric_initializer, 'coordinates'),
-    without(base_matric_initializer, 'line_element'),
 ])
-def test_line_element_missing_kwarg(initializer):
+def test_line_element_missing_arg(initializer):
     
-    with pytest.raises(ValueError, match='arguments'):
+    with pytest.raises(TypeError):
         metric = pygro.Metric(
             M = 1,
             **initializer

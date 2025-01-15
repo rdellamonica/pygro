@@ -1,5 +1,10 @@
 import numpy as np
 import scipy.interpolate as sp_int
+from typing import Literal, Optional, Tuple, get_args
+from yaspin.core import Yaspin
+import logging
+
+AVAILABLE_INTEGRATORS = Literal['rkf45', 'dp45', 'ck45', 'rkf78']
 
 def get_integrator(integrator, *args, **kwargs):
     if integrator == "rkf45":
@@ -10,6 +15,97 @@ def get_integrator(integrator, *args, **kwargs):
         return CashKarp45(*args, **kwargs)
     if integrator == "rkf78":
         return RungeKuttaFehlberg78(*args, **kwargs)
+    
+class DormandPrince45():
+    def __init__(self, f, initial_step = 1, AccuracyGoal = 10, PrecisionGoal = 10, SF = 0.9, interpolate = False, stopping_criterion = "none", hmax = 1e+16):
+
+        self.f = f
+        self.tolerance = 1
+        self.Atol = 10**(-AccuracyGoal)
+        self.Rtol = 10**(-PrecisionGoal)
+        self.initial_step = initial_step
+        self.interpolate = interpolate
+        self.SF = SF
+        self.hmax = hmax
+
+        self.a = np.array([
+            [0, 0, 0, 0, 0, 0, 0],
+            [1/5, 0, 0, 0, 0, 0, 0],
+            [3/40, 9/40, 0, 0, 0, 0, 0],
+            [44/45, -56/15, 32/9, 0, 0, 0, 0],
+            [19372/6561, -25360/2187, 64448/6561, -212/729, 0, 0, 0],
+            [9017/3168, -355/33, 46732/5247, 49/176, -5103/18656, 0, 0],
+            [35/384, 0, 500/1113, 125/192, -2187/6784, 11/84, 0]
+        ])
+
+        self.b = np.array([
+            [35/384, 0, 500/1113, 125/192, -2187/6784, 11/84, 0],
+            [5179/57600, 0, 7571/16695, 393/640, -92097/339200, 187/2100, 1/40]
+        ])
+
+        self.c = np.array([
+            0, 1/5, 3/10, 4/5, 8/9, 1, 1
+        ])
+
+        self.stopping_criterion = stopping_criterion
+
+    def integrate(self, x_start, x_end, y_start, initial_step):
+
+        x = [x_start]
+        y = [y_start]
+
+        h = initial_step
+        
+        while abs(x[-1]) <= abs(x_end) and self.stopping_criterion(*y[-1]):
+            next = self.next_step(x[-1], y[-1], h)
+            x.append(next[0])
+            y.append(next[1])
+            h = next[2]
+
+            if not self.stopping_criterion(*y[-1]):
+                exit = self.stopping_criterion.exit
+            else:
+                exit = "done"
+        
+        if not self.interpolate:
+            return np.array(x), np.array(y), exit
+        else:
+            return sp_int.interp1d(np.array(x), np.array(y), kind = 'cubic')
+
+    def next_step(self, x, y, h):
+        k = np.zeros(7, dtype = object)
+        h1 = h
+        while True:
+            
+            for i in range(7):
+                k[i] = self.f(x+self.c[i]*h1, y + h1*np.dot(k, self.a[i]))
+            
+            y4 = y + h1*np.dot(self.b[1], k)
+            y5 = y + h1*np.dot(self.b[0], k)
+            
+            v = y4-y5
+            w = abs(v)/(self.Atol+self.Rtol*abs(np.maximum(y4,y5)))
+
+            err = np.linalg.norm(w) / w.size ** 0.5
+
+            if err > 1:
+                h1 *= self.SF*err**(-0.2)
+                continue
+            else:
+                if err == 0:
+                    if self.hmax > 0:
+                        h2 = min(self.hmax, 2*h1)
+                    else:
+                        h2 = max(self.hmax, 2*h1)
+                    break
+                if self.hmax > 0:
+                    h2 = min(self.hmax, h1*self.SF*err**(-0.2))
+                else:
+                    h2 = max(self.hmax, h1*self.SF*err**(-0.2))
+                break
+            
+        x1 = x + h1
+        return x1, y5, h2
         
 
 class CashKarp45():
@@ -411,106 +507,3 @@ class RungeKuttaFehlberg45():
             
         x1 = x + h1
         return x1, y4, h2
-
-
-class DormandPrince45():
-    def __init__(self, f, initial_step = 1, AccuracyGoal = 10, PrecisionGoal = 10, SF = 0.9, interpolate = False, stopping_criterion = "none", verbose = False, hmax = 1e+16):
-
-        self.f = f
-        self.tolerance = 1
-        self.Atol = 10**(-AccuracyGoal)
-        self.Rtol = 10**(-PrecisionGoal)
-        self.initial_step = initial_step
-        self.interpolate = interpolate
-        self.verbose = verbose
-        self.SF = SF
-        self.hmax = hmax
-
-        self.a = np.array([
-            [0, 0, 0, 0, 0, 0, 0],
-            [1/5, 0, 0, 0, 0, 0, 0],
-            [3/40, 9/40, 0, 0, 0, 0, 0],
-            [44/45, -56/15, 32/9, 0, 0, 0, 0],
-            [19372/6561, -25360/2187, 64448/6561, -212/729, 0, 0, 0],
-            [9017/3168, -355/33, 46732/5247, 49/176, -5103/18656, 0, 0],
-            [35/384, 0, 500/1113, 125/192, -2187/6784, 11/84, 0]
-        ])
-
-        self.b = np.array([
-            [35/384, 0, 500/1113, 125/192, -2187/6784, 11/84, 0],
-            [5179/57600, 0, 7571/16695, 393/640, -92097/339200, 187/2100, 1/40]
-        ])
-
-        self.c = np.array([
-            0, 1/5, 3/10, 4/5, 8/9, 1, 1
-        ])
-
-        if stopping_criterion == "none":
-            self.stopping_criterion = lambda geo: True
-        else:
-            self.stopping_criterion = stopping_criterion
-
-    def integrate(self, x_start, x_end, y_start, initial_step):
-
-        x = [x_start]
-        y = [y_start]
-
-        h = initial_step
-
-        try:
-            while abs(x[-1]) <= abs(x_end) and self.stopping_criterion(*y[-1]):
-                if self.verbose:
-                    print("{:.4f}".format(x[-1]), end= "\r")
-                next = self.next_step(x[-1], y[-1], h)
-                x.append(next[0])
-                y.append(next[1])
-                h = next[2]
-
-            if not self.stopping_criterion(*y[-1]):
-                exit = self.stopping_criterion.exit
-            else:
-                exit = "done"
-        except KeyboardInterrupt:
-            if self.verbose:
-                print("Integration stopped.")
-            exit = "stopped"
-        
-        if not self.interpolate:
-            return np.array(x), np.array(y), exit
-        else:
-            return sp_int.interp1d(np.array(x), np.array(y), kind = 'cubic')
-
-    def next_step(self, x, y, h):
-        k = np.zeros(7, dtype = object)
-        h1 = h
-        while True:
-            
-            for i in range(7):
-                k[i] = self.f(x+self.c[i]*h1, y + h1*np.dot(k, self.a[i]))
-            
-            y4 = y + h1*np.dot(self.b[1], k)
-            y5 = y + h1*np.dot(self.b[0], k)
-            
-            v = y4-y5
-            w = abs(v)/(self.Atol+self.Rtol*abs(np.maximum(y4,y5)))
-
-            err = np.linalg.norm(w) / w.size ** 0.5
-
-            if err > 1:
-                h1 *= self.SF*err**(-0.2)
-                continue
-            else:
-                if err == 0:
-                    if self.hmax > 0:
-                        h2 = min(self.hmax, 2*h1)
-                    else:
-                        h2 = max(self.hmax, 2*h1)
-                    break
-                if self.hmax > 0:
-                    h2 = min(self.hmax, h1*self.SF*err**(-0.2))
-                else:
-                    h2 = max(self.hmax, h1*self.SF*err**(-0.2))
-                break
-            
-        x1 = x + h1
-        return x1, y5, h2

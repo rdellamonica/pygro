@@ -8,14 +8,11 @@ Welcome to PyGRO's documentation!
 
 PyGRO [pronounced /'pi.gro/, from the italian **pigro**: *lazy*] is a Python library that provides methods and functions to perform the numerical integration of the geodesic equations describing a particle or photon orbit in any metric theory of gravity, given an analytic expression of the metric tensor.
 
-
-Check out the :doc:`installation` section for getting started.
-
 .. toctree::
    :maxdepth: 2
    :caption: Tutorials:
 
-   installation
+   getting_started
    create_metric
    integrate_geodesic
    visualize

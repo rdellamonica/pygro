@@ -12,7 +12,7 @@ Given a generic spacetime described by the metric tensor :math:`g_{\mu\nu}`, the
 
 .. math::
     
-    \ddot{x}^\mu = \Gamma^{\mu}_{\nu\rho}\dot{x}^\nu\dot{x}^{\rho}.
+    \ddot{x}^\mu = -\Gamma^{\mu}_{\nu\rho}\dot{x}^\nu\dot{x}^{\rho}.
 
 Here: a dot represents a derivation with respect to an affine parameter :math:`\lambda` by which the geodesic curve is parameterized (for the time-like geodesic case we assume that this affine parameter coincides with the proper time measured by the massive particle); we assume summation over repeated indices; the quantities :math:`\Gamma^{\mu}_{\nu\rho}` represent the Christoffel symbols related to the metric, defined by
 
