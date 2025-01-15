@@ -1,4 +1,4 @@
-Define your own-spacetime
+Define your own space-time
 ================================================================
 
 In this tutorial we will go through all the different methods in PyGRO for the generation of a :meth:`~pygro.metric_engine.Metric` object that describes a particular space-time metric.
@@ -72,7 +72,7 @@ The :meth:`~pygro.metric_engine.Metric` performs tensorial operations on the new
 * The geodesic equations, representing the right-hand side in equation
     .. math::
 
-        \ddot{x}^\mu = \Gamma^{\mu}_{\nu\rho}\dot{x}^\nu\dot{x}^\rho
+        \ddot{x}^\mu = - \Gamma^{\mu}_{\nu\rho}\dot{x}^\nu\dot{x}^\rho
         
   where, :math:`\Gamma^{\mu}_{\nu\rho}` are the Christoffel symbols accessible via :meth:`~pygro.metric_engine.Metric.Christoffel`.
   These four equations are stored into a list accessible via :attr:`Metric.eq_u`.

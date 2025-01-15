@@ -1,7 +1,7 @@
-Installation
-============
+Getting started
+===============
 
-Install via pypi
+Installation
 ----------------
 
 PyGRO is distributed as a Python package that can be installed through the PyPi package manager via:

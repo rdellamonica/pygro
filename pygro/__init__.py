@@ -1,6 +1,7 @@
 from pygro.metric_engine import Metric
-from pygro.geodesic import Geodesic
 from pygro.geodesic_engine import GeodesicEngine
+from pygro.geodesic import Geodesic
+
 from pygro.observer import Observer
 
 import logging

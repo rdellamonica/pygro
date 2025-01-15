@@ -1,74 +1,61 @@
+from typing import Optional, Literal, Union, Callable, TYPE_CHECKING
 import numpy as np
 import numpy.typing as npt
 import time
 import sympy as sp
 import pygro.integrators as integrators
+from pygro.integrators import AVAILABLE_INTEGRATORS
 from pygro.metric_engine import Metric
-from pygro.geodesic import Geodesic
+if TYPE_CHECKING:
+    from pygro.geodesic import Geodesic
 from sympy.utilities.autowrap import autowrap
 from sympy.utilities.lambdify import lambdify
 import scipy.interpolate as sp_int
 import logging
-from typing import Optional, Literal, Union, Callable
+from pygro.utils import type_of_script
+from yaspin import yaspin
+from contextlib import nullcontext
 
 _BACKEND_TYPES = Literal["autowrap", "lambdify"]
 
 class GeodesicEngine():
-    r"""This is the main symbolic tool within PyGRO to perform tensorial calculations
-    starting from the spacetime metric. The ``Metric`` object can be initialized in two separate ways:
-
-    .. rubric:: Interactive mode
-    
-    In this case the ``Metric`` has to be initialized without any additional argument.
-    Later the :py:func:`Metric.initialize_metric` method should be called without additional arguments in order to enter the interactive mode.
-    During this phase the user will be asked to input:
-
-    * The ``name`` of the spacetime.
-    * The symbolic ``coordinates`` in which the metric is expressed.
-    * The symbolic expression of the spacetime metric which can be either expressed as a line elemnt :math:`ds^2 = g_{\mu\nu}dx^\mu dx^\nu` or as the single components :math:`g_{\mu\nu}` of the metric tensor.
-    * The symbolix expression of ``transformation functions`` to pseudo-cartesian coordinates which can be useful to :doc:`visualize`.
-
-    After the insertion of all the required information the metric is initialized.
-
-    .. rubric:: Functional mode
-
-    In this case the ``Metric`` object is initialized without interactive input by the user. The arguments to build the metric can be either passed to the ``Metric`` constructor upon class initialization,
-    
-    >>> spacetime_metric = pygro.Metric(**kwargs)
-
-    or as arguments to the  :py:func:`Metric.initialize_metric` method:
-
-    >>> spacetime_metric = pygro.Metric()
-    >>> spacetime_metric.initialize_metric(**kwargs)
-
-    The ``**kwargs`` that can be passed to initialize a ``Metric`` object are the following:
-
-    :param name: The name of the metric to initialize.
-    :type name: str
-    :param coordinates: Four-dimensional list containing the symbolic expression of the space-time coordinates in which the `line_element` argument is written.
-    :type coordinates: list of str
-    :param line_element: A string containing the symbolic expression of the line element (that will be parsed using `sympy`) expressed in the space-time coordinates defined in the `coordinates` argument.
-    :type line_element: str
-
-    .. note::
-        Test
-    
-    After successful initialization, the ``Metric`` instance has the following attributes:
-
-    :ivar g: The symbolic representation of the metric tensor. It is a :math:`4\times4` ``sympy.Matrix`` object.
-    :type g: sympy.Matric
-
+    r"""
+        The main numerical class in PyGRO. It deals with performing the numerical operations to integrate a :py:class:`.Geodesic` object. 
+        
+        After linking a :py:class:`.Metric` to the :py:class:`GeodesicEngine`, the latter will have the following attributes:
+        
+        :ivar motion_eq: A callable of the coordinates and their derivatives which returns the right-hand-side of the geodesic equations (casted to a first-order system of ODEs). For example, given the coordinates ``["t", "x", "y", "z"]``, the ``motion_eq`` will be of type ``(t, x, y, z, u_t, u_x, u_y, u_z) -> Iterable[float]`` of dimension 8. 
+        :vartype motion_eq: Iterable[Callable]
+        :ivar u[i]_f_timelike: a helper function that returns the numerical value of the *i*-th component of the 4-velocity of a massive test particle as a function of the others, which normalizes the 4-velocity to :math:`g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu = -1`
+        :vartype u[i]_f_timelike: Callable[Iterable[float], float]
+        :ivar u[i]_f_null: a helper function that returns the numerical value of the *i*-th component of the 4-velocity of a null test particle as a function of the others, which normalizes the 4-velocity to :math:`g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu = 0`
+        :vartype u[i]_f_null: Callable[Iterable[float], float]
+        :ivar stopping_criterion: a :py:class:`.StoppingCriterionList` representing the list of conditions to check at each integration step to determine whether to stop the integration or not.
+        :vartype stopping_criterion: StoppingCriterionList
     """
     instances = []
     
-    def __init__(self, metric: Optional[Metric] = None, backend: _BACKEND_TYPES = "autowrap", integrator = "dp45"):
+    def __init__(self, metric: Optional[Metric] = None, backend: _BACKEND_TYPES = "autowrap", integrator : AVAILABLE_INTEGRATORS = "dp45"):
+        r"""
+            The :py:class:`GeodesicEngine` constructor accepts the following arguments:
+            
+            :param metric: The :py:class:`.Metric` object to link to the :py:class:`GeodesicEngine` and from which the geodesic equations and all the related symbolic quantities are retrieved. If not provided, the :py:class:`GeodesicEngine` will be linked to the last initialized :py:class:`.Metric`.
+            :type metric: Metric
+            :param backend: The symbolic backend to use. If ``autowrap`` (defaul option) the symbolic expression will be converted, upon linking the :py:class:`.Metric` to the :py:class:`GeodesicEngine`, in pre-compiled C low-level callable with a consitent gain in performance of single function-calls. If ``lambdify`` the geodesic equations will not be compiled as C callables and will be converted to Python callables, with a loss in performances. The :py:class:`GeodesicEngine` will fallback to a ``lambdify`` whenever auxiliary py-functions are used to define the :py:class:`.Metric` object (see :doc:`create_metric` for an example).
+            :type backend: Literal["autowrap", "lambdify"]
+            :param integrator: Specifies the numerical integration schemes used to carry out the geodesic integration. See :doc:`integrators`. Default is ``dp45`` correspoding to the :py:class:`.DormandPrince45` integrator.
+            :type integrator: Literal['rkf45', 'dp45', 'ck45', 'rkf78']
+        """
         if metric == None:
-            if isinstance(Metric.instances[-1], Metric):
-                metric = Metric.instances[-1]
-                logging.warning(f"No Metric object passed to the Geodesic Engine constructor. Using last initialized Metric ({metric.name}) instead")
-                
+            if len(Metric.instances) > 0:
+                if isinstance(Metric.instances[-1], Metric):
+                    metric = Metric.instances[-1]
+                    logging.warning(f"No Metric object passed to the Geodesic Engine constructor. Using last initialized Metric ({metric.name}) instead.")
+            else:
+                raise ValueError("No Metric found, initialize one and pass it as argument to the GeodesicEngine constructor.")
+                    
         self.link_metric(metric, backend)
-        self.integrator = integrator
+        self._integrator = integrator
         GeodesicEngine.instances.append(self)
     
     def link_metric(self, g: Metric, backend: _BACKEND_TYPES):
@@ -78,10 +65,7 @@ class GeodesicEngine():
         self.eq_x = g.eq_x
         self.eq_u = g.eq_u
         
-        self.u0_s_null = g.u0_s_null
-        self.u0_s_timelike = g.u0_s_timelike
-
-        self.metric.geodesic_engine_linked = True
+        self.metric._geodesic_engine_linked = True
         self.metric.geodesic_engine = self
 
         if (backend == "lambdify") or len(self.metric.get_parameters_functions()) > 0:
@@ -103,27 +87,43 @@ class GeodesicEngine():
         self.motion_eq = _f_eq
         
         u0_f_timelike = lambdify([*self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3], *self.metric.get_parameters_symb()], self.metric.subs_functions(g.u0_s_timelike))
+        self.u0_f_timelike = lambda initial_x, u1, u2, u3: abs(u0_f_timelike(*initial_x, u1, u2, u3, *self.metric.get_parameters_val()))
+        u1_f_timelike = lambdify([*self.metric.x, self.metric.u[0], self.metric.u[2], self.metric.u[3], *self.metric.get_parameters_symb()], self.metric.subs_functions(g.u1_s_timelike))
+        self.u1_f_timelike = lambda initial_x, u0, u2, u3: abs(u1_f_timelike(*initial_x, u0, u2, u3, *self.metric.get_parameters_val()))
+        u2_f_timelike = lambdify([*self.metric.x, self.metric.u[0], self.metric.u[1], self.metric.u[3], *self.metric.get_parameters_symb()], self.metric.subs_functions(g.u2_s_timelike))
+        self.u2_f_timelike = lambda initial_x, u0, u1, u3: abs(u2_f_timelike(*initial_x, u0, u1, u3, *self.metric.get_parameters_val()))
+        u3_f_timelike = lambdify([*self.metric.x, self.metric.u[0], self.metric.u[1], self.metric.u[2], *self.metric.get_parameters_symb()], self.metric.subs_functions(g.u3_s_timelike))
+        self.u3_f_timelike = lambda initial_x, u0, u1, u2: abs(u3_f_timelike(*initial_x, u0, u1, u2, *self.metric.get_parameters_val()))
         
-        def f_u0_timelike(initial_x, u1, u2, u3):
-            return abs(u0_f_timelike(*initial_x, u1, u2, u3, *self.metric.get_parameters_val()))
-
         u0_f_null = lambdify([*self.metric.x, self.metric.u[1], self.metric.u[2], self.metric.u[3], *self.metric.get_parameters_symb()], self.metric.subs_functions(g.u0_s_null))
-
-        def f_u0_null(initial_x, u1, u2, u3):
-            return abs(u0_f_null(*initial_x, u1, u2, u3, *self.metric.get_parameters_val()))
-
-        self.u0_f_timelike = f_u0_timelike
-        self.u0_f_null = f_u0_null
+        self.u0_f_null = lambda initial_x, u1, u2, u3: abs(u0_f_null(*initial_x, u1, u2, u3, *self.metric.get_parameters_val()))
+        u1_f_null = lambdify([*self.metric.x, self.metric.u[0], self.metric.u[2], self.metric.u[3], *self.metric.get_parameters_symb()], self.metric.subs_functions(g.u1_s_null))
+        self.u1_f_null = lambda initial_x, u0, u2, u3: abs(u1_f_null(*initial_x, u0, u2, u3, *self.metric.get_parameters_val()))
+        u2_f_null = lambdify([*self.metric.x, self.metric.u[0], self.metric.u[1], self.metric.u[3], *self.metric.get_parameters_symb()], self.metric.subs_functions(g.u2_s_null))
+        self.u2_f_null = lambda initial_x, u0, u1, u3: abs(u2_f_null(*initial_x, u0, u1, u3, *self.metric.get_parameters_val()))
+        u3_f_null = lambdify([*self.metric.x, self.metric.u[0], self.metric.u[1], self.metric.u[2], *self.metric.get_parameters_symb()], self.metric.subs_functions(g.u3_s_null))
+        self.u3_f_null = lambda initial_x, u0, u1, u2: abs(u3_f_null(*initial_x, u0, u1, u2, *self.metric.get_parameters_val()))
         
         self.stopping_criterion = StoppingCriterionList([])
         
         logging.info("Metric linking complete.")
 
     def set_stopping_criterion(self, expr: str, exit_str: str = "none"):
+        r"""
+            Creates a :py:class:`.StoppingCriterion` given the symbolic expression contained in the ``expr`` argument and sets is as the sole stopping criterion for the :py:class:`GeodesicEngine`.
+            
+            :param expr: a string to be sympy-parsed containing the expression that will be evaluated at each integration time-step.
+            :type expr: str
+            :param exit_str: the exit message that will be attached to the :py:class:`.Geodesic` when the stopping condition is met (*i.e.* when the condition in ``expr`` return ``False``).
+            :type exit_str: str
+        """
         self.stopping_criterion = StoppingCriterionList([])
         self.add_stopping_criterion(expr, exit_str)
         
     def add_stopping_criterion(self, expr: str, exit_str: str = "none"):
+        r"""
+            Adds a :py:class:`.StoppingCriterion` to the :py:class:`.StoppingCriterionList` of the :py:class:`.GeodesicEngine`. Has the same parameters as :py:func:`set_stopping_criterion`
+        """
         expr_s = sp.parse_expr(expr)
         free_symbols = list(expr_s.free_symbols-set(self.metric.x))
         check = True
@@ -139,12 +139,32 @@ class GeodesicEngine():
         else:
             raise TypeError(f"Unkwnown symbol {str(symbol)}")
         
-
-    def integrate(self, geo: Geodesic, tauf: float, initial_step: float, verbose: bool = False, direction: Literal["fw", "bw"] = "fw", interpolate: bool = False, **integrator_kwargs):
+    def integrate(self, geo: 'Geodesic', tauf: float, initial_step: float, verbose: bool = False, direction: Literal["fw", "bw"] = "fw", **integrator_kwargs) -> None:
+        """
+            The main function for the numerical integration. Accepts an initialized :py:class:`.Geodesic` (*i.e.* with appropriately set initial space-time position and 4-velocity), performs the numerical integration of the geodesic equations up to the provided final value of the affine parameter ``tauf`` or until a stopping condition is met, and returns to the input :py:class:`.Geodesic` object the integrated numerical array.
+            
+            See :doc:`integrate_geodesic` for a complete tutorials.
+            
+            :param geo: the :py:class:`.Geodesic` to be integrated.
+            :type geo: Geodesic
+            :param tauf: the value of the final proper time at which to stop the numerical integration.
+            :type tauf: float
+            :param initial_step: the value of the initial proper time step.
+            :type initial_step: float
+            :param verbose: whether to log the integration progress to the standard output or not.
+            :type verbose: bool
+            :param direction: if "fw" the integration is carried on forward in proper time; if "bw" the integration is carried on backward in proper time. The correct signs for ``tauf`` and ``initial_step`` will be assigned automatically.
+            :type direction: Literal["fw", "bw"]
+            :param integrator_kwargs: the kwargs to be passed to the integrator.
+        """
+        if not direction in ["fw", "bw"]:
+            raise TypeError("direction must be either 'fw' or 'bw'.")
         if verbose:
-            logging.info("Integrating...")
+            logging.info("Starting integration.")
+            spinner = yaspin()
+            spinner.start()
 
-        integrator = integrators.get_integrator(self.integrator, self.motion_eq, stopping_criterion = self.stopping_criterion, verbose = verbose, **integrator_kwargs)
+        integrator = integrators.get_integrator(self._integrator, self.motion_eq, stopping_criterion = self.stopping_criterion, **integrator_kwargs)
 
         if direction == "bw":
             h = -initial_step
@@ -159,17 +179,18 @@ class GeodesicEngine():
                 
         if verbose:
             time_elapsed = (time.perf_counter() - time_start)
-            logging.info(f"Integration completed in {time_elapsed:.5} s with result '{exit}'")
+            spinner.stop()
+            logging.info(f"Integration completed in {time_elapsed:.5} s with result '{exit}'.")
 
         geo.tau = tau
         geo.x = np.stack(xu[:,:4])
         geo.u = np.stack(xu[:,4:])
-        geo.exit = exit     
-    
-    def set_integrator(self, integrator):
-        self.integrator = integrator
+        geo.exit = exit
 
 class StoppingCriterion:
+    r"""
+        An helper class to deal with stopping criterion. Requires as input the lambdified callable (``stopping_criterion``) built from a sympy symboic expression (``expr``) and can be called on a given geodesic step to return either ``True`` if the condition in the expression is verified or ``False`` when it is not, stopping the integration. It also requires an exit message (``exit_str``), useful to flag a geodesic that fires the stopping criterion (*i.e.* a geodesic that ends in an horizon).
+    """
     def __init__(self, stopping_criterion: Callable[[npt.ArrayLike], bool], expr: str, exit_str: str):
         self.stopping_criterion = stopping_criterion
         self.exit = exit_str
@@ -182,6 +203,9 @@ class StoppingCriterion:
         return self.stopping_criterion(*geo)
 
 class StoppingCriterionList:
+    r"""
+        An aggregator of multiples :py:class:`StoppingCriterion`s. When called on a geodesic it tests multiple stopping criterions on the last step and returns ``False`` if at least one of the ``stopping_criterions`` is falsy. In that case stores the ``exit`` of the stopping criterion that fired the condition.
+    """
     def __init__(self, stopping_criterions: list[StoppingCriterion]):
         self.stopping_criterions = stopping_criterions
         self.exit = None
@@ -198,5 +222,6 @@ class StoppingCriterionList:
             check &= stopping_criterion(*geo)
             if not check:
                 self.exit = stopping_criterion.exit
+                break
 
         return check

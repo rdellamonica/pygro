@@ -1,7 +1,9 @@
-`Metric()`
+`Metric`
 ================================================================
 
-The main object in PyGRO is the `metric_engine` object which is used to describe the spacetime metric.
+The main symbolic object in PyGRO is the ``pygro.Metric`` class which is used to describe the space-time metric and contains a variety of helper function to perform the symbolic calculations and obtain the geodesic equations.
 
-.. autoclass:: pygro.metric_engine.Metric
+.. autoclass:: pygro.metric_engine.Metric()
     :members:
+
+    .. automethod:: __init__
