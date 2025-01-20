@@ -1,7 +1,7 @@
 `GeodesicEngine`
 ================================================================
 
-The main object in PyGRO is the `metric_engine` object which is used to describe the spacetime metric.
+The main object in PyGRO to perform numerical integrations of the geodesic equations is the :py:class:`.GeodesicEngine` class.
 
 .. autoclass:: pygro.GeodesicEngine
     :members:

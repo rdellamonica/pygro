@@ -1,12 +1,9 @@
-.. PyGRO documentation master file, created by
-   sphinx-quickstart on Mon Feb  7 16:24:07 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to PyGRO's documentation!
+PyGRO: a Python integrator for General Relativistic Orbits
 =================================
 
-PyGRO [pronounced /'pi.gro/, from the italian **pigro**: *lazy*] is a Python library that provides methods and functions to perform the numerical integration of the geodesic equations describing a particle or photon orbit in any metric theory of gravity, given an analytic expression of the metric tensor.
+PyGRO [pronounced /'pi.gro/, from the italian **pigro**: *lazy*] is a Python library that provides a series of tools to perform the numerical integration of the geodesic equations describing a particle or photon orbit in any metric theory of gravity, given an analytic expression of the metric tensor.
+
+This documentation comes with a series of tutorial that will the guide you through the different possibilities that PyGRO offers
 
 .. toctree::
    :maxdepth: 2
@@ -15,9 +12,10 @@ PyGRO [pronounced /'pi.gro/, from the italian **pigro**: *lazy*] is a Python lib
    getting_started
    create_metric
    integrate_geodesic
+   define_observer
    visualize
    
-
+and with a detailed API guide that provides support for all the classes and methods in PyGRO
 
 .. toctree::
    :maxdepth: 2
@@ -26,13 +24,13 @@ PyGRO [pronounced /'pi.gro/, from the italian **pigro**: *lazy*] is a Python lib
    metricengine
    geodesicengine
    geodesic
+   observer
    integrators
 
 
 
 Indices and tables
-==================
+-----------------
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`

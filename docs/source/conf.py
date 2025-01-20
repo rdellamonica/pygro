@@ -36,8 +36,12 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
-    'sphinx.ext.mathjax'
+    'sphinx.ext.mathjax',
+    "sphinx_github_style",
+    'sphinx_copybutton',
 ]
+
+linkcode_url = "https://github.com/rdellamonica/pygro"
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
