@@ -1,0 +1,61 @@
+Define a space-time Observer
+================================================================
+
+.. image:: _static/observer-illustration.png
+  :width: 100%
+  :alt: Geodesic Engine
+
+.. code-block::
+
+    observer = pygro.Observer(
+        metric = metric,
+        x = [0, 50, np.pi/2, 0],
+        coframe = ["sqrt(A(r))*dt","-dr/sqrt(A(r))", "-r*dtheta", "-r*sin(theta)*dphi"]
+    )
+
+
+.. code-block::
+
+    geo = pygro.Geodesic("time-like", geo_engine, verbose = False)
+
+    geo.initial_x = observer.x
+    geo.initial_u = observer.from_f1(np.deg2rad(15), np.deg2rad(5), type = geo.type, v = 0.3)
+
+
+
+.. code-block::
+
+    geo_engine.integrate(geo, 1000, 1, verbose = True)
+
+.. image:: _static/observer_example_1.png
+  :width: 100%
+  :alt: Geodesic Engine
+
+
+.. code-block::
+
+    observer = pygro.Observer(
+        metric = metric,
+        x = [0, 25*np.sqrt(2), np.pi/2, np.pi/4],
+        coframe = ["sqrt(A(r))*dt","-dr/sqrt(A(r))", "-r*dtheta", "-r*sin(theta)*dphi"]
+    )
+
+    phi_arr = np.linspace(-np.pi/4, np.pi/4, 101)
+    geo_arr = []
+
+    for phi in phi_arr:
+
+        geo = pygro.Geodesic("null", geo_engine, verbose = False)
+        
+        geo.initial_x = observer.x
+        geo.initial_u = observer.from_f1(0, phi, type = geo.type)
+        
+        geo_engine.integrate(geo, 1000, 1, verbose = False)
+
+        geo_arr.append(geo)
+
+
+
+.. image:: _static/observer_example_2.png
+  :width: 100%
+  :alt: Geodesic Engine

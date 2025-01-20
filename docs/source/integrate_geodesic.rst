@@ -5,7 +5,7 @@ Integrating the geodesic equations related to a specific metric tensor is the ma
 
 .. image:: _static/PygroGeodesicEngine.png
   :width: 100%
-  :alt: GeodesicEngine
+  :alt: Geodesic Engine
 
 
 Given a generic spacetime described by the metric tensor :math:`g_{\mu\nu}`, the geodesic equations related to this metric read:
@@ -52,6 +52,8 @@ Here, we have used the :meth:`~pygro.geodesic_engine.GeodesicEngine.set_stopping
  
 Integrating time-like and null geodesics
 -----------------------------------------
+
+We can now proceed to the numerical integration of actual geodesics.
 
 .. toctree::
 

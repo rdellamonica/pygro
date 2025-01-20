@@ -54,6 +54,10 @@ class Geodesic():
         self._tau = np.empty(0)
         self._x = np.empty((0,4))
         self._u = np.empty((0,4))
+    
+    @property
+    def type(self) -> _GEODESIC_TYPE:
+        return self._type
         
     @property
     def initial_x(self) -> np.ndarray:
