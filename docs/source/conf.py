@@ -39,6 +39,7 @@ extensions = [
     'sphinx.ext.mathjax',
     "sphinx_github_style",
     'sphinx_copybutton',
+    "nbsphinx",
 ]
 
 linkcode_url = "https://github.com/rdellamonica/pygro"

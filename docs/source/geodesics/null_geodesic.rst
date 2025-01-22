@@ -79,4 +79,4 @@ which can be visualized as
 
 We can play around by changing the starting point of the geodesic and its 4-velocity to see how the the integrated geodesic changes depending on the initial data. Nevertheless, directly using the :py:meth:`~pygro.geodesic.Geodesic.set_starting_4velocity` to fix the initial components of the 4-velocity has its drawebacks as one directly fixes the derivatives of the space-time coordinates at the initial time which in principle have no physical meaning. A much more physical way of fixing the initial conditions is to choose a physical observer, using the :py:class:`.Observer` class and use it to fix initial conditions for null geodesics starting from a specific direction in the observer's reference frame.
 
-This will be explained in more details in the :doc:`define_observer` tutorial.
+This will be explained in more details in the :doc:`../define_observer` tutorial.

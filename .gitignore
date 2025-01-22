@@ -9,6 +9,7 @@ pygro/default_metrics/__pycache__/
 */.ipynb_checkpoints/*
 test_integrator.py
 *.metric
+docs/build
 docs/source
 docs/make.bat
 docs/Makefile

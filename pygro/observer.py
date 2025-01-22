@@ -129,19 +129,37 @@ class Observer:
             v = 1
 
         x_obs: float = v*np.cos(theta_obs)*np.cos(phi_obs)
-        y_obs: float = v*np.sin(theta_obs)
-        z_obs: float = v*np.cos(theta_obs)*np.sin(phi_obs)
+        y_obs: float = v*np.cos(theta_obs)*np.sin(phi_obs)
+        z_obs: float = v*np.sin(theta_obs)
         
         return x_obs, y_obs, z_obs
     
     def from_f1(self, theta_obs: float, phi_obs: float, type = _GEODESIC_TYPE, v: Optional[float] = None):
+        r'''
+            Returns a 4-vector corresponding to the initial 4-velocity for a time-like or null geodesic (depending on the ``type`` argument) fired with angles ``theta_obs`` and ``phi_obs`` from the :math:`f_1` vector. See :doc:`define_observer` for an illustrative example of this functionality.
+            
+            :param theta_obs: The angle :math:`\theta_{\rm obs}` in the local observer's frame.
+            :type theta_obs: float
+            :param phi_obs: The angle :math:`\phi_{\rm obs}` in the local observer's frame.
+            :type phi_obs: float
+            :param type: The vector normalization. It accepts strings with either ``"time-like"`` (:math:`g_{\mu\nu}u^\mu u^\nu = -1`) or ``"null"`` (:math:`g_{\mu\nu}u^\mu u^\nu = 0`). 
+            :type type: Literal['time-like', 'null']
+            :param v: The modulus of the spatial velocity of the geodesic. To be specified in the ``time-like case.``
+            :type v: float
+        '''
         x, y, z = self._from_frame_vector(theta_obs, phi_obs, type, v)
         return self.convert_3vector([x, y, z], type)
     
     def from_f2(self,  theta_obs: float, phi_obs: float, type = _GEODESIC_TYPE, v: Optional[float] = None):
+        r'''
+            As :py:meth:`~.pygro.observer.Observer.from_f1` method, but for the vector :math:`f_2`.
+        '''
         x, y, z = self._from_frame_vector(theta_obs, phi_obs, type, v)
         return self.convert_3vector([z, x, y], type)
     
     def from_f3(self,  theta_obs: float, phi_obs: float, type = _GEODESIC_TYPE, v: Optional[float] = None):
+        r'''
+            As :py:meth:`~.pygro.observer.Observer.from_f1` method, but for the vector :math:`f_3`.
+        '''
         x, y, z = self._from_frame_vector(theta_obs, phi_obs, type, v)
         return self.convert_3vector([z, y, x], type)
