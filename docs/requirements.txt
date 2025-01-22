@@ -1,0 +1,4 @@
+furo
+nbsphinx
+sphinx_github_style
+sphinx_copybutton
