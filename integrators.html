@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Observer" href="observer.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Orbital precession" href="examples/Schwarzschild-Precession.html" /><link rel="prev" title="Visualize the results" href="visualize.html" />
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Integrators - PyGRO 1.0.0 documentation</title>
@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="_static/github_style.css?v=1093691d" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=83708512" />
     
     
 
@@ -191,6 +192,10 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="_static/pygro-logo.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="_static/pygro-logo-dark.png" alt="Dark Logo"/>
+  </div>
   
   <span class="sidebar-brand-text">PyGRO 1.0.0 documentation</span>
   
@@ -201,7 +206,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="create_metric.html">Define your own space-time</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="integrate_geodesic.html">Integrate a geodesic in PyGRO</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Integrate a geodesic in PyGRO</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -211,6 +216,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="define_observer.html">Define a space-time Observer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualize.html">Visualize the results</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Integrators</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
 <ul>
@@ -219,12 +225,11 @@
 <li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-ISCO.html">Innermost Stable Circilar Orbit</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="metricengine.html"><cite>Metric</cite></a></li>
 <li class="toctree-l1"><a class="reference internal" href="geodesicengine.html"><cite>GeodesicEngine</cite></a></li>
 <li class="toctree-l1"><a class="reference internal" href="geodesic.html"><cite>Geodesic</cite></a></li>
 <li class="toctree-l1"><a class="reference internal" href="observer.html"><cite>Observer</cite></a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Integrators</a></li>
 </ul>
 
 </div>
@@ -267,6 +272,40 @@
         <article role="main" id="furo-main-content">
           <section id="integrators">
 <h1>Integrators<a class="headerlink" href="#integrators" title="Link to this heading">¶</a></h1>
+<p>Here, we collect the documentations of the ordinary-differential-equations (ODE) integrators that are implemented in PyGRO.</p>
+<p>A series of different integration schemes is pre-built in PyGRO. These can be chosen at the moment of defining a <code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code>.</p>
+<p>In particular, we have implemented a series of adaptive step-size <a class="reference external" href="https://en.wikipedia.org/wiki/Runge-Kutta_methods#Explicit_Runge-Kutta_methods">explicit Runge-Kutta methods</a>:</p>
+<ul class="simple">
+<li><p><strong>Runge-Kutta-Fehlberg4(5)</strong>: (<code class="docutils literal notranslate"><span class="pre">integrator</span> <span class="pre">=</span> <span class="pre">&quot;rkf45&quot;</span></code>) embedded method from the Runge-Kutta family of the 4th order with error estiamtion of the 5th order. The implemented version is based on <a class="footnote-reference brackets" href="#id5" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p></li>
+<li><p><strong>Dormand-Prince5(4)</strong>: (<code class="docutils literal notranslate"><span class="pre">integrator</span> <span class="pre">=</span> <span class="pre">&quot;dp45&quot;</span></code>) embedded method of the 5th order with error estiamtion of the 4th order. The implemented version is based on <a class="footnote-reference brackets" href="#id6" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. It is the <strong>default</strong> choice in PyGRO when no <code class="docutils literal notranslate"><span class="pre">integrator</span></code> argument is passed to the <code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code>.</p></li>
+<li><p><strong>Cash-Karp</strong>: (<code class="docutils literal notranslate"><span class="pre">integrator</span> <span class="pre">=</span> <span class="pre">&quot;ck45&quot;</span></code>) embedded method of the 4th order with error estiamtion of the 5th order. The implemented version is based on <a class="footnote-reference brackets" href="#id7" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p></li>
+<li><p><strong>Runge-Kutta-Fehlberg7(8)</strong>: (<code class="docutils literal notranslate"><span class="pre">integrator</span> <span class="pre">=</span> <span class="pre">&quot;rkf78&quot;</span></code>) embedded method from the Runge-Kutta family of the 7th order with error estiamtion of the 8th order. The implemented version is based on <a class="footnote-reference brackets" href="#id8" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p></li>
+</ul>
+<p>In the future, we also plan to implement implicit and symplectic integrations schemes.</p>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Fehlberg, E (1964). “New high-order Runge-Kutta formulas with step size control for systems of first and second-order differential equations”. Zeitschrift für Angewandte Mathematik und  Mechanik. 44 (S1): T17 - T29. <a class="reference external" href="https://doi.org/10.1002%2Fzamm.19640441310">doi:10.1002/zamm.19640441310</a>.</p>
+</aside>
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Dormand, J.R.; Prince, P.J. (1980). “A family of embedded Runge-Kutta formulae”. Journal of Computational and Applied Mathematics. 6 (1): 19-26. <a class="reference external" href="https://doi.org/10.1016/0771-050X(80)90013-3">doi:10.1016/0771-050X(80)90013-3</a></p>
+</aside>
+<aside class="footnote brackets" id="id7" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<ol class="upperalpha simple" start="10">
+<li><ol class="upperalpha simple" start="18">
+<li><p>Cash, A. H. Karp. (1990) “A variable order Runge-Kutta method for initial value problems with rapidly varying right-hand sides”, ACM Transactions on Mathematical Software 16: 201-222. <a class="reference external" href="https://doi.org/10.1145/79505.79507">doi:10.1145/79505.79507</a>.</p></li>
+</ol>
+</li>
+</ol>
+</aside>
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>Fehlberg, Erwin (1968) “Classical fifth-, sixth-, seventh-, and eighth-order Runge-Kutta formulas with stepsize control”. NASA Technical Report 287. (<a class="reference external" href="https://ntrs.nasa.gov/api/citations/19680027281/downloads/19680027281.pdf">PDF</a>).</p>
+</aside>
+</aside>
 </section>
 
         </article>
@@ -274,15 +313,23 @@
       <footer>
         
         <div class="related-pages">
-          
-          <a class="prev-page" href="observer.html">
+          <a class="next-page" href="examples/Schwarzschild-Precession.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Orbital precession</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="visualize.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><cite>Observer</cite></div>
+                <div class="title">Visualize the results</div>
                 
               </div>
             </a>
