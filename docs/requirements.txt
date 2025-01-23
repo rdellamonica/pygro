@@ -1,3 +1,6 @@
+sphinx
+sphinx_markdown_builder
+sphinx_rtd_theme
 furo
 nbsphinx
 sphinx_github_style
