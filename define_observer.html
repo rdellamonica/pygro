@@ -191,10 +191,6 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
-  <div class="sidebar-logo-container">
-    <img class="sidebar-logo only-light" src="_static/PyGROLogo.png" alt="Light Logo"/>
-    <img class="sidebar-logo only-dark" src="_static/PyGROLogo_dark.png" alt="Dark Logo"/>
-  </div>
   
   <span class="sidebar-brand-text">PyGRO 1.0.0 documentation</span>
   
@@ -274,7 +270,9 @@
 <section id="theoretical-background">
 <h2>Theoretical background<a class="headerlink" href="#theoretical-background" title="Link to this heading">¶</a></h2>
 <p>The approach to General Relativity that employs observer frames is known as the <em>tetrad formalism</em> or Cartan formalism. In this framework, it is possible to construct frames (also called vierbein) at each point on the curved manifold, <em>i.e.</em> constructing a frame bundle over the manifold. These frames consist of four orthonormal vectors that we denote as <span class="math notranslate nohighlight">\(\{f^\alpha_a\}\)</span> (greek indices represent the components of the frame vector in the chart coordinates fixed on the manifold while roman indices select one of the frame vector): one time-like vector (<span class="math notranslate nohighlight">\(f^\alpha_0\)</span>) and three space-like vectors (<span class="math notranslate nohighlight">\(f^\alpha_i\)</span>), representing respectively the time axis of a given observer and a series of orthonormal spatial axes, forming a spatial tetrad, at a given point. The observer uses thse axes to define tangent vectors to the manifold and project them in a convenient way in its own frame. In this sense, we can say that the frame <span class="math notranslate nohighlight">\(\{f^\alpha_a\}\)</span> provides a local basis for tangent vectors at the observer’s location.</p>
-<a class="reference internal image-reference" href="_images/observer-illustration.png"><img alt="Reference frame of a given observer" src="_images/observer-illustration.png" style="width: 100%;" />
+<a class="only-light reference internal image-reference" href="_images/observer-illustration.png"><img alt="Reference frame of a given observer" class="only-light" src="_images/observer-illustration.png" style="width: 100%;" />
+</a>
+<a class="only-dark reference internal image-reference" href="_images/observer-illustration-dark.png"><img alt="Reference frame of a given observer" class="only-dark" src="_images/observer-illustration-dark.png" style="width: 100%;" />
 </a>
 <p>Similarly, one can define a co-frame <span class="math notranslate nohighlight">\(\{f_\beta^b\}\)</span> which forms the basis for tangent 1-forms at the observer’s location.</p>
 <p>This can be generalized and one can use the defined frame and co-frame basis to define any tensorial quantity the in the tangent or co-tangent bundle (or any product of these). For example, the metric tensor can be expressed in the coframe as</p>
@@ -297,7 +295,9 @@ f^a_\alpha f^\beta_b g_{ab} &amp;= \eta_{\alpha\beta}.\end{split}\]</div>
 \[ds^2 = -\left(1-\frac{2M}{r}\right)dt^2+\left(1-\frac{2M}{r}\right)^{-1}dr^2+r^2(d\theta^2+\sin^2\theta d\phi^2).\]</div>
 </div>
 <p>We want to fix an observer at a certain point so that the <span class="math notranslate nohighlight">\(f_1\)</span> frame vector points in the radial direction, towards the black hole. The other frame vectors, <span class="math notranslate nohighlight">\(f_2\)</span> and <span class="math notranslate nohighlight">\(f_3\)</span> will point along the <em>angular</em> directions at the observer’s positon, opposite to the coordinate basis vecotor (to ensure the left-handedness of the frame).</p>
-<a class="reference internal image-reference" href="_images/observer-illustration-schwarzschild.png"><img alt="Geodesic Engine" src="_images/observer-illustration-schwarzschild.png" style="width: 100%;" />
+<a class="only-light reference internal image-reference" href="_images/observer-illustration-schwarzschild.png"><img alt="Geodesic Engine" class="only-light" src="_images/observer-illustration-schwarzschild.png" style="width: 100%;" />
+</a>
+<a class="only-dark reference internal image-reference" href="_images/observer-illustration-schwarzschild-dark.png"><img alt="Geodesic Engine" class="only-dark" src="_images/observer-illustration-schwarzschild-dark.png" style="width: 100%;" />
 </a>
 <p>When these ingredients are put together, and equation <a class="reference internal" href="#equation-metric-tetrad">(1)</a> is taken into account, one can define a co-frame basis for the Schwarzschild metric (expressed in Schwarzschild coordinates and hance defined in terms of the coordinate basis of the co-tangent space <span class="math notranslate nohighlight">\(\{dt,\,dr,\,d\theta,\,d\phi\}\)</span>) as</p>
 <div class="math-wrapper docutils container">
@@ -347,7 +347,9 @@ f_3 &amp;= -\frac{1}{r}\partial_\theta\end{split}\]</div>
 <p>We can now use the newly defined <code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code> object to set initial conditions for photons or test-particles in a more physical way than done in the previous tutorials (<a class="reference internal" href="integrate_geodesic.html"><span class="doc">Integrate a geodesic in PyGRO</span></a>).</p>
 <p>To do so, we can use the methods <code class="xref py py-meth docutils literal notranslate"><span class="pre">from_f1()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">from_f2()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">from_f3()</span></code> of the <code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code> class to fire a geodesic that forms specific angles with respect to the <span class="math notranslate nohighlight">\(f_1\)</span>, <span class="math notranslate nohighlight">\(f_2\)</span> and <span class="math notranslate nohighlight">\(f_3\)</span> frame vectors respectively. To do so, we define the angles <span class="math notranslate nohighlight">\(\theta_{\rm obs}\)</span> and <span class="math notranslate nohighlight">\(\phi_{\rm obs}\)</span> that correspond to the usual longitude and latitude in the observer’s reference frame taking as origin the given frame vector.</p>
 <p>For example, for the <span class="math notranslate nohighlight">\(f_1\)</span> case, these angle are illustrated here:</p>
-<a class="reference internal image-reference" href="_images/observer-illustration-angles.png"><img alt="Reference frame of a given observer" src="_images/observer-illustration-angles.png" style="width: 100%;" />
+<a class="only-light reference internal image-reference" href="_images/observer-illustration-angles.png"><img alt="Reference frame of a given observer" class="only-light" src="_images/observer-illustration-angles.png" style="width: 100%;" />
+</a>
+<a class="only-dark reference internal image-reference" href="_images/observer-illustration-angles-dark.png"><img alt="Reference frame of a given observer" class="only-dark" src="_images/observer-illustration-angles-dark.png" style="width: 100%;" />
 </a>
 <p>Hence, suppose we want to fire a time-like geodesic starting at the observer’s position with a spatial velocity that, in the oberver’s reference frame, has an initial direction of <span class="math notranslate nohighlight">\(\theta_{\rm obs} = 15^{\circ}\)</span> and <span class="math notranslate nohighlight">\(\phi_{\rm obs} = 5^{\circ}\)</span> from the radial inward-pointing direction (<span class="math notranslate nohighlight">\(f_1\)</span> direction) and that the module of the velocity is 30% of the speed of light (<code class="docutils literal notranslate"><span class="pre">v</span> <span class="pre">=</span> <span class="pre">0.3</span></code> given the gometrized units that we are using).</p>
 <p>This can be done by:</p>
