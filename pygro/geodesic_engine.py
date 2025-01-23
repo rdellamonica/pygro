@@ -35,7 +35,7 @@ class GeodesicEngine():
     """
     instances = []
     
-    def __init__(self, metric: Optional[Metric] = None, backend: _BACKEND_TYPES = "autowrap", integrator : AVAILABLE_INTEGRATORS = "dp45"):
+    def __init__(self, metric: Optional[Metric] = None, backend: _BACKEND_TYPES = "autowrap", integrator : AVAILABLE_INTEGRATORS = "rkf45"):
         r"""
             The :py:class:`GeodesicEngine` constructor accepts the following arguments:
             
@@ -43,7 +43,7 @@ class GeodesicEngine():
             :type metric: Metric
             :param backend: The symbolic backend to use. If ``autowrap`` (defaul option) the symbolic expression will be converted, upon linking the :py:class:`.Metric` to the :py:class:`GeodesicEngine`, in pre-compiled C low-level callable with a consitent gain in performance of single function-calls. If ``lambdify`` the geodesic equations will not be compiled as C callables and will be converted to Python callables, with a loss in performances. The :py:class:`GeodesicEngine` will fallback to a ``lambdify`` whenever auxiliary py-functions are used to define the :py:class:`.Metric` object (see :doc:`create_metric` for an example).
             :type backend: Literal["autowrap", "lambdify"]
-            :param integrator: Specifies the numerical integration schemes used to carry out the geodesic integration. See :doc:`integrators`. Default is ``dp45`` correspoding to the :py:class:`.DormandPrince45` integrator.
+            :param integrator: Specifies the numerical integration schemes used to carry out the geodesic integration. See :doc:`integrators`. Default is ``rkf45`` correspoding to the :py:class:`.RungeKuttaFehlberg45` integrator.
             :type integrator: Literal['rkf45', 'dp45', 'ck45', 'rkf78']
         """
         if metric == None:
@@ -161,9 +161,7 @@ class GeodesicEngine():
             raise TypeError("direction must be either 'fw' or 'bw'.")
         if verbose:
             logging.info("Starting integration.")
-            spinner = yaspin()
-            spinner.start()
-
+            
         integrator = integrators.get_integrator(self._integrator, self.motion_eq, stopping_criterion = self.stopping_criterion, **integrator_kwargs)
 
         if direction == "bw":
@@ -179,7 +177,6 @@ class GeodesicEngine():
                 
         if verbose:
             time_elapsed = (time.perf_counter() - time_start)
-            spinner.stop()
             logging.info(f"Integration completed in {time_elapsed:.5} s with result '{exit}'.")
 
         geo.tau = tau
@@ -204,7 +201,7 @@ class StoppingCriterion:
 
 class StoppingCriterionList:
     r"""
-        An aggregator of multiples :py:class:`StoppingCriterion`s. When called on a geodesic it tests multiple stopping criterions on the last step and returns ``False`` if at least one of the ``stopping_criterions`` is falsy. In that case stores the ``exit`` of the stopping criterion that fired the condition.
+        An aggregator of multiple :py:class:`StoppingCriterion` objects. When called on a geodesic it tests multiple stopping criterions on the last step and returns ``False`` if at least one of the ``stopping_criterions`` is falsy. In that case stores the ``exit`` of the stopping criterion that fired the condition.
     """
     def __init__(self, stopping_criterions: list[StoppingCriterion]):
         self.stopping_criterions = stopping_criterions

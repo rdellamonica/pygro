@@ -24,6 +24,7 @@ This documentation comes with a series of tutorial that will the guide you throu
    integrate_geodesic
    define_observer
    visualize
+   integrators
 
 with example notebooks:
    
@@ -45,10 +46,7 @@ and with a detailed API guide that provides support for all the classes and meth
    geodesicengine
    geodesic
    observer
-   integrators
-
-
-
+   
 Indices and tables
 -----------------
 
