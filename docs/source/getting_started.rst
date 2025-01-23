@@ -13,6 +13,8 @@ PyGRO is distributed as a Python package that can be installed through the PyPi 
 Requirements
 ----------------
 
+
+
 License
 ----------------
 
@@ -33,7 +35,7 @@ For more details, visit https://www.gnu.org/licenses/.
 Citing PyGRO
 --------------------
 
-PyGRO is accompanied by a scientific publication that can be found at.
+PyGRO will be accompanied by a scientific publication.
 
 Please cite it properly attribute it in your works:
 
@@ -46,11 +48,7 @@ Please cite it properly attribute it in your works:
        keywords = {General Relativity and Quantum Cosmology},
            year = 2025,
           month = feb,
-            eid = {},
-          pages = {},
-            doi = {},
-  archivePrefix = {arXiv},
-         eprint = {},
+         eprint = {arxiv:2502.xxxx},
    primaryClass = {gr-qc},
    }
 

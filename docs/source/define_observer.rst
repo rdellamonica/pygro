@@ -9,6 +9,12 @@ The approach to General Relativity that employs observer frames is known as the 
 .. image:: _static/observer-illustration.png
   :width: 100%
   :alt: Reference frame of a given observer
+  :class: only-light
+
+.. image:: _static/observer-illustration-dark.png
+  :width: 100%
+  :alt: Reference frame of a given observer
+  :class: only-dark
 
 Similarly, one can define a co-frame :math:`\{f_\beta^b\}` which forms the basis for tangent 1-forms at the observer's location. 
 
@@ -42,6 +48,12 @@ We want to fix an observer at a certain point so that the :math:`f_1` frame vect
 .. image:: _static/observer-illustration-schwarzschild.png
   :width: 100%
   :alt: Geodesic Engine
+  :class: only-light
+
+.. image:: _static/observer-illustration-schwarzschild-dark.png
+  :width: 100%
+  :alt: Geodesic Engine
+  :class: only-dark
 
 When these ingredients are put together, and equation :eq:`metric-tetrad` is taken into account, one can define a co-frame basis for the Schwarzschild metric (expressed in Schwarzschild coordinates and hance defined in terms of the coordinate basis of the co-tangent space :math:`\{dt,\,dr,\,d\theta,\,d\phi\}`) as 
 
@@ -108,6 +120,12 @@ For example, for the :math:`f_1` case, these angle are illustrated here:
 .. image:: _static/observer-illustration-angles.png
   :width: 100%
   :alt: Reference frame of a given observer
+  :class: only-light
+
+.. image:: _static/observer-illustration-angles-dark.png
+  :width: 100%
+  :alt: Reference frame of a given observer
+  :class: only-dark
 
 Hence, suppose we want to fire a time-like geodesic starting at the observer's position with a spatial velocity that, in the oberver's reference frame, has an initial direction of :math:`\theta_{\rm obs} = 15^{\circ}` and :math:`\phi_{\rm obs} = 5^{\circ}` from the radial inward-pointing direction (:math:`f_1` direction) and that the module of the velocity is 30% of the speed of light (``v = 0.3`` given the gometrized units that we are using).
 
