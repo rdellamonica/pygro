@@ -11,10 +11,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Build HTML
-        uses: ammaraskar/sphinx-action@master
+      - name: Set up Python
+        uses: actions/setup-python@v3
         with:
-          docs-folder: "docs/"
+          python-version: "3.x"
+      - name: Install Sphinx & Dependencies
+        run: pip install sphinx sphinx_markdown_builder sphinx_rtd_theme furo nbsphinx sphinx_github_style sphinx_copybutton
+      - name: Build Documentation
+        run: cd "$GITHUB_WORKSPACE/docs" && make html
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
