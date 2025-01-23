@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: "3.x"
       - name: Install Sphinx & Dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r docs/requirements.txt
       - name: Build Documentation
         run: cd "$GITHUB_WORKSPACE/docs" && make html
       - name: Upload artifacts
