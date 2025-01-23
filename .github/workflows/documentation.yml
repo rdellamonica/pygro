@@ -8,6 +8,8 @@ jobs:
     permissions:
       contents: write
     steps:
+      - id: install_pandoc
+        run: sudo apt-get install pandoc
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
