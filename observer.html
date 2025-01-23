@@ -181,7 +181,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -264,7 +264,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -272,7 +272,70 @@
         <article role="main" id="furo-main-content">
           <section id="observer">
 <h1><cite>Observer</cite><a class="headerlink" href="#observer" title="Link to this heading">¶</a></h1>
-<p>A PyGRO object that defines a given observer in space-time. Useful to assign initial conditions to <code class="xref py py-class docutils literal notranslate"><span class="pre">Geodesic</span></code> objects.</p>
+<p>A PyGRO object that defines a given observer in space-time. Useful to assign initial conditions to <a class="reference internal" href="geodesic.html#pygro.geodesic.Geodesic" title="pygro.geodesic.Geodesic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodesic</span></code></a> objects.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygro.observer.Observer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygro.observer.</span></span><span class="sig-name descname"><span class="pre">Observer</span></span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/fc43e787a7e6ba7087e7b86b78e4ca762b633c09/pygro/observer.py#L10-L165"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.observer.Observer" title="Link to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#pygro.observer.Observer" title="pygro.observer.Observer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code></a> class represent PyGRO representation of physical observers in space-time. It is built by specifying either a frame or a co-frame uniquely identifying a tetrad in space-time. This can than be used to fire geodesics from the observer’s position giving a physical meaning to the intial values of the 4-velocity components for the integrated geodesic.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pygro.observer.Observer.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><span class="pre">Metric</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/fc43e787a7e6ba7087e7b86b78e4ca762b633c09/pygro/observer.py#L14-L50"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.observer.Observer.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Initializes the <a class="reference internal" href="#pygro.observer.Observer" title="pygro.observer.Observer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code></a> class. Accepts the following arguments:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metric</strong> (<a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><em>Metric</em></a>) – The <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a> object to link to the <code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code> and from which the geodesic equations and all the related symbolic quantities are retrieved. If not provided, the <code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code> will be linked to the last initialized <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a>.</p></li>
+<li><p><strong>x</strong> (<em>Sequence</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>]</em>) – The space-time position of the observer (must be a 4-dimensional array of numbers).</p></li>
+<li><p><strong>frame/coframe</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The symbolic definitions of either the observer’s frame or coframe in the tetrad formalism (accepts a list of four strings, one for each tetrad). See the tutorial <a class="reference internal" href="define_observer.html"><span class="doc">Define a space-time Observer</span></a> for more details.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygro.observer.Observer.convert_3vector">
+<span class="sig-name descname"><span class="pre">convert_3vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'time-like'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'null'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/fc43e787a7e6ba7087e7b86b78e4ca762b633c09/pygro/observer.py#L91-L116"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.observer.Observer.convert_3vector" title="Link to this definition">¶</a></dt>
+<dd><p>Converts a 3-vector in the reference frame of the <a class="reference internal" href="#pygro.observer.Observer" title="pygro.observer.Observer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code></a> into a 4-vector in space-time. The user must specify the components of the 3-vector <code class="docutils literal notranslate"><span class="pre">v</span></code> and the desired 4-vector <code class="docutils literal notranslate"><span class="pre">type</span></code> that can either be <code class="docutils literal notranslate"><span class="pre">time-like</span></code> or <code class="docutils literal notranslate"><span class="pre">geodesic</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vector</strong> (<em>Sequence</em><em>[</em><em>Union</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em><em>]</em>) – A 3-dimensional sequence of numbers corresponding to the components of the 3-vector in the Observer’s reference frame.</p></li>
+<li><p><strong>type</strong> (<em>Literal</em><em>[</em><em>'time-like'</em><em>, </em><em>'null'</em><em>]</em>) – The vector normalization. It accepts strings with either <code class="docutils literal notranslate"><span class="pre">&quot;time-like&quot;</span></code> (<span class="math notranslate nohighlight">\(g_{\mu\nu}u^\mu u^\nu = -1\)</span>) or <code class="docutils literal notranslate"><span class="pre">&quot;null&quot;</span></code> (<span class="math notranslate nohighlight">\(g_{\mu\nu}u^\mu u^\nu = 0\)</span>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygro.observer.Observer.from_f1">
+<span class="sig-name descname"><span class="pre">from_f1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta_obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">typing.Literal['time-like',</span> <span class="pre">'null']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/fc43e787a7e6ba7087e7b86b78e4ca762b633c09/pygro/observer.py#L137-L151"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.observer.Observer.from_f1" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a 4-vector corresponding to the initial 4-velocity for a time-like or null geodesic (depending on the <code class="docutils literal notranslate"><span class="pre">type</span></code> argument) fired with angles <code class="docutils literal notranslate"><span class="pre">theta_obs</span></code> and <code class="docutils literal notranslate"><span class="pre">phi_obs</span></code> from the <span class="math notranslate nohighlight">\(f_1\)</span> vector. See <a class="reference internal" href="define_observer.html"><span class="doc">Define a space-time Observer</span></a> for an illustrative example of this functionality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>theta_obs</strong> (<em>float</em>) – The angle <span class="math notranslate nohighlight">\(\theta_{\rm obs}\)</span> in the local observer’s frame.</p></li>
+<li><p><strong>phi_obs</strong> (<em>float</em>) – The angle <span class="math notranslate nohighlight">\(\phi_{\rm obs}\)</span> in the local observer’s frame.</p></li>
+<li><p><strong>type</strong> (<em>Literal</em><em>[</em><em>'time-like'</em><em>, </em><em>'null'</em><em>]</em>) – The vector normalization. It accepts strings with either <code class="docutils literal notranslate"><span class="pre">&quot;time-like&quot;</span></code> (<span class="math notranslate nohighlight">\(g_{\mu\nu}u^\mu u^\nu = -1\)</span>) or <code class="docutils literal notranslate"><span class="pre">&quot;null&quot;</span></code> (<span class="math notranslate nohighlight">\(g_{\mu\nu}u^\mu u^\nu = 0\)</span>).</p></li>
+<li><p><strong>v</strong> (<em>float</em>) – The modulus of the spatial velocity of the geodesic. To be specified in the <code class="docutils literal notranslate"><span class="pre">time-like</span> <span class="pre">case.</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygro.observer.Observer.from_f2">
+<span class="sig-name descname"><span class="pre">from_f2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta_obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">typing.Literal['time-like',</span> <span class="pre">'null']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/fc43e787a7e6ba7087e7b86b78e4ca762b633c09/pygro/observer.py#L153-L158"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.observer.Observer.from_f2" title="Link to this definition">¶</a></dt>
+<dd><p>As <a class="reference internal" href="#pygro.observer.Observer.from_f1" title="pygro.observer.Observer.from_f1"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_f1()</span></code></a> method, but for the vector <span class="math notranslate nohighlight">\(f_2\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygro.observer.Observer.from_f3">
+<span class="sig-name descname"><span class="pre">from_f3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta_obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_obs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">typing.Literal['time-like',</span> <span class="pre">'null']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/fc43e787a7e6ba7087e7b86b78e4ca762b633c09/pygro/observer.py#L160-L165"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.observer.Observer.from_f3" title="Link to this definition">¶</a></dt>
+<dd><p>As <a class="reference internal" href="#pygro.observer.Observer.from_f1" title="pygro.observer.Observer.from_f1"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_f1()</span></code></a> method, but for the vector <span class="math notranslate nohighlight">\(f_3\)</span>.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
         </article>
@@ -310,8 +373,34 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"><cite>Observer</cite></a><ul>
+<li><a class="reference internal" href="#pygro.observer.Observer"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></a><ul>
+<li><a class="reference internal" href="#pygro.observer.Observer.__init__"><code class="docutils literal notranslate"><span class="pre">Observer.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#pygro.observer.Observer.convert_3vector"><code class="docutils literal notranslate"><span class="pre">Observer.convert_3vector()</span></code></a></li>
+<li><a class="reference internal" href="#pygro.observer.Observer.from_f1"><code class="docutils literal notranslate"><span class="pre">Observer.from_f1()</span></code></a></li>
+<li><a class="reference internal" href="#pygro.observer.Observer.from_f2"><code class="docutils literal notranslate"><span class="pre">Observer.from_f2()</span></code></a></li>
+<li><a class="reference internal" href="#pygro.observer.Observer.from_f3"><code class="docutils literal notranslate"><span class="pre">Observer.from_f3()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -323,5 +412,7 @@
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>
