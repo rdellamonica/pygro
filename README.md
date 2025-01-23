@@ -22,7 +22,7 @@ PyGRO is distributed as a Python package that can be installed through the PyPi 
 pip install pygro
 ```
 
-or by cloning [PyGRO GitHub repository]https://github.com/rdellamonica/pygro).
+or by cloning [PyGRO GitHub repository](https://github.com/rdellamonica/pygro).
 
 ## Documentation
 
