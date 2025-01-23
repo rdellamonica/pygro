@@ -10,11 +10,7 @@ if TYPE_CHECKING:
     from pygro.geodesic import Geodesic
 from sympy.utilities.autowrap import autowrap
 from sympy.utilities.lambdify import lambdify
-import scipy.interpolate as sp_int
 import logging
-from pygro.utils import type_of_script
-from yaspin import yaspin
-from contextlib import nullcontext
 
 _BACKEND_TYPES = Literal["autowrap", "lambdify"]
 

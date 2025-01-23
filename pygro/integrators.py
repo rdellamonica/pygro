@@ -1,6 +1,5 @@
 import numpy as np
-import scipy.interpolate as sp_int
-from typing import Literal, Optional, Tuple, get_args, Callable, Union, Optional
+from typing import Literal, Optional, Tuple, Callable, Optional
 
 AVAILABLE_INTEGRATORS = Literal['rkf45', 'dp45', 'ck45', 'rkf78']
 
