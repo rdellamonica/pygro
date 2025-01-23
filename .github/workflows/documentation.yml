@@ -1,29 +1,26 @@
-name: documentation
+name: "Sphinx: Render docs"
 
-on: [push, pull_request, workflow_dispatch]
-
-permissions:
-  contents: write
+on: push
 
 jobs:
-  docs:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - id: install_pandoc
-        run: sudo apt-get install pandoc
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-      - name: Install dependencies
-        run: |
-          pip install sphinx sphinx_rtd_theme myst_parser furo nbsphinx sphinx_github_style sphinx_copybutton
-      - name: Sphinx build
-        run: |
-          sphinx-build docs/source _build
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         with:
-          publish_branch: gh-pages
+          persist-credentials: false
+      - name: Build HTML
+        uses: ammaraskar/sphinx-action@master
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-docs
+          path: docs/build/html/
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _build/
-          force_orphan: true
+          publish_dir: docs/build/html
