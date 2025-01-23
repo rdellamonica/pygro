@@ -9,6 +9,8 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
+      - id: install_pandoc
+        run: sudo apt-get install pandoc
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
       - name: Install dependencies
