@@ -1,0 +1,17 @@
+[project]
+name = "pygro"
+version = "1.0.0"
+description = "A Python Integrator for General Relativistic Orbits"
+authors = [
+    {name = "Riccardo Della Monica",email = "dellamonicariccardo@gmail.com"}
+]
+license = {text = "GNU GPL-3.0 license"}
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

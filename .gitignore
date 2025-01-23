@@ -17,3 +17,4 @@ docs/docsenv
 .gitignore
 .DS_Store
 **/.DS_Store
+setup.py
