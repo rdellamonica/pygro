@@ -1,8 +1,5 @@
 from typing import Literal, Optional, Tuple, get_args, Sequence, Union
 import numpy as np
-import time
-import sympy as sp
-from sympy.utilities.lambdify import lambdify, implemented_function
 from pygro import GeodesicEngine
 
 import logging

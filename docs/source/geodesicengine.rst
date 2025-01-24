@@ -3,7 +3,7 @@
 
 The main object in PyGRO to perform numerical integrations of the geodesic equations is the :py:class:`.GeodesicEngine` class.
 
-.. autoclass:: pygro.GeodesicEngine
+.. autoclass:: pygro.geodesic_engine.GeodesicEngine
     :members:
 
     .. automethod:: __init__

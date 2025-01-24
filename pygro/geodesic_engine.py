@@ -1,4 +1,4 @@
-from typing import Optional, Literal, Union, Callable, TYPE_CHECKING
+from typing import Optional, Literal, Callable, TYPE_CHECKING, get_args
 import numpy as np
 import numpy.typing as npt
 import time
@@ -49,12 +49,19 @@ class GeodesicEngine():
                     logging.warning(f"No Metric object passed to the Geodesic Engine constructor. Using last initialized Metric ({metric.name}) instead.")
             else:
                 raise ValueError("No Metric found, initialize one and pass it as argument to the GeodesicEngine constructor.")
-                    
+        
+        if not integrator in (valid_integrators := get_args(AVAILABLE_INTEGRATORS)):
+            raise ValueError(f"'integrator' must be one of {valid_integrators}")
+        
         self.link_metric(metric, backend)
         self._integrator = integrator
         GeodesicEngine.instances.append(self)
     
     def link_metric(self, g: Metric, backend: _BACKEND_TYPES):
+        
+        if not backend in (valid_backends := get_args(_BACKEND_TYPES)):
+            raise ValueError(f"'backend' must be one of {valid_backends}")
+        
         logging.info(f"Linking {g.name} to the Geodesic Engine")
 
         self.metric = g
@@ -73,8 +80,13 @@ class GeodesicEngine():
 
         for eq in [*self.eq_x, *self.eq_u]:
             if self._wrapper == "autowrap":
-                self._motion_eq_f.append(autowrap(self.metric.subs_functions(eq), backend='cython', args = [*self.metric.x, *self.metric.u, *self.metric.get_parameters_symb()]))
-            else:
+                try:
+                    self._motion_eq_f.append(autowrap(self.metric.subs_functions(eq), backend='cython', args = [*self.metric.x, *self.metric.u, *self.metric.get_parameters_symb()]))
+                except OSError:
+                    logging.warning("Falling back to 'lambdify' backend because the current platform is not compatible with 'autowrap'. This may affect performances.")
+                    self._wrapper = "lambdify"
+                    self._motion_eq_f.append(lambdify([*self.metric.x, *self.metric.u, *self.metric.get_parameters_symb()], self.metric.subs_functions(eq)))
+            elif self._wrapper == "lambdify":
                 self._motion_eq_f.append(lambdify([*self.metric.x, *self.metric.u, *self.metric.get_parameters_symb()], self.metric.subs_functions(eq)))
 
         def _f_eq(tau, xu):

@@ -26,8 +26,8 @@ class Integrator:
 
         h = initial_step
         
-        while abs(x[-1]) <= abs(x_end) and self.stopping_criterion(*y[-1]):
-            next = self.next_step(x[-1], y[-1], h)
+        while abs(x[-1]) < abs(x_end) and self.stopping_criterion(*y[-1]):
+            next = self.next_step(x[-1], y[-1], h, x_end)
             x.append(next[0])
             y.append(next[1])
             h = next[2]
@@ -40,6 +40,37 @@ class Integrator:
         return np.array(x), np.array(y), exit
 
 class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
+    r"""
+        Base class for explicit adaptive step-size integrators of the Runge-Kutta family.
+        
+        The local error is estimated as the difference between the two approximations at higher and lower order:
+
+        .. math::
+
+            E = \| y_{\text{high}} - y_{\text{low}} \|
+        
+        where :math:`\| \cdot \|` typically represents a norm, such as the maximum norm or the Euclidean norm (the one we use).
+        
+        The step size is adapted based on a defined error tolerance, which ensures the solution's accuracy, computed as:
+
+        .. math::
+            \text{tol} = \text{tol}_\text{abs} + \text{tol}_\text{rel} \cdot \| y \|
+            :label: integration-tolerance
+            
+        The tolerance acts as a threshold for acceptable error in the solution. If :math:`E \leq \text{tol}`, the step is accepted; otherwise, it is rejected, and a smaller step size is used.
+        
+        The constructor for the :py:class:`.ExplicitAdaptiveRungeKuttaIntegrator` object accepts the following arguments that can be directly passed to the :py:meth:`~pygro.geodesic_engine.GeodesicEngine.integrate` method of the :py:class:`.GeodesicEngine` object upon integration:
+        
+        :param accuracy_goal: the exponent that defines the integration absolute tolerance ``atol = 10**(-accuracy_goal)``, :math:`\text{tol}_\text{abs}`, in formula :eq:`integration-tolerance`.
+        :type accuracy_goal: int
+        :param precision_goal: the exponent that defines the integration relative tolerance ``rtol = 10**(-precision_goal)``, :math:`\text{tol}_\text{rel}`,  in formula :eq:`integration-tolerance`.
+        :type precision_goal: int
+        :param hmax: maximum acceptable step size (default is ``hmax = 1e+16``).
+        :type hmax: float
+        :param hmin: minimum acceptable step size (default is ``hmin = 1e-16``).
+        :type hmin: float
+    """
+    
     def __init__(self, function: Callable, stopping_criterion: Callable, order: int, stages: int, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16, hmin: Optional[float] = 1e-16):
         
         super().__init__(function, stopping_criterion)
@@ -67,12 +98,21 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
         self.sf = safety_factor
         self.hmax = hmax
         self.hmin = hmin
+        self.min_factor = 0.2
+        self.max_factor = 10
     
-    def next_step(self, x: float, y: np.ndarray, h: float) -> Tuple[float, np.ndarray, float]:
+    def next_step(self, x: float, y: np.ndarray, h: float, x_end: float) -> Tuple[float, np.ndarray, float]:
         k = np.zeros(self.stages, dtype = object)
         h1 = h
         
         while True:
+            
+            x1 = x + h1
+
+            if np.sign(h1)*(x1 - x_end) > 0:
+                x1 = x_end
+
+            h1 = x1 - x
             
             for i in range(self.stages):
                 k[i] = self.f(x+self.c[i]*h1, y + h1*np.dot(k, self.a[i]))
@@ -80,29 +120,36 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
             y_lower = y + h1*np.dot(self.b[1], k)
             y_higher = y + h1*np.dot(self.b[0], k)
             
-            v = y_lower-y_higher
-            w = abs(v)/(self.atol+self.rtol*abs(np.maximum(y_lower, y_higher)))
+            v = np.linalg.norm(y_lower-y_higher)
+            w = self.atol+self.rtol*np.linalg.norm(np.maximum(y_lower, y_higher))
 
-            err = np.linalg.norm(w) / w.size ** 0.5
+            err = v/w
+            
+            if not err == 0: K = min(max(self.sf*err**(-1/self.order), self.min_factor), self.max_factor)
 
             if err > 1:
-                h1 *= self.sf*err**(-1/self.order)
-                continue
-            else:
-                if err == 0:
-                    if self.hmax > 0:
-                        h2 = min(self.hmax, 2*h1)
-                    else:
-                        h2 = max(self.hmax, 2*h1)
-                    break
-                if self.hmax > 0:
-                    h2 = min(self.hmax, h1*self.sf*err**(-1/self.order))
+                # Reject step and try smaller step-size
+                
+                if h1 > 0:
+                    h1 = max(min(abs(self.hmax), h1*K), abs(self.hmin))
                 else:
-                    h2 = max(self.hmax, h1*self.sf*err**(-1/self.order))
+                    h1 = -max(min(abs(self.hmax), abs(h1)*K), abs(self.hmin))
+                continue
+            
+            else:
+                # Accept step
+                if err == 0:
+                    if h1 > 0:
+                        h2 = min(abs(self.hmax), 2*h1)
+                    else:
+                        h2 = -max(abs(self.hmax), 2*abs(h1))
+                    break
+                if h1 > 0:
+                    h2 = max(min(abs(self.hmax), h1*K), abs(self.hmin))
+                else:
+                    h2 = -min(max(abs(self.hmax), abs(h1)*K), abs(self.hmin))
                 break
             
-        x1 = x + h1
-        
         return x1, y_lower, h2
         
 class DormandPrince45(ExplicitAdaptiveRungeKuttaIntegrator):

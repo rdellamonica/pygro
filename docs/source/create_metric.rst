@@ -87,6 +87,15 @@ The :meth:`~pygro.metric_engine.Metric` performs tensorial operations on the new
   These are particularly useful when one needs to retrieve the time-like component of the four-velocity of a massive particle (or, equivalently, the time-like component of a photon wave-vector)
   knowing the spatial components of the velocity (which is usually the case). See :doc:`integrate_geodesic` for a working example. 
 
+Changing the value of the metric parameters
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The values of the parameters appearing in the :py:class:`.Metric` object must be set at moment of the declaration of the metric. However, through the  :py:meth:`~pygro.metric_engine.Metric.set_constant` method one can change at any time the value of the parameters stored in the metric. This is useful when one wants to see how the geodesics in a given space-time change depending on the parameters appearing in the metric tensor.  The arguments of :py:meth:`~pygro.metric_engine.Metric.set_constant` must specify the name of the parameter that one wants to change along with the new value of the parameters. For example, in the previously defined :py:class:`.Metric` we can change the value of the mass from 1 to 2 by running
+
+.. code-block::
+
+    metric.set_constant(M = 2)
+
 
 Auxiliary expressions approach
 -------------------------------

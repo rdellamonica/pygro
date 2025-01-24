@@ -6,7 +6,7 @@ import logging
 from sympy.utilities.lambdify import lambdify, implemented_function
 from sympy.core.function import AppliedUndef
 from collections.abc import Iterable
-from typing import Callable, Optional, Union
+from typing import Callable, Optional
 
 diag = sp.diag
 
