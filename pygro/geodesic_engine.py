@@ -173,10 +173,11 @@ class GeodesicEngine():
         integrator = integrators.get_integrator(self._integrator, self.motion_eq, stopping_criterion = self.stopping_criterion, **integrator_kwargs)
 
         if direction == "bw":
-            h = -initial_step
-            tauf = -tauf
+            h = -abs(initial_step)
+            tauf = -abs(tauf)
         else:
-            h = initial_step
+            h = abs(initial_step)
+            tauf = abs(tauf)
 
         if verbose:
             time_start = time.perf_counter()

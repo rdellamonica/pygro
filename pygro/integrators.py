@@ -3,6 +3,10 @@ from typing import Literal, Optional, Tuple, Callable, Optional
 
 AVAILABLE_INTEGRATORS = Literal['rkf45', 'dp45', 'ck45', 'rkf78']
 
+class IntegrationError(Exception):
+    def __init__(self, message):
+        self.message = message
+
 class Integrator:
     """
         Base class for ODE integrator.
@@ -69,9 +73,11 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
         :type hmax: float
         :param hmin: minimum acceptable step size (default is ``hmin = 1e-16``).
         :type hmin: float
+        :param max_iter: maxium namber of step-size adaptation attempts before rising an error. If this error is reached, try to use smaller ``accuracy_goal`` and/or ``precision_goal`` or to reduce the initial step size of the integration (``initial_step`` in the :py:meth:`~pygro.geodesic_engine.GeodesicEngine.integrate` method).
+        :type max_iter: int
     """
     
-    def __init__(self, function: Callable, stopping_criterion: Callable, order: int, stages: int, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16, hmin: Optional[float] = 1e-16):
+    def __init__(self, function: Callable, stopping_criterion: Callable, order: int, stages: int, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16, hmin: Optional[float] = 1e-16, max_iter: int = 100):
         
         super().__init__(function, stopping_criterion)
         
@@ -100,10 +106,13 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
         self.hmin = hmin
         self.min_factor = 0.2
         self.max_factor = 10
+        self.max_iter = max_iter
     
     def next_step(self, x: float, y: np.ndarray, h: float, x_end: float) -> Tuple[float, np.ndarray, float]:
         k = np.zeros(self.stages, dtype = object)
         h1 = h
+        
+        j = 1
         
         while True:
             
@@ -130,11 +139,16 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
             if err > 1:
                 # Reject step and try smaller step-size
                 
+                if j >= self.max_iter:
+                    raise IntegrationError("Reached maximum number of step iterations. Try reducing the initial step size.")
+                
                 if h1 > 0:
                     h1 = max(min(abs(self.hmax), h1*K), abs(self.hmin))
                 else:
                     h1 = -max(min(abs(self.hmax), abs(h1)*K), abs(self.hmin))
                 continue
+            
+                j += 1
             
             else:
                 # Accept step

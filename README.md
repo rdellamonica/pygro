@@ -1,12 +1,11 @@
 # PyGRO
 
-![PyGRO](/docs/source/_static/pygro-banner.png#gh-light-mode-only)
-![PyGRO](/docs/source/_static/pygro-banner-dark.png#gh-dark-mode-only)
+![PyGRO](https://github.com/rdellamonica/pygro/blob/master/docs/source/_static/pygro-banner.png?raw=true#gh-light-mode-only)
+![PyGRO](https://github.com/rdellamonica/pygro/blob/master/docs/source/_static/pygro-banner-dark.png?raw=true#gh-dark-mode-only)
 
-![pygro-badge](https://img.shields.io/badge/pygro-v.1.0.0-blue)
-![docs](https://img.shields.io/badge/docs-passing-green?link=https://rdellamonica.github.io/pygro/index.html)
-![pip](https://img.shields.io/badge/pypi-pygro-orange?link=https://pypi.org/project/PyGRO)
-![downloads](https://img.shields.io/pypi/dm/PyGRO)
+[<img src="https://img.shields.io/badge/pygro-v.1.0.0-blue">](https://github.com/rdellamonica/pygro)
+[<img src="https://img.shields.io/badge/docs-passing-green">](https://rdellamonica.github.io/pygro/index.html)
+[<img src="https://img.shields.io/badge/pypi-pygro-orange?link=">](https://pypi.org/project/PyGRO)
 
 ![watchers](https://img.shields.io/github/watchers/rdellamonica/pygro) ![stars](https://img.shields.io/github/stars/rdellamonica/pygro)
 

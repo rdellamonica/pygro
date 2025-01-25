@@ -30,7 +30,7 @@ with example notebooks:
    
 .. toctree::
    :maxdepth: 2
-   :caption: Examples:
+   :caption: Example Notebooks:
 
    examples/Schwarzschild-Precession.ipynb
    examples/Schwarzschild-PhotonOrbit.ipynb
