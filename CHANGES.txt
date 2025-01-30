@@ -2,10 +2,14 @@ PyGRO - Pyhton integrator for General Relativistic Orbits
 
 CHANGELOG
 |---------------------------------------------------------------------------|
+Version 1.0.1:
+- Added support for the Orbit API.
+
+Version 1.0.0:
+- First public release of PyGRO.
 
 Version 0.0.6:
 - Redefined the constants in the Metric() object and the way they are handled in the GeodesicEngine().
-
 
 Version 0.0.3.2:
 

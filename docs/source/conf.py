@@ -23,7 +23,7 @@ copyright = '2025, Riccardo Della Monica'
 author = 'Riccardo Della Monica'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0.0'
+release = '1.0.1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -39,7 +39,6 @@ extensions = [
     'sphinx.ext.mathjax',
     "sphinx_github_style",
     'sphinx_copybutton',
-    "sphinx_multiversion",
     "nbsphinx",
 ]
 

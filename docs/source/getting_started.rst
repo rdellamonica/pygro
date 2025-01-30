@@ -10,14 +10,22 @@ PyGRO is distributed as a Python package that can be installed through the PyPi 
 
    pip install pygro
 
+Alternatively, you can clone PyGRO's Github repo and install it manually:
+
+.. code-block:: console
+
+   git clone https://github.com/rdellamonica/pygro.git
+   cd pygro
+   python -m pip install .
+
 Requirements
 ----------------
 
 To successfully use this package, ensure you have the following dependencies installed. These dependencies are specified in the ``requirements.txt`` file and can be installed easily using ``pip``. Below are the exact versions required for compatibility:
 
-- **numpy==2.2.2**
-- **scipy==1.15.1**
-- **sympy==1.11.1**
+- **numpy>=2.2.2**
+- **scipy>=1.15.1**
+- **sympy>=1.11.1**
 
 You can install these dependencies by running the following command in your terminal:
 
