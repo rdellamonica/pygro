@@ -3,7 +3,7 @@
 ![PyGRO](https://github.com/rdellamonica/pygro/blob/master/docs/source/_static/pygro-banner.png?raw=true#gh-light-mode-only)
 ![PyGRO](https://github.com/rdellamonica/pygro/blob/master/docs/source/_static/pygro-banner-dark.png?raw=true#gh-dark-mode-only)
 
-[<img src="https://img.shields.io/badge/pygro-v.1.0.0-blue">](https://github.com/rdellamonica/pygro)
+[<img src="https://img.shields.io/badge/pygro-v.1.0.1-blue">](https://github.com/rdellamonica/pygro)
 [<img src="https://img.shields.io/badge/docs-passing-green">](https://rdellamonica.github.io/pygro/index.html)
 [<img src="https://img.shields.io/badge/pypi-pygro-orange?link=">](https://pypi.org/project/PyGRO)
 
