@@ -19,7 +19,7 @@ To successfully use this package, ensure you have the following dependencies ins
 - **scipy==1.15.1**
 - **sympy==1.11.1**
 
-You can install these dependencies by running the following command in your terminal::
+You can install these dependencies by running the following command in your terminal:
 
 .. code-block:: console
    

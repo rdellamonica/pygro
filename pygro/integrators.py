@@ -30,6 +30,8 @@ class Integrator:
 
         h = initial_step
         
+        exit = "failed"
+        
         while abs(x[-1]) < abs(x_end) and self.stopping_criterion(*y[-1]):
             next = self.next_step(x[-1], y[-1], h, x_end)
             x.append(next[0])

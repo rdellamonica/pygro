@@ -1,4 +1,4 @@
-`GeodesicEngine`
+``GeodesicEngine``
 ================================================================
 
 The main object in PyGRO to perform numerical integrations of the geodesic equations is the :py:class:`.GeodesicEngine` class.

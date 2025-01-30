@@ -1,7 +1,8 @@
 Define your own space-time
 ================================================================
 
-In this tutorial we will go through all the different methods in PyGRO for the generation of a :meth:`~pygro.metric_engine.Metric` object that describes a particular space-time metric.
+In this tutorial we will go through all the different methods in PyGRO for the generation of a :meth:`~pygro.metric_engine.Metric` object that describes a particular space-time metric. PyGRO uses the signature convention :math:`(-,\,+,\,+,\,+)`.
+
 For the sake of simplicity, we will devote this tutorial to the Schwarzschild solution, describing the spherically symmetric spacetime around a point-like particle with mass :math:`M`.
 When expressed in Schwarzschild coordinates :math:`(t, r, \theta, \phi)` the line element describing the geometry of this spacetime is described by
 

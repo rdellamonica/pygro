@@ -15,9 +15,9 @@ def parse_expr(expr):
 
 class Metric():
     r"""This is the main symbolic tool within PyGRO to perform tensorial calculations
-    starting from the space-time metric.
+    starting from the space-time metric. PyGRO uses the signature convention :math:`(-,\,+,\,+,\,+)`.
     
-    After successful initialization (:py:func:`Metric.__init__`), the :py:class:`Metric` instance has the following attributes:
+    After successful initialization (:py:func:`Metric.__init__`), the :py:class:`.Metric` instance has the following attributes:
 
     :ivar g: The symbolic representation of the :math:`4\times4` metric tensor.
     :vartype g: sympy.Matrix
@@ -288,7 +288,7 @@ class Metric():
                 else:
                     self.transform_s.append(x_symb)
                     self.transform_functions_str.append(x_inpt)
-                    self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
+                    self.transform_functions.append(sp.lambdify([*self.x, *self.get_parameters_symb()], x_symb, 'numpy'))
                     
         self._g_ff = lambdify([*self.x, *self.get_parameters_symb()], self.subs_functions(self.g))
         
@@ -493,7 +493,8 @@ class Metric():
                 transf = load['transform'][i]
                 transform_function = sp.parse_expr(transf)
                 self.transform_s.append(transform_function)
-                self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(transform_function), 'numpy'))
+                self.transform_functions.append(sp.lambdify([*self.x, *self.get_parameters_symb()], transform_function, 'numpy'))
+
                 
         self._g_ff = lambdify([*self.x, *self.get_parameters_symb()], self.subs_functions(self.g))
 
@@ -748,7 +749,9 @@ class Metric():
         
         free_sym = list(expr.free_symbols-set(self.get_parameters_symb()))
         
-        return sp.lambdify(free_sym, self.evaluate_parameters(self.subs_functions(expr)))
+        free_sym_ordered = [x_u for x_u in [*self.x, *self.u] if x_u in free_sym]
+        
+        return sp.lambdify(free_sym_ordered, self.evaluate_parameters(self.subs_functions(expr)))
         
 
     def set_coordinate_transformation(self, transform_functions: list[str]):
@@ -780,7 +783,7 @@ class Metric():
                     raise ValueError(f"Insert a valid expression for transformation to the cartesian coordinate: {x}")
                 
                 self.transform_s.append(x_symb)
-                self.transform_functions.append(sp.lambdify([self.x], self.evaluate_parameters(x_symb), 'numpy'))
+                self.transform_functions.append(sp.lambdify([self.x], x_symb, 'numpy'))
     
     def transform(self, X: npt.ArrayLike):
         r"""A function to apply the transformation defined in ``transform_functions`` to the given point.
@@ -792,7 +795,7 @@ class Metric():
         The transformed values of the coordinates of the point(s).
         """
         if self.transform_functions:
-            return self.transform_functions[0](X), self.transform_functions[1](X), self.transform_functions[2](X), self.transform_functions[3](X)
+            return self.transform_functions[0](*X, *self.get_parameters_val()), self.transform_functions[1](*X, *self.get_parameters_val()), self.transform_functions[2](*X, *self.get_parameters_val()), self.transform_functions[3](*X, *self.get_parameters_val())
         else:
             raise TypeError("Coordinate transformations not set. Use .set_coordinate_transformation method in Metric class.")
         
