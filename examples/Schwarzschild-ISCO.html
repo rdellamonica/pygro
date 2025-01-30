@@ -3,14 +3,15 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Metric" href="../metricengine.html" /><link rel="prev" title="Unstable photon orbit" href="Schwarzschild-PhotonOrbit.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Ellis wormhole" href="Wormhole.html" /><link rel="prev" title="Unstable photon orbit" href="Schwarzschild-PhotonOrbit.html" />
 
-    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>Innermost Stable Circilar Orbit - PyGRO 1.0.0 documentation</title>
+    <link rel="shortcut icon" href="../_static/pygro-icon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>Circular orbits - Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0745d1ac" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/github_style.css?v=1093691d" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=83708512" />
     
@@ -169,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">PyGRO 1.0.0 documentation</div></a>
+      <a href="../index.html"><div class="brand">Documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -181,7 +182,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -197,7 +198,7 @@
     <img class="sidebar-logo only-dark" src="../_static/pygro-logo-dark.png" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">PyGRO 1.0.0 documentation</span>
+  <span class="sidebar-brand-text">Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -215,21 +216,24 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../define_observer.html">Define a space-time Observer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrating_orbits.html">Integrating physical orbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../visualize.html">Visualize the results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../integrators.html">Integrators</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example Notebooks:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Schwarzschild-Precession.html">Orbital precession</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Schwarzschild-PhotonOrbit.html">Unstable photon orbit</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Innermost Stable Circilar Orbit</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Circular orbits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Wormhole.html">Ellis wormhole</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../metricengine.html"><cite>Metric</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../geodesicengine.html"><cite>GeodesicEngine</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../geodesic.html"><cite>Geodesic</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../observer.html"><cite>Observer</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metricengine.html"><code class="docutils literal notranslate"><span class="pre">Metric</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../geodesicengine.html"><code class="docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../geodesic.html"><code class="docutils literal notranslate"><span class="pre">Geodesic</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observer.html"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../orbit.html"><code class="docutils literal notranslate"><span class="pre">Orbit</span></code></a></li>
 </ul>
 
 </div>
@@ -250,12 +254,16 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../_sources/examples/Schwarzschild-ISCO.ipynb.txt" title="View this page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/blob/master/docs/source/examples/Schwarzschild-ISCO.ipynb?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
-</div>
-<div class="theme-toggle-container theme-toggle-content">
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/edit/master/docs/source/examples/Schwarzschild-ISCO.ipynb" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
@@ -264,14 +272,411 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="Innermost-Stable-Circilar-Orbit">
-<h1>Innermost Stable Circilar Orbit<a class="headerlink" href="#Innermost-Stable-Circilar-Orbit" title="Link to this heading">¶</a></h1>
+          <section id="Circular-orbits">
+<h1>Circular orbits<a class="headerlink" href="#Circular-orbits" title="Link to this heading">¶</a></h1>
+<p>In this example notebook, we want to study circular orbits for <code class="docutils literal notranslate"><span class="pre">time-like</span></code> particles around a black hole in PyGRO, to show the capabilities of the code to reproduce known theoretical results.</p>
+<p>Let’s start by importing the necessary modules:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pygro
+import numpy as np
+
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+</pre></div>
+</div>
+</div>
+<p>defining the usual Schwarzschild metric:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>name = &quot;Schwarzschild spacetime&quot;
+coordinates = [&quot;t&quot;, &quot;r&quot;, &quot;theta&quot;, &quot;phi&quot;]
+
+transform_functions = [
+    &quot;t&quot;,
+    &quot;r*sin(theta)*cos(phi)&quot;,
+    &quot;r*sin(theta)*sin(phi)&quot;,
+    &quot;r*cos(theta)&quot;
+]
+
+line_element = &quot;-(1-2*M/r)*dt**2+1/(1-2*M/r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)&quot;
+
+metric = pygro.Metric(
+    name = name,
+    coordinates = coordinates,
+    line_element = line_element,
+    transform = transform_functions,
+    M = 1,
+)
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) INFO: Initializing Schwarzschild spacetime.
+(PyGRO) INFO: Calculating inverse metric.
+(PyGRO) INFO: Calculating symbolic equations of motion.
+(PyGRO) INFO: Computing helper functions to normalize 4-velocity.
+(PyGRO) INFO: The Metric (Schwarzschild spacetime) has been initialized.
+</pre></div></div>
+</div>
+<p>and defining the <code class="docutils literal notranslate"><span class="pre">GeodesicEngine</span></code> with a stopping criterion at the event horizon:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>geo_engine = pygro.GeodesicEngine(metric)
+geo_engine.set_stopping_criterion(&quot;r &gt; 2.00001*M&quot;, &quot;horizon&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) INFO: Linking Schwarzschild spacetime to the Geodesic Engine
+(PyGRO) INFO: Metric linking complete.
+</pre></div></div>
+</div>
+<section id="Stable-circular-orbit">
+<h2>Stable circular orbit<a class="headerlink" href="#Stable-circular-orbit" title="Link to this heading">¶</a></h2>
+<p>The first thing we want to study is the existence of stable orbital configurations for zero-eccentricity orbits with a radius <span class="math notranslate nohighlight">\(r&gt; 6M\)</span>.</p>
+<p>We will make use of the <code class="docutils literal notranslate"><span class="pre">Orbit</span></code> object to define a time-like geodesic starting from the values of its Keplerian-like orbital parameters. In particular, let’s fix the mandatory parameters that uniquely deterimine the in-orbital-plane motion of the star <span class="math notranslate nohighlight">\((t_P,\,a,\,e)\)</span>, to <span class="math notranslate nohighlight">\(t_P = 0\)</span> (without loss of generality), <span class="math notranslate nohighlight">\(a = 20M\)</span> and <span class="math notranslate nohighlight">\(e =0\)</span> (to obtain a circular orbit). We will not assign values to the angular orbital parameters which will be automatically be fixed to
+<span class="math notranslate nohighlight">\(0^\circ\)</span>.</p>
+<p>Moreover, we integrate the orbit for a proper time interval of <span class="math notranslate nohighlight">\(1000M\)</span>, starting at its pericenter (<code class="docutils literal notranslate"><span class="pre">at</span> <span class="pre">=</span> <span class="pre">&quot;peri&quot;</span></code>) with some given precision and accuracy goals. We also fix the maximum step size of the integration at <span class="math notranslate nohighlight">\(1M\)</span>. This guarantees that we have at least 1000 points on the integrated orbit and thus enough resolution to plot it.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>orbit = pygro.Orbit(geo_engine)
+orbit.set_orbital_parameters(0, 20, 0)
+orbit.integrate(1000, 1, at = &quot;peri&quot;, accuracy_goal = 12, precision_goal = 12, hmax = 1)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) WARNING: Longitude of ascending node not specified, set to 0.
+(PyGRO) WARNING: Argument of the pericenter not specified, set to 0.
+(PyGRO) WARNING: Inclination not specified, set to 0.
+</pre></div></div>
+</div>
+<p>Let’s also define some functions to plot the results.</p>
+<p>More specifically, we want to see the resulting orbit on the equatorial plane, anlong with the effective potential as a function of the radius, to see in action how the assignement of the inital conditions work.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_orbit(orbit, color):
+    plt.close(&#39;all&#39;)
+
+    fig, ax = plt.subplots()
+
+    t, x, y, z = metric.transform(orbit.geo.x.T)
+
+    ax.plot(x, y, color = color)
+
+    theta = np.linspace(0, 2*np.pi, 150)
+    x_bh = 2*np.cos(theta)
+    y_bh = 2*np.sin(theta)
+
+    ax.fill(x_bh, y_bh, color = &quot;k&quot;)
+
+    ax.set_axisbelow(True)
+
+    lim = 50
+
+    ax.axis(&#39;equal&#39;)
+
+    ax.set_xlim(-20, 50)
+    ax.set_ylim(-20, 20)
+
+    ax.set_xlabel(r&#39;$x$ ($M$)&#39;)
+    ax.set_ylabel(r&#39;$y$ ($M$)&#39;)
+
+    ax.axis(&#39;equal&#39;)
+
+def plot_effective_potential(orbit, color, limits = [2.3, 100]):
+    fig, ax = plt.subplots()
+
+    r = np.linspace(*limits, 1000)
+
+    ax.plot(r, -orbit.V_eff(orbit.E, orbit.L, r), color = color)
+
+    ax.axvline(orbit.a, linestyle = &quot;:&quot;, color = &quot;firebrick&quot;)
+    ax.axhline(0, linestyle = &quot;--&quot;, linewidth = 1, color = &quot;k&quot;)
+
+    ax.set_xlabel(r&#39;$r$ ($M$)&#39;)
+    ax.set_ylabel(r&#39;$V_{\rm eff}(r)$&#39;)
+</pre></div>
+</div>
+</div>
+<p>Let’s use the first function to show the orbit and the black hole on the equatorial plane.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_orbit(orbit, color = &quot;#767afe&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-ISCO_14_0.png" src="../_images/examples_Schwarzschild-ISCO_14_0.png" />
+</div>
+</div>
+<p>Fine! As expected, we obtain a circular obtit with constant <span class="math notranslate nohighlight">\(r= 20M\)</span>. The orbit is stable, so we can carry on the integration for a much longer period of proper time and it will reamin on this orbit for as long as we want.</p>
+<p>We can see this by plotting the effective potential and the initial radius (as a vertical line):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_effective_potential(orbit, color = &quot;#767afe&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-ISCO_16_0.png" src="../_images/examples_Schwarzschild-ISCO_16_0.png" />
+</div>
+</div>
+<p>Great, as anticipated, the orbit is stable, sitting right at a minimum of the effective potential. This works beacuse, when setting <code class="docutils literal notranslate"><span class="pre">e=0</span></code> in the definition of the <code class="docutils literal notranslate"><span class="pre">Orbit</span></code> object, PyGRO automatically looks for orbital configurations that correspond to a minimum of the orbital potential at the position given by the semi-major axis.</p>
+</section>
+<section id="Innermost-Stable-Circular-Orbit-(ISCO)">
+<h2>Innermost Stable Circular Orbit (ISCO)<a class="headerlink" href="#Innermost-Stable-Circular-Orbit-(ISCO)" title="Link to this heading">¶</a></h2>
+<p>As we know from standard relativistic celestial mechanics, we can repeat what we have done so far up to a minimum radius of <span class="math notranslate nohighlight">\(r=6M\)</span> which is denoted as the <em>Innermost Stable Circular Orbit</em> (ISCO).</p>
+<p>The name is quite self-explanatory. Defining an orbit at the ISCO:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>orbit = pygro.Orbit(geo_engine)
+orbit.set_orbital_parameters(0, 6, 0)
+orbit.integrate(1000, 1, at = &quot;peri&quot;, accuracy_goal = 12, precision_goal = 12, hmax = 1)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) WARNING: Longitude of ascending node not specified, set to 0.
+(PyGRO) WARNING: Argument of the pericenter not specified, set to 0.
+(PyGRO) WARNING: Inclination not specified, set to 0.
+</pre></div></div>
+</div>
+<p>still gives out a circular orbit:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_orbit(orbit, color = &quot;firebrick&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-ISCO_22_0.png" src="../_images/examples_Schwarzschild-ISCO_22_0.png" />
+</div>
+</div>
+<p>but this time the effective potential, that we can plot using our previously defined function, does not have a minimum point at the orbital radius. Rather, it has a saddle point:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_effective_potential(orbit, color = &quot;firebrick&quot;, limits = [4, 20])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-ISCO_24_0.png" src="../_images/examples_Schwarzschild-ISCO_24_0.png" />
+</div>
+</div>
+<p>Again, PyGRO will autonomously be able to fix initial conditions at the ISCO, because it looks for points that extremize the effective potential.</p>
+</section>
+<section id="Marginally-bound-circular-orbits">
+<h2>Marginally bound circular orbits<a class="headerlink" href="#Marginally-bound-circular-orbits" title="Link to this heading">¶</a></h2>
+<p>The fact that the ISCO has <span class="math notranslate nohighlight">\(r=6M\)</span> does not imply necessarily that circular orbits cannot exist for <span class="math notranslate nohighlight">\(r&lt;6M\)</span>.</p>
+<p>In fact, we can defin a zero-eccentricity orbit at <span class="math notranslate nohighlight">\(r=5M\)</span> and see what happens:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>orbit = pygro.Orbit(geo_engine)
+orbit.set_orbital_parameters(0, 5, 0)
+orbit.integrate(100, 1, at = &quot;peri&quot;, accuracy_goal = 12, precision_goal = 12, hmax = 1)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) WARNING: Longitude of ascending node not specified, set to 0.
+(PyGRO) WARNING: Argument of the pericenter not specified, set to 0.
+(PyGRO) WARNING: Inclination not specified, set to 0.
+</pre></div></div>
+</div>
+<p>The integration is carried out without problems, and we obtain:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_orbit(orbit, color = &quot;#22b230&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-ISCO_30_0.png" src="../_images/examples_Schwarzschild-ISCO_30_0.png" />
+</div>
+</div>
+<p>a circular orbit!</p>
+<p>However, if we now plot the effective potential, we get:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_effective_potential(orbit, color = &quot;#22b230&quot;, limits=[4, 20])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-ISCO_32_0.png" src="../_images/examples_Schwarzschild-ISCO_32_0.png" />
+</div>
+</div>
+<p>The orbit sits on an unstable maximum of the potential. This means that the orbit is <em>bound</em> to the black hole and if we carry out the integration for a much longer interval of time it will eventually escape the equilibirum point, branching out of the circular configuration either on an elliptic orbit (given by the other root og the <span class="math notranslate nohighlight">\(V_eff(r) = 0\)</span> equation) or falling into the black hole.</p>
+<p>For example, let’s consider the orbit</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>orbit = pygro.Orbit(geo_engine)
+orbit.set_orbital_parameters(0, 5, 0)
+orbit.integrate(10000, 1, at = &quot;peri&quot;, accuracy_goal = 12, precision_goal = 12, hmax = 1)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) WARNING: Longitude of ascending node not specified, set to 0.
+(PyGRO) WARNING: Argument of the pericenter not specified, set to 0.
+(PyGRO) WARNING: Inclination not specified, set to 0.
+</pre></div></div>
+</div>
+<p>and plot the resulting geodesic</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_orbit(orbit, &quot;#22b230&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-ISCO_36_0.png" src="../_images/examples_Schwarzschild-ISCO_36_0.png" />
+</div>
+</div>
+<p>it eventually plunges in the black hole, due to small numerical errors that over time accumulate and bring the system out of the equilibrium.</p>
+<p>Of course, we can reduce the maximum step size of the integration and adjust the accuracy and precision tolerances of the integrator to make the orbit stay circular for as long as we need.</p>
+</section>
+<section id="Plunging-orbit">
+<h2>Plunging orbit<a class="headerlink" href="#Plunging-orbit" title="Link to this heading">¶</a></h2>
+<p>Bound circular orbits are still possible between the ISCO and <span class="math notranslate nohighlight">\(r = 4M\)</span>, the so-called marginally bound orbit.</p>
+<p>For <span class="math notranslate nohighlight">\(3M &lt; r &lt; 4M\)</span> we can still obtain circular orbits, which are extremely unstable and are unbound, meaning that once they escape local maximum of the potnetial they can either fall into the black hole or escape infinity.</p>
+<p>Finally, if we consider orbits with <span class="math notranslate nohighlight">\(r&lt;3M\)</span> they are forced to fall in the central black hole, as no stable orbital configuration exists for this case:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>orbit = pygro.Orbit(geo_engine)
+orbit.set_orbital_parameters(0, 3, 0)
+orbit.integrate(10000, 1, at = &quot;peri&quot;, accuracy_goal = 12, precision_goal = 12, hmax = 1)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) WARNING: Longitude of ascending node not specified, set to 0.
+(PyGRO) WARNING: Argument of the pericenter not specified, set to 0.
+(PyGRO) WARNING: Inclination not specified, set to 0.
+</pre></div></div>
+</div>
+<p>which results in:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_orbit(orbit, &quot;#703676&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-ISCO_42_0.png" src="../_images/examples_Schwarzschild-ISCO_42_0.png" />
+</div>
+</div>
+<p>whose effective potential has no equilibrium</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_effective_potential(orbit, &quot;#703676&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-ISCO_44_0.png" src="../_images/examples_Schwarzschild-ISCO_44_0.png" />
+</div>
+</div>
+</section>
 </section>
 
         </article>
@@ -279,12 +684,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../metricengine.html">
+          <a class="next-page" href="Wormhole.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><cite>Metric</cite></div>
+                <div class="title">Ellis wormhole</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -311,19 +716,48 @@
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/rdellamonica/pygro" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
           </div>
         </div>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Circular orbits</a><ul>
+<li><a class="reference internal" href="#Stable-circular-orbit">Stable circular orbit</a></li>
+<li><a class="reference internal" href="#Innermost-Stable-Circular-Orbit-(ISCO)">Innermost Stable Circular Orbit (ISCO)</a></li>
+<li><a class="reference internal" href="#Marginally-bound-circular-orbits">Marginally bound circular orbits</a></li>
+<li><a class="reference internal" href="#Plunging-orbit">Plunging orbit</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=8d563738"></script>
+</div><script src="../_static/documentation_options.js?v=292eb321"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=5fa4622c"></script>

@@ -5,8 +5,8 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Orbital precession" href="examples/Schwarzschild-Precession.html" /><link rel="prev" title="Visualize the results" href="visualize.html" />
 
-    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>Integrators - PyGRO 1.0.0 documentation</title>
+    <link rel="shortcut icon" href="_static/pygro-icon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>Integrators - Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0745d1ac" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/github_style.css?v=1093691d" />
@@ -169,7 +169,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">PyGRO 1.0.0 documentation</div></a>
+      <a href="index.html"><div class="brand">Documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -181,7 +181,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -197,7 +197,7 @@
     <img class="sidebar-logo only-dark" src="_static/pygro-logo-dark.png" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">PyGRO 1.0.0 documentation</span>
+  <span class="sidebar-brand-text">Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -215,21 +215,24 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="define_observer.html">Define a space-time Observer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="integrating_orbits.html">Integrating physical orbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualize.html">Visualize the results</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Integrators</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example Notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-Precession.html">Orbital precession</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-PhotonOrbit.html">Unstable photon orbit</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-ISCO.html">Innermost Stable Circilar Orbit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-ISCO.html">Circular orbits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Wormhole.html">Ellis wormhole</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="metricengine.html"><cite>Metric</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="geodesicengine.html"><cite>GeodesicEngine</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="geodesic.html"><cite>Geodesic</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="observer.html"><cite>Observer</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="metricengine.html"><code class="docutils literal notranslate"><span class="pre">Metric</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="geodesicengine.html"><code class="docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="geodesic.html"><code class="docutils literal notranslate"><span class="pre">Geodesic</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="observer.html"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="orbit.html"><code class="docutils literal notranslate"><span class="pre">Orbit</span></code></a></li>
 </ul>
 
 </div>
@@ -250,12 +253,16 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/integrators.rst.txt" title="View this page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/blob/master/docs/source/integrators.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
-</div>
-<div class="theme-toggle-container theme-toggle-content">
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/edit/master/docs/source/integrators.rst" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
@@ -264,7 +271,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -273,14 +280,45 @@
           <section id="integrators">
 <h1>Integrators<a class="headerlink" href="#integrators" title="Link to this heading">¶</a></h1>
 <p>Here, we collect the documentations of the ordinary-differential-equations (ODE) integrators that are implemented in PyGRO.</p>
-<p>A series of different integration schemes is pre-built in PyGRO. These can be chosen at the moment of defining a <a class="reference internal" href="geodesicengine.html#pygro.GeodesicEngine" title="pygro.GeodesicEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a>.</p>
+<p>A series of different integration schemes is pre-built in PyGRO. These can be chosen at the moment of defining a <a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a>.</p>
 <p>In particular, we have implemented a series of adaptive step-size <a class="reference external" href="https://en.wikipedia.org/wiki/Runge-Kutta_methods#Explicit_Runge-Kutta_methods">explicit Runge-Kutta methods</a>:</p>
 <ul class="simple">
 <li><p><strong>Runge-Kutta-Fehlberg4(5)</strong>: (<code class="docutils literal notranslate"><span class="pre">integrator</span> <span class="pre">=</span> <span class="pre">&quot;rkf45&quot;</span></code>) embedded method from the Runge-Kutta family of the 4th order with error estiamtion of the 5th order. The implemented version is based on <a class="footnote-reference brackets" href="#id5" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p></li>
-<li><p><strong>Dormand-Prince5(4)</strong>: (<code class="docutils literal notranslate"><span class="pre">integrator</span> <span class="pre">=</span> <span class="pre">&quot;dp45&quot;</span></code>) embedded method of the 5th order with error estiamtion of the 4th order. The implemented version is based on <a class="footnote-reference brackets" href="#id6" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. It is the <strong>default</strong> choice in PyGRO when no <code class="docutils literal notranslate"><span class="pre">integrator</span></code> argument is passed to the <a class="reference internal" href="geodesicengine.html#pygro.GeodesicEngine" title="pygro.GeodesicEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a>.</p></li>
+<li><p><strong>Dormand-Prince5(4)</strong>: (<code class="docutils literal notranslate"><span class="pre">integrator</span> <span class="pre">=</span> <span class="pre">&quot;dp45&quot;</span></code>) embedded method of the 5th order with error estiamtion of the 4th order. The implemented version is based on <a class="footnote-reference brackets" href="#id6" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. It is the <strong>default</strong> choice in PyGRO when no <code class="docutils literal notranslate"><span class="pre">integrator</span></code> argument is passed to the <a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a>.</p></li>
 <li><p><strong>Cash-Karp</strong>: (<code class="docutils literal notranslate"><span class="pre">integrator</span> <span class="pre">=</span> <span class="pre">&quot;ck45&quot;</span></code>) embedded method of the 4th order with error estiamtion of the 5th order. The implemented version is based on <a class="footnote-reference brackets" href="#id7" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p></li>
 <li><p><strong>Runge-Kutta-Fehlberg7(8)</strong>: (<code class="docutils literal notranslate"><span class="pre">integrator</span> <span class="pre">=</span> <span class="pre">&quot;rkf78&quot;</span></code>) embedded method from the Runge-Kutta family of the 7th order with error estiamtion of the 8th order. The implemented version is based on <a class="footnote-reference brackets" href="#id8" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p></li>
 </ul>
+<p>All the implemented methods refer to the general class of <a class="reference internal" href="#pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator" title="pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplicitAdaptiveRungeKuttaIntegrator</span></code></a>, whose docuemntation is reported here:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygro.integrators.</span></span><span class="sig-name descname"><span class="pre">ExplicitAdaptiveRungeKuttaIntegrator</span></span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/515b29b6b80e2d28f9d77d9a0ff55d6d0cb3db99/pygro/integrators.py#L48-L169"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for explicit adaptive step-size integrators of the Runge-Kutta family.</p>
+<p>The local error is estimated as the difference between the two approximations at higher and lower order:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[E = \| y_{\text{high}} - y_{\text{low}} \|\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(\| \cdot \|\)</span> typically represents a norm, such as the maximum norm or the Euclidean norm (the one we use).</p>
+<p>The step size is adapted based on a defined error tolerance, which ensures the solution’s accuracy, computed as:</p>
+<div class="math-wrapper docutils container" id="equation-integration-tolerance">
+<div class="math notranslate nohighlight" id="equation-integration-tolerance">
+<span class="eqno">(1)<a class="headerlink" href="#equation-integration-tolerance" title="Link to this equation">¶</a></span>\[\text{tol} = \text{tol}_\text{abs} + \text{tol}_\text{rel} \cdot \| y \|\]</div>
+</div>
+<p>The tolerance acts as a threshold for acceptable error in the solution. If <span class="math notranslate nohighlight">\(E \leq \text{tol}\)</span>, the step is accepted; otherwise, it is rejected, and a smaller step size is used.</p>
+<p>The constructor for the <a class="reference internal" href="#pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator" title="pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplicitAdaptiveRungeKuttaIntegrator</span></code></a> object accepts the following arguments that can be directly passed to the <a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine.integrate" title="pygro.geodesic_engine.GeodesicEngine.integrate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate()</span></code></a> method of the <a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a> object upon integration:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>accuracy_goal</strong> (<em>int</em>) – the exponent that defines the integration absolute tolerance <code class="docutils literal notranslate"><span class="pre">atol</span> <span class="pre">=</span> <span class="pre">10**(-accuracy_goal)</span></code>, <span class="math notranslate nohighlight">\(\text{tol}_\text{abs}\)</span>, in formula <a class="reference internal" href="#equation-integration-tolerance">(1)</a>.</p></li>
+<li><p><strong>precision_goal</strong> (<em>int</em>) – the exponent that defines the integration relative tolerance <code class="docutils literal notranslate"><span class="pre">rtol</span> <span class="pre">=</span> <span class="pre">10**(-precision_goal)</span></code>, <span class="math notranslate nohighlight">\(\text{tol}_\text{rel}\)</span>,  in formula <a class="reference internal" href="#equation-integration-tolerance">(1)</a>.</p></li>
+<li><p><strong>hmax</strong> (<em>float</em>) – maximum acceptable step size (default is <code class="docutils literal notranslate"><span class="pre">hmax</span> <span class="pre">=</span> <span class="pre">1e+16</span></code>).</p></li>
+<li><p><strong>hmin</strong> (<em>float</em>) – minimum acceptable step size (default is <code class="docutils literal notranslate"><span class="pre">hmin</span> <span class="pre">=</span> <span class="pre">1e-16</span></code>).</p></li>
+<li><p><strong>max_iter</strong> (<em>int</em>) – maxium namber of step-size adaptation attempts before rising an error. If this error is reached, try to use smaller <code class="docutils literal notranslate"><span class="pre">accuracy_goal</span></code> and/or <code class="docutils literal notranslate"><span class="pre">precision_goal</span></code> or to reduce the initial step size of the integration (<code class="docutils literal notranslate"><span class="pre">initial_step</span></code> in the <a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine.integrate" title="pygro.geodesic_engine.GeodesicEngine.integrate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate()</span></code></a> method).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <p>In the future, we also plan to implement implicit and symplectic integrations schemes.</p>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
@@ -296,7 +334,7 @@
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
 <ol class="upperalpha simple" start="10">
 <li><ol class="upperalpha simple" start="18">
-<li><p>Cash, A. H. Karp. (1990) “A variable order Runge-Kutta method for initial value problems with rapidly varying right-hand sides”, ACM Transactions on Mathematical Software 16: 201-222. <a class="reference external" href="https://doi.org/10.1145/79505.79507">doi:10.1145/79505.79507</a>.</p></li>
+<li><p>Cash, A. H. Karp. (1990). “A variable order Runge-Kutta method for initial value problems with rapidly varying right hand sides”, ACM Transactions on Mathematical Software 16: 201-222. <a class="reference external" href="https://doi.org/10.1145/79505.79507">doi:10.1145/79505.79507</a></p></li>
 </ol>
 </li>
 </ol>
@@ -345,24 +383,52 @@
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/rdellamonica/pygro" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
           </div>
         </div>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Integrators</a><ul>
+<li><a class="reference internal" href="#pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator"><code class="docutils literal notranslate"><span class="pre">ExplicitAdaptiveRungeKuttaIntegrator</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=8d563738"></script>
+</div><script src="_static/documentation_options.js?v=292eb321"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>

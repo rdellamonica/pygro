@@ -5,8 +5,8 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Observer" href="observer.html" /><link rel="prev" title="GeodesicEngine" href="geodesicengine.html" />
 
-    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>Geodesic - PyGRO 1.0.0 documentation</title>
+    <link rel="shortcut icon" href="_static/pygro-icon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>Geodesic - Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0745d1ac" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/github_style.css?v=1093691d" />
@@ -169,7 +169,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">PyGRO 1.0.0 documentation</div></a>
+      <a href="index.html"><div class="brand">Documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -197,7 +197,7 @@
     <img class="sidebar-logo only-dark" src="_static/pygro-logo-dark.png" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">PyGRO 1.0.0 documentation</span>
+  <span class="sidebar-brand-text">Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -215,21 +215,24 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="define_observer.html">Define a space-time Observer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="integrating_orbits.html">Integrating physical orbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualize.html">Visualize the results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="integrators.html">Integrators</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example Notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-Precession.html">Orbital precession</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-PhotonOrbit.html">Unstable photon orbit</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-ISCO.html">Innermost Stable Circilar Orbit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-ISCO.html">Circular orbits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Wormhole.html">Ellis wormhole</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="metricengine.html"><cite>Metric</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="geodesicengine.html"><cite>GeodesicEngine</cite></a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#"><cite>Geodesic</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="observer.html"><cite>Observer</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="metricengine.html"><code class="docutils literal notranslate"><span class="pre">Metric</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="geodesicengine.html"><code class="docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">Geodesic</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="observer.html"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="orbit.html"><code class="docutils literal notranslate"><span class="pre">Orbit</span></code></a></li>
 </ul>
 
 </div>
@@ -250,12 +253,16 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/geodesic.rst.txt" title="View this page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/blob/master/docs/source/geodesic.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
-</div>
-<div class="theme-toggle-container theme-toggle-content">
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/edit/master/docs/source/geodesic.rst" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
@@ -271,12 +278,12 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="geodesic">
-<h1><cite>Geodesic</cite><a class="headerlink" href="#geodesic" title="Link to this heading">¶</a></h1>
+<h1><code class="docutils literal notranslate"><span class="pre">Geodesic</span></code><a class="headerlink" href="#geodesic" title="Link to this heading">¶</a></h1>
 <p>The main object in PyGRO is the <cite>geodesic</cite> object which is used to describe the spacetime metric.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pygro.geodesic.Geodesic">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygro.geodesic.</span></span><span class="sig-name descname"><span class="pre">Geodesic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'time-like'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'null'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geodesicengine.html#pygro.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><span class="pre">GeodesicEngine</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/fc43e787a7e6ba7087e7b86b78e4ca762b633c09/pygro/geodesic.py#L13-L210"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.geodesic.Geodesic" title="Link to this definition">¶</a></dt>
-<dd><p>The <code class="docutils literal notranslate"><span class="pre">pygro</span></code> representation of a geodesic. It is used to define the geodesic type (either time-like or null), initial data and stores the results of the numerical integration, perfromed by the <a class="reference internal" href="geodesicengine.html#pygro.GeodesicEngine" title="pygro.GeodesicEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a>.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygro.geodesic.</span></span><span class="sig-name descname"><span class="pre">Geodesic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'time-like'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'null'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><span class="pre">GeodesicEngine</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/515b29b6b80e2d28f9d77d9a0ff55d6d0cb3db99/pygro/geodesic.py#L10-L207"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.geodesic.Geodesic" title="Link to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">pygro</span></code> representation of a geodesic. It is used to define the geodesic type (either time-like or null), initial data and stores the results of the numerical integration, perfromed by the <a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a>.</p>
 <p>See <a class="reference internal" href="integrate_geodesic.html"><span class="doc">Integrate a geodesic in PyGRO</span></a> for more details on the actual integration procedure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
@@ -288,13 +295,13 @@
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="pygro.geodesic.Geodesic.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'time-like'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'null'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geodesicengine.html#pygro.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><span class="pre">GeodesicEngine</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/fc43e787a7e6ba7087e7b86b78e4ca762b633c09/pygro/geodesic.py#L24-L56"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.geodesic.Geodesic.__init__" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'time-like'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'null'</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><span class="pre">GeodesicEngine</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/515b29b6b80e2d28f9d77d9a0ff55d6d0cb3db99/pygro/geodesic.py#L21-L53"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.geodesic.Geodesic.__init__" title="Link to this definition">¶</a></dt>
 <dd><p>The <a class="reference internal" href="#pygro.geodesic.Geodesic" title="pygro.geodesic.Geodesic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodesic</span></code></a> constructor accepts the following arguments:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>type</strong> (<em>Literal</em><em>[</em><em>'time-like'</em><em>, </em><em>'null'</em><em>]</em>) – The geodesic normalization. It accepts strings with either <code class="docutils literal notranslate"><span class="pre">&quot;time-like&quot;</span></code> (<span class="math notranslate nohighlight">\(g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu = -1\)</span>) or <code class="docutils literal notranslate"><span class="pre">&quot;null&quot;</span></code> (<span class="math notranslate nohighlight">\(g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu = 0\)</span>).</p></li>
-<li><p><strong>engine</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="geodesicengine.html#pygro.GeodesicEngine" title="pygro.GeodesicEngine"><em>GeodesicEngine</em></a><em>]</em>) – The <a class="reference internal" href="geodesicengine.html#pygro.GeodesicEngine" title="pygro.GeodesicEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a> object to link to the <a class="reference internal" href="#pygro.geodesic.Geodesic" title="pygro.geodesic.Geodesic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodesic</span></code></a>. If not provided, the <a class="reference internal" href="#pygro.geodesic.Geodesic" title="pygro.geodesic.Geodesic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodesic</span></code></a> will be linked to the last initialized <a class="reference internal" href="geodesicengine.html#pygro.GeodesicEngine" title="pygro.GeodesicEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a>.</p></li>
+<li><p><strong>engine</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><em>GeodesicEngine</em></a><em>]</em>) – The <a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a> object to link to the <a class="reference internal" href="#pygro.geodesic.Geodesic" title="pygro.geodesic.Geodesic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodesic</span></code></a>. If not provided, the <a class="reference internal" href="#pygro.geodesic.Geodesic" title="pygro.geodesic.Geodesic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodesic</span></code></a> will be linked to the last initialized <a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a>.</p></li>
 <li><p><strong>verbose</strong> (<em>bool</em>) – Specifies whether to log information on the geodesic status to the standard output.</p></li>
 </ul>
 </dd>
@@ -303,14 +310,14 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygro.geodesic.Geodesic.set_starting_4velocity">
-<span class="sig-name descname"><span class="pre">set_starting_4velocity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/fc43e787a7e6ba7087e7b86b78e4ca762b633c09/pygro/geodesic.py#L189-L210"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.geodesic.Geodesic.set_starting_4velocity" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set_starting_4velocity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/515b29b6b80e2d28f9d77d9a0ff55d6d0cb3db99/pygro/geodesic.py#L186-L207"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.geodesic.Geodesic.set_starting_4velocity" title="Link to this definition">¶</a></dt>
 <dd><p>Sets the initial values of the components of the 4-velocity, enforcing the normalization conditions. For this reason, only three out of the four components <code class="docutils literal notranslate"><span class="pre">u[i]</span></code> of the 4-velocity must be specified, and the remaining one will be automatically computed to satistfy the normalization condition.</p>
 <p>To override this behaviour, you can directly set the <code class="docutils literal notranslate"><span class="pre">.initial_u</span></code> property of the <a class="reference internal" href="#pygro.geodesic.Geodesic" title="pygro.geodesic.Geodesic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodesic</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygro.geodesic.Geodesic.set_starting_point">
-<span class="sig-name descname"><span class="pre">set_starting_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/fc43e787a7e6ba7087e7b86b78e4ca762b633c09/pygro/geodesic.py#L137-L143"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.geodesic.Geodesic.set_starting_point" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set_starting_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/515b29b6b80e2d28f9d77d9a0ff55d6d0cb3db99/pygro/geodesic.py#L134-L140"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.geodesic.Geodesic.set_starting_point" title="Link to this definition">¶</a></dt>
 <dd><p>Sets the initial values of the space-time coordinates from which to start the integration.</p>
 </dd></dl>
 
@@ -328,7 +335,7 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><cite>Observer</cite></div>
+                <div class="title"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -339,7 +346,7 @@
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><cite>GeodesicEngine</cite></div>
+                <div class="title"><code class="docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></div>
                 
               </div>
             </a>
@@ -355,7 +362,14 @@
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/rdellamonica/pygro" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
           </div>
         </div>
         
@@ -373,7 +387,7 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><cite>Geodesic</cite></a><ul>
+<li><a class="reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">Geodesic</span></code></a><ul>
 <li><a class="reference internal" href="#pygro.geodesic.Geodesic"><code class="docutils literal notranslate"><span class="pre">Geodesic</span></code></a><ul>
 <li><a class="reference internal" href="#pygro.geodesic.Geodesic.__init__"><code class="docutils literal notranslate"><span class="pre">Geodesic.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#pygro.geodesic.Geodesic.set_starting_4velocity"><code class="docutils literal notranslate"><span class="pre">Geodesic.set_starting_4velocity()</span></code></a></li>
@@ -391,7 +405,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=8d563738"></script>
+</div><script src="_static/documentation_options.js?v=292eb321"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>

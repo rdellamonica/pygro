@@ -37,9 +37,9 @@ Hence, we can call the method:
 
 .. code-block::
 
-    geo_engine.integrate(geo, 50, 1, verbose=True)
+    geo_engine.integrate(geo, 50, 1, verbose=True, accuracy_goal = 11, precision_goal = 11)
 
-to integrate the :py:class:`.Geodesic` object ``geo`` up to a value of the affine parameter :math:`\tau = 50`, starting with an initial step of 1. The ``verbose = True`` keyword argument makes the integration verbose which will alert us of the status of the integration. In this case, we will be logged
+to integrate the :py:class:`.Geodesic` object ``geo`` up to a value of the affine parameter :math:`\tau = 50`, starting with an initial step of 1. The ``verbose = True`` keyword argument makes the integration verbose which will alert us of the status of the integration. We have also used specific precisiona and accuracy tolerances, for which we suggest reading the :doc:`../integrators` tutorial. In this case, we will be logged
 
 .. code-block:: text
 

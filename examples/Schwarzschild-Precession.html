@@ -5,12 +5,13 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Unstable photon orbit" href="Schwarzschild-PhotonOrbit.html" /><link rel="prev" title="Integrators" href="../integrators.html" />
 
-    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>Orbital precession - PyGRO 1.0.0 documentation</title>
+    <link rel="shortcut icon" href="../_static/pygro-icon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>Orbital precession - Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0745d1ac" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/github_style.css?v=1093691d" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=83708512" />
     
@@ -169,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">PyGRO 1.0.0 documentation</div></a>
+      <a href="../index.html"><div class="brand">Documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -197,7 +198,7 @@
     <img class="sidebar-logo only-dark" src="../_static/pygro-logo-dark.png" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">PyGRO 1.0.0 documentation</span>
+  <span class="sidebar-brand-text">Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -215,21 +216,24 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../define_observer.html">Define a space-time Observer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrating_orbits.html">Integrating physical orbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../visualize.html">Visualize the results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../integrators.html">Integrators</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example Notebooks:</span></p>
 <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Orbital precession</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Schwarzschild-PhotonOrbit.html">Unstable photon orbit</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Schwarzschild-ISCO.html">Innermost Stable Circilar Orbit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Schwarzschild-ISCO.html">Circular orbits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Wormhole.html">Ellis wormhole</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../metricengine.html"><cite>Metric</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../geodesicengine.html"><cite>GeodesicEngine</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../geodesic.html"><cite>Geodesic</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../observer.html"><cite>Observer</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metricengine.html"><code class="docutils literal notranslate"><span class="pre">Metric</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../geodesicengine.html"><code class="docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../geodesic.html"><code class="docutils literal notranslate"><span class="pre">Geodesic</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observer.html"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../orbit.html"><code class="docutils literal notranslate"><span class="pre">Orbit</span></code></a></li>
 </ul>
 
 </div>
@@ -250,12 +254,16 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../_sources/examples/Schwarzschild-Precession.ipynb.txt" title="View this page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/blob/master/docs/source/examples/Schwarzschild-Precession.ipynb?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
-</div>
-<div class="theme-toggle-container theme-toggle-content">
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/edit/master/docs/source/examples/Schwarzschild-Precession.ipynb" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
@@ -272,6 +280,401 @@
         <article role="main" id="furo-main-content">
           <section id="Orbital-precession">
 <h1>Orbital precession<a class="headerlink" href="#Orbital-precession" title="Link to this heading">¶</a></h1>
+<p>In this example notebook, we want to study elliptic orbits for <code class="docutils literal notranslate"><span class="pre">time-like</span></code> particles around a black hole in PyGRO, to show the capabilities of the code to reproduce the results of the orbital precession and also go beyond the usual firs’t order formulas.</p>
+<p>Let’s start by importing the necessary modules:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pygro
+import numpy as np
+
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+
+from scipy.interpolate import interp1d
+from scipy.optimize import fsolve
+</pre></div>
+</div>
+</div>
+<p>defining the usual Schwarzschild metric:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>name = &quot;Schwarzschild spacetime&quot;
+coordinates = [&quot;t&quot;, &quot;r&quot;, &quot;theta&quot;, &quot;phi&quot;]
+
+transform_functions = [
+    &quot;t&quot;,
+    &quot;r*sin(theta)*cos(phi)&quot;,
+    &quot;r*sin(theta)*sin(phi)&quot;,
+    &quot;r*cos(theta)&quot;
+]
+
+line_element = &quot;-(1-2*M/r)*dt**2+1/(1-2*M/r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)&quot;
+
+metric = pygro.Metric(
+    name = name,
+    coordinates = coordinates,
+    line_element = line_element,
+    transform = transform_functions,
+    M = 1,
+)
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) INFO: Initializing Schwarzschild spacetime.
+(PyGRO) INFO: Calculating inverse metric.
+(PyGRO) INFO: Calculating symbolic equations of motion.
+(PyGRO) INFO: Computing helper functions to normalize 4-velocity.
+(PyGRO) INFO: The Metric (Schwarzschild spacetime) has been initialized.
+</pre></div></div>
+</div>
+<p>and defining the <code class="docutils literal notranslate"><span class="pre">GeodesicEngine</span></code> with a stopping criterion at the event horizon:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>geo_engine = pygro.GeodesicEngine(metric)
+geo_engine.set_stopping_criterion(&quot;r &gt; 2.00001*M&quot;, &quot;horizon&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) INFO: Linking Schwarzschild spacetime to the Geodesic Engine
+(PyGRO) INFO: Metric linking complete.
+</pre></div></div>
+</div>
+<p>Let us now initialize an <code class="docutils literal notranslate"><span class="pre">Orbit</span></code> object with a high eccentricity of 0.8 and a semi-major axis of <span class="math notranslate nohighlight">\(a = 1000M\)</span>. We will not assign values to the angular orbital parameters which will be automatically be fixed to <span class="math notranslate nohighlight">\(0^\circ\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>orbit = pygro.Orbit(geo_engine)
+orbit.set_orbital_parameters(t_P = 0, a = 1000, e = 0.8)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) WARNING: Longitude of ascending node not specified, set to 0.
+(PyGRO) WARNING: Argument of the pericenter not specified, set to 0.
+(PyGRO) WARNING: Inclination not specified, set to 0.
+</pre></div></div>
+</div>
+<p>We can use the Newtonian formula for the orbital period as an estimator of how many turns we want our orbit to make around the black hole.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>T = np.sqrt(4*np.pi**2*orbit.a**3)
+
+print(f&quot;Keplerian period = {T:.0f} M&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Keplerian period = 198692 M
+</pre></div></div>
+</div>
+<p>For example, let’s integrate the orbit over five orbital periods:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>orbit.integrate(T*5, 0.1, accuracy_goal = 15, precision_goal = 15, verbose=True)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) INFO: Starting integration.
+(PyGRO) INFO: Integration completed in 0.39807 s with result &#39;done&#39;.
+</pre></div></div>
+</div>
+<p>and visualize the results</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.close(&#39;all&#39;)
+
+fig, ax = plt.subplots()
+
+t, x, y, z = metric.transform(orbit.geo.x.T)
+
+ax.plot(x, y)
+
+theta = np.linspace(0, 2*np.pi, 150)
+x_bh = 2*np.cos(theta)
+y_bh = 2*np.sin(theta)
+
+ax.fill(x_bh, y_bh, color = &quot;k&quot;)
+
+ax.set_axisbelow(True)
+
+ax.axis(&#39;equal&#39;)
+
+ax.set_xlabel(r&#39;$x$ ($M$)&#39;)
+ax.set_ylabel(r&#39;$y$ ($M$)&#39;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-Precession_15_0.png" src="../_images/examples_Schwarzschild-Precession_15_0.png" />
+</div>
+</div>
+<p>We’ve got a nicely precessing orbit!</p>
+<p>To see what is the impact of the choice of the orbital parameters in PyGRO, let’s plot the radial coordinate of the geodesic as a function of coordinate time</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.close(&#39;all&#39;)
+
+fig, ax = plt.subplots()
+
+ax.plot(orbit.geo.x[:,0], orbit.geo.x[:,1])
+
+ax.axhline(orbit.a*(1-orbit.e), linestyle = &quot;:&quot;, color = &quot;k&quot;)
+ax.axhline(orbit.a*(1+orbit.e), linestyle = &quot;:&quot;, color = &quot;k&quot;)
+
+ax.set_xlabel(r&quot;$t$ ($M$)&quot;)
+ax.set_ylabel(r&quot;$r$ ($M$)&quot;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-Precession_17_0.png" src="../_images/examples_Schwarzschild-Precession_17_0.png" />
+</div>
+</div>
+<p>We have obtained exactly what we have asked for. The orbit of a time-like geodesic with <span class="math notranslate nohighlight">\(a = 1000M\)</span> and <span class="math notranslate nohighlight">\(e = 0.8\)</span> (whose radial coordiante thus periodically oscillates between the pericenter at <span class="math notranslate nohighlight">\(r_p = a(1-e) = 200M\)</span> and the apocenter <span class="math notranslate nohighlight">\(r_a = a(1+e) = 1800M\)</span>) integrated over 5 orbital periods, starting at the pericenter.</p>
+<p>PyGRO autonomously fixed the initial spacetime coordinates of the orbit and the components of the 4-velocity to obtain this.</p>
+<p>Moreover, the orbit is not a closed ellipse as in Newtonian gravity, but it precedes on the equatorial plane, which is one of the most peculiar predicitons of General Relativity and one of its classical tests.</p>
+<p>To quantifiy this orbital precession, let’s look at the derivative of the radial coordianate, <span class="math notranslate nohighlight">\(\dot{r}\)</span>, as a function of the azimuthal angle, <span class="math notranslate nohighlight">\(\phi\)</span>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots()
+
+ax.plot(orbit.geo.x[:,3], orbit.geo.u[:,1])
+
+ax.set_xlabel(r&quot;$\phi$ (rad)&quot;)
+ax.set_ylabel(r&quot;$\dot{r}$&quot;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-Precession_19_0.png" src="../_images/examples_Schwarzschild-Precession_19_0.png" />
+</div>
+</div>
+<p>Starting at pericenter, the initial azimuthal angle is <span class="math notranslate nohighlight">\(\phi=0\)</span> and the this corresponds to a radial turning point, <em>i.e.</em> <span class="math notranslate nohighlight">\(\dot{r}=0\)</span>.</p>
+<p>If the orbit didn’t precess it would complete a turn ($:nbsphinx-math:<cite>phi `= 2:nbsphinx-math:</cite>pi`) and be back at a radial turning point. However if we zoom in the previous plout at around <span class="math notranslate nohighlight">\(2\pi\)</span></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots()
+
+ax.plot(orbit.geo.x[:,3], orbit.geo.u[:,1])
+
+ax.set_xlim(2*np.pi-np.pi/20, 2*np.pi+np.pi/20)
+ax.set_ylim(-0.01, 0.01)
+
+ax.axhline(0, color = &quot;k&quot;, linestyle = &quot;:&quot;, linewidth = 1)
+ax.axvline(2*np.pi, color = &quot;k&quot;, linestyle = &quot;--&quot;, linewidth = 1, label = r&quot;$2\pi$&quot;)
+
+ax.legend()
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-Precession_21_0.png" src="../_images/examples_Schwarzschild-Precession_21_0.png" />
+</div>
+</div>
+<p>we can clearly see that after a complete azimuthal turn the orbit is not yet back at pericenter, but this happens after some additional angle <span class="math notranslate nohighlight">\(\Delta\phi\)</span>. This angle is what we call the rate of orbital precession per orbital period.</p>
+<p>We can easily estimate it by considering the following piece of code:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>precession = fsolve(interp1d(orbit.geo.x[:,3], orbit.geo.u[:,1], kind = &quot;cubic&quot;), x0 = 2*np.pi)[0] - 2*np.pi
+
+print(f&quot;Orbital precession = {precession:.5} rad/orbital period&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Orbital precession = 0.053048 rad/orbital period
+</pre></div></div>
+</div>
+<p>We have first made use of the <code class="docutils literal notranslate"><span class="pre">scipy.interpolate.interp1d</span></code> function to create a cubic interpolant of the <span class="math notranslate nohighlight">\(\dot{r}(\phi)\)</span> function. Then we have looked for a root of this funciton (namely, a radial turning point) around <span class="math notranslate nohighlight">\(\phi=2\pi\)</span> and than we have computed the difference from <span class="math notranslate nohighlight">\(2\pi\)</span> of this angle. This is thus an estimation of how much the orbit precessed over one orbital period.</p>
+<p>We can visualize the result:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots()
+
+ax.plot(orbit.geo.x[:,3], orbit.geo.u[:,1])
+
+ax.set_xlim(2*np.pi-np.pi/20, 2*np.pi+np.pi/20)
+ax.set_ylim(-0.01, 0.01)
+
+ax.axhline(0, color = &quot;k&quot;, linestyle = &quot;:&quot;, linewidth = 1)
+ax.axvline(2*np.pi, color = &quot;k&quot;, linestyle = &quot;--&quot;, linewidth = 1, label = r&quot;$2\pi$&quot;)
+ax.axvline(precession+2*np.pi, color = &quot;firebrick&quot;, linestyle = &quot;--&quot;, linewidth = 1, label = r&quot;$2\pi + \Delta\phi$&quot;)
+
+ax.legend()
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-Precession_25_0.png" src="../_images/examples_Schwarzschild-Precession_25_0.png" />
+</div>
+</div>
+<p>It is now instructive to compare the rate of orbital precession that we have obtained numerically in PyGRO, with the classical post-Newtonian formula of General Relativity</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\Delta\phi = \frac{6\pi GM}{a c^2 (1-e^2)}\]</div>
+</div>
+<p>Since we are considering <span class="math notranslate nohighlight">\(G=c=M=1\)</span>, we can easily compute it by:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>PN_precession = 6*np.pi/(orbit.a*(1-orbit.e**2))
+
+print(f&quot;Post-newtonian orbital precession = {PN_precession:.5} rad/orbital period&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Post-newtonian orbital precession = 0.05236 rad/orbital period
+</pre></div></div>
+</div>
+<p>The result obtained from our numerical integration matches with good precision the one obtained with the first order post-newtonian formula.</p>
+<p>The (small) discrepancy that we have obtained is not an aritfact of the numerical approach we used. This is a clear manifestation of the fact that the post-Newtonian formula is derived in a weak-field approximation and we are considering a quite-strong field regime of an orbit with a very high eccentricity and only 1000 gravitational radii of semi-major axis.</p>
+<p>In order to demonstrate this more quantitatively, let’s consider an interval of semi-major axes <span class="math notranslate nohighlight">\(a\in[50, 10000]M\)</span> and track the discrepancy between our numerically computed rate of orbital precession and the post-Newtonian formula:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a_arr = np.geomspace(50, 10000, 100)
+
+GR_precession_arr = []
+PN_precession_arr = []
+
+for i, a in enumerate(a_arr):
+    print(f&quot;Orbit {i+1}/{len(a_arr)}&quot;, end = &quot;\r&quot;)
+
+    orbit = pygro.Orbit(geo_engine, verbose=False)
+    orbit.set_orbital_parameters(0, a, 0.8, 0, 0, 0)
+
+    T = np.sqrt(4*np.pi**2*orbit.a**3)
+
+    orbit.integrate(T*5, 0.1, accuracy_goal = 15, precision_goal = 15, verbose=False)
+
+    GR_precession = fsolve(interp1d(orbit.geo.x[:,3], orbit.geo.u[:,1], kind = &quot;cubic&quot;), x0 = 2*np.pi)[0] - 2*np.pi
+    PN_precession = 6*np.pi/(orbit.a*(1-orbit.e**2))
+
+    GR_precession_arr.append(GR_precession)
+    PN_precession_arr.append(PN_precession)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Orbit 100/100
+</pre></div></div>
+</div>
+<p>If we now plot the two estimations</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots()
+
+ax.plot(a_arr, GR_precession_arr, label = &quot;Numerical&quot;)
+ax.plot(a_arr, PN_precession_arr, label = &quot;Post-newtonian&quot;, linestyle = &quot;:&quot;, color = &quot;k&quot;)
+
+ax.set_xscale(&#39;log&#39;)
+
+ax.set_xlabel(&quot;$a$ ($M$)&quot;)
+ax.set_ylabel(&quot;$\Delta\phi$ (rad)&quot;)
+
+ax.legend()
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-Precession_31_0.png" src="../_images/examples_Schwarzschild-Precession_31_0.png" />
+</div>
+</div>
+<p>we can clearly see how the numerically -omputed rate or precession and the post-Newtonian formula converge to the same results for larger values of <span class="math notranslate nohighlight">\(a\)</span> or, in other words, in a weak-field gravitational regime.</p>
+<p>When <span class="math notranslate nohighlight">\(a\)</span> is small, however, the two estiamtions deviate beacuese the first-order post-Newtonian formula fails to capture the full orbital dynamics in a stronger gravitational regime</p>
 </section>
 
         </article>
@@ -311,7 +714,14 @@
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/rdellamonica/pygro" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
           </div>
         </div>
         
@@ -323,7 +733,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=8d563738"></script>
+</div><script src="../_static/documentation_options.js?v=292eb321"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=5fa4622c"></script>

@@ -5,8 +5,8 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Integrate a geodesic in PyGRO" href="integrate_geodesic.html" /><link rel="prev" title="Getting started" href="getting_started.html" />
 
-    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>Define your own space-time - PyGRO 1.0.0 documentation</title>
+    <link rel="shortcut icon" href="_static/pygro-icon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>Define your own space-time - Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0745d1ac" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/github_style.css?v=1093691d" />
@@ -169,7 +169,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">PyGRO 1.0.0 documentation</div></a>
+      <a href="index.html"><div class="brand">Documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -197,7 +197,7 @@
     <img class="sidebar-logo only-dark" src="_static/pygro-logo-dark.png" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">PyGRO 1.0.0 documentation</span>
+  <span class="sidebar-brand-text">Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -215,21 +215,24 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="define_observer.html">Define a space-time Observer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="integrating_orbits.html">Integrating physical orbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualize.html">Visualize the results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="integrators.html">Integrators</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example Notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-Precession.html">Orbital precession</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-PhotonOrbit.html">Unstable photon orbit</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-ISCO.html">Innermost Stable Circilar Orbit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-ISCO.html">Circular orbits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Wormhole.html">Ellis wormhole</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="metricengine.html"><cite>Metric</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="geodesicengine.html"><cite>GeodesicEngine</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="geodesic.html"><cite>Geodesic</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="observer.html"><cite>Observer</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="metricengine.html"><code class="docutils literal notranslate"><span class="pre">Metric</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="geodesicengine.html"><code class="docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="geodesic.html"><code class="docutils literal notranslate"><span class="pre">Geodesic</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="observer.html"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="orbit.html"><code class="docutils literal notranslate"><span class="pre">Orbit</span></code></a></li>
 </ul>
 
 </div>
@@ -250,12 +253,16 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/create_metric.rst.txt" title="View this page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/blob/master/docs/source/create_metric.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
-</div>
-<div class="theme-toggle-container theme-toggle-content">
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/edit/master/docs/source/create_metric.rst" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
@@ -272,8 +279,8 @@
         <article role="main" id="furo-main-content">
           <section id="define-your-own-space-time">
 <h1>Define your own space-time<a class="headerlink" href="#define-your-own-space-time" title="Link to this heading">¶</a></h1>
-<p>In this tutorial we will go through all the different methods in PyGRO for the generation of a <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> object that describes a particular space-time metric.
-For the sake of simplicity, we will devote this tutorial to the Schwarzschild solution, describing the spherically symmetric spacetime around a point-like particle with mass <span class="math notranslate nohighlight">\(M\)</span>.
+<p>In this tutorial we will go through all the different methods in PyGRO for the generation of a <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> object that describes a particular space-time metric. PyGRO uses the signature convention <span class="math notranslate nohighlight">\((-,\,+,\,+,\,+)\)</span>.</p>
+<p>For the sake of simplicity, we will devote this tutorial to the Schwarzschild solution, describing the spherically symmetric spacetime around a point-like particle with mass <span class="math notranslate nohighlight">\(M\)</span>.
 When expressed in Schwarzschild coordinates <span class="math notranslate nohighlight">\((t, r, \theta, \phi)\)</span> the line element describing the geometry of this spacetime is described by</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -356,6 +363,13 @@ These four equations are stored into a list accessible via <code class="xref py 
 knowing the spatial components of the velocity (which is usually the case). See <a class="reference internal" href="integrate_geodesic.html"><span class="doc">Integrate a geodesic in PyGRO</span></a> for a working example.</p>
 </li>
 </ul>
+<section id="changing-the-value-of-the-metric-parameters">
+<h3>Changing the value of the metric parameters<a class="headerlink" href="#changing-the-value-of-the-metric-parameters" title="Link to this heading">¶</a></h3>
+<p>The values of the parameters appearing in the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a> object must be set at moment of the declaration of the metric. However, through the  <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric.set_constant" title="pygro.metric_engine.Metric.set_constant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_constant()</span></code></a> method one can change at any time the value of the parameters stored in the metric. This is useful when one wants to see how the geodesics in a given space-time change depending on the parameters appearing in the metric tensor.  The arguments of <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric.set_constant" title="pygro.metric_engine.Metric.set_constant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_constant()</span></code></a> must specify the name of the parameter that one wants to change along with the new value of the parameters. For example, in the previously defined <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a> we can change the value of the mass from 1 to 2 by running</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">metric</span><span class="o">.</span><span class="kp">set_constant</span><span class="p">(</span><span class="nc">M</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="auxiliary-expressions-approach">
 <h2>Auxiliary expressions approach<a class="headerlink" href="#auxiliary-expressions-approach" title="Link to this heading">¶</a></h2>
@@ -408,7 +422,7 @@ one wants to write it using the following expression</p>
 <p id="aux-func">Finally, we have a last approach for the metric initialization, which relies on auxiliary <code class="docutils literal notranslate"><span class="pre">pyfunc</span></code> methods as parts of the line element. This approach is particularly useful when we wish to introduce in the metric functions of the coordinates that do not have an analytic expression and rely on, for example, the solution of an integral or on an interpolated/tabulated function which is not available within the <code class="docutils literal notranslate"><span class="pre">sympy</span></code> module. This approach allows to use any function defined in the <code class="docutils literal notranslate"><span class="pre">__main__</span></code> body of your script as auxiliary function.</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
-<p>We suggest using the <em>Auxiliary functions approach</em> only when strictly dictated by the problem you want to solve, i.e. only if it is necessary to rely on an external function that cannot be expressed symbolically with an analytic expression. This is because PyGRO reaches its best performances when integrating geodesic equations expressed in a completely symbolic way. More specifically, upon linking of a <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> element to a <a class="reference internal" href="geodesicengine.html#pygro.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GeodesicEngine()</span></code></a>, PyGRO makes use of the built-in <code class="docutils literal notranslate"><span class="pre">sympy</span></code> method <code class="docutils literal notranslate"><span class="pre">autowrap</span></code>, which converts the call to a specific symbolic expression into a C-precompiled binary executable, whereas when presented with a non symbolic expression, it relies on the native-Python <code class="docutils literal notranslate"><span class="pre">sympy</span></code> method <code class="docutils literal notranslate"><span class="pre">lambdify</span></code>. The former <strong>drastically</strong> improves the integration performances.</p>
+<p>We suggest using the <em>Auxiliary functions approach</em> only when strictly dictated by the problem you want to solve, i.e. only if it is necessary to rely on an external function that cannot be expressed symbolically with an analytic expression. This is because PyGRO reaches its best performances when integrating geodesic equations expressed in a completely symbolic way. More specifically, upon linking of a <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> element to a <a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GeodesicEngine()</span></code></a>, PyGRO makes use of the built-in <code class="docutils literal notranslate"><span class="pre">sympy</span></code> method <code class="docutils literal notranslate"><span class="pre">autowrap</span></code>, which converts the call to a specific symbolic expression into a C-precompiled binary executable, whereas when presented with a non symbolic expression, it relies on the native-Python <code class="docutils literal notranslate"><span class="pre">sympy</span></code> method <code class="docutils literal notranslate"><span class="pre">lambdify</span></code>. The former <strong>drastically</strong> improves the integration performances.</p>
 </div>
 <p>In order to correctly initialize a metric using the <em>Auxiliary functions approach</em> the user must take into account the fact that Christoffel symbols and, hence, geodesic equations are computed from the derivatives of the metric coefficients. This means that, while in the purely symbolic approaches the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> deals autonomously with the computation of such derivatives, in the auxiliary functions approach the user should not only pass to the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> constructor the <code class="docutils literal notranslate"><span class="pre">pyfunc</span></code> corresponding to the auxiliary functions reported in the line element, but also its derivatives with respect to all the coordinates on which it explicitly depends. These must be passed as keyword arguments to the metric constructor corresponding to the following syntax:</p>
 <p>&gt; <code class="docutils literal notranslate"><span class="pre">&quot;A(r)&quot;</span> <span class="pre">-&gt;</span> <span class="pre">Metric(...,</span> <span class="pre">A</span> <span class="pre">=</span> <span class="pre">[...],</span> <span class="pre">dAdr</span> <span class="pre">=</span> <span class="pre">[...])</span></code></p>
@@ -488,7 +502,14 @@ one wants to write it using the following expression</p>
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/rdellamonica/pygro" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
           </div>
         </div>
         
@@ -507,7 +528,10 @@ one wants to write it using the following expression</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Define your own space-time</a><ul>
-<li><a class="reference internal" href="#purely-symbolic-approach">Purely symbolic approach</a></li>
+<li><a class="reference internal" href="#purely-symbolic-approach">Purely symbolic approach</a><ul>
+<li><a class="reference internal" href="#changing-the-value-of-the-metric-parameters">Changing the value of the metric parameters</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#auxiliary-expressions-approach">Auxiliary expressions approach</a></li>
 <li><a class="reference internal" href="#auxiliary-functions-approach">Auxiliary functions approach</a></li>
 </ul>
@@ -521,7 +545,7 @@ one wants to write it using the following expression</p>
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=8d563738"></script>
+</div><script src="_static/documentation_options.js?v=292eb321"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=5fa4622c"></script>

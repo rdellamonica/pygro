@@ -3,14 +3,15 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Innermost Stable Circilar Orbit" href="Schwarzschild-ISCO.html" /><link rel="prev" title="Orbital precession" href="Schwarzschild-Precession.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Circular orbits" href="Schwarzschild-ISCO.html" /><link rel="prev" title="Orbital precession" href="Schwarzschild-Precession.html" />
 
-    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>Unstable photon orbit - PyGRO 1.0.0 documentation</title>
+    <link rel="shortcut icon" href="../_static/pygro-icon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>Unstable photon orbit - Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0745d1ac" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/github_style.css?v=1093691d" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=83708512" />
     
@@ -169,7 +170,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../index.html"><div class="brand">PyGRO 1.0.0 documentation</div></a>
+      <a href="../index.html"><div class="brand">Documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -197,7 +198,7 @@
     <img class="sidebar-logo only-dark" src="../_static/pygro-logo-dark.png" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">PyGRO 1.0.0 documentation</span>
+  <span class="sidebar-brand-text">Documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -215,21 +216,24 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../define_observer.html">Define a space-time Observer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../integrating_orbits.html">Integrating physical orbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../visualize.html">Visualize the results</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../integrators.html">Integrators</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example Notebooks:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Schwarzschild-Precession.html">Orbital precession</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Unstable photon orbit</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Schwarzschild-ISCO.html">Innermost Stable Circilar Orbit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Schwarzschild-ISCO.html">Circular orbits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Wormhole.html">Ellis wormhole</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../metricengine.html"><cite>Metric</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../geodesicengine.html"><cite>GeodesicEngine</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../geodesic.html"><cite>Geodesic</cite></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../observer.html"><cite>Observer</cite></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metricengine.html"><code class="docutils literal notranslate"><span class="pre">Metric</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../geodesicengine.html"><code class="docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../geodesic.html"><code class="docutils literal notranslate"><span class="pre">Geodesic</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../observer.html"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../orbit.html"><code class="docutils literal notranslate"><span class="pre">Orbit</span></code></a></li>
 </ul>
 
 </div>
@@ -250,12 +254,16 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../_sources/examples/Schwarzschild-PhotonOrbit.ipynb.txt" title="View this page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/blob/master/docs/source/examples/Schwarzschild-PhotonOrbit.ipynb?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
-</div>
-<div class="theme-toggle-container theme-toggle-content">
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/edit/master/docs/source/examples/Schwarzschild-PhotonOrbit.ipynb" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
@@ -272,6 +280,201 @@
         <article role="main" id="furo-main-content">
           <section id="Unstable-photon-orbit">
 <h1>Unstable photon orbit<a class="headerlink" href="#Unstable-photon-orbit" title="Link to this heading">¶</a></h1>
+<p>In this example notebook, we want to study geodesics in the <code class="docutils literal notranslate"><span class="pre">null</span></code> case around a Schwarzschild black hole, to show the capability of PyGRO to correctly reproduce known results from textbooks.</p>
+<p>Let’s start by importing the necessary modules:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pygro
+import numpy as np
+
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+</pre></div>
+</div>
+</div>
+<p>defining the usual Schwarzschild metric:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>name = &quot;Schwarzschild spacetime&quot;
+coordinates = [&quot;t&quot;, &quot;r&quot;, &quot;theta&quot;, &quot;phi&quot;]
+
+transform_functions = [
+    &quot;t&quot;,
+    &quot;r*sin(theta)*cos(phi)&quot;,
+    &quot;r*sin(theta)*sin(phi)&quot;,
+    &quot;r*cos(theta)&quot;
+]
+
+line_element = &quot;-(1-2*M/r)*dt**2+1/(1-2*M/r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)&quot;
+
+metric = pygro.Metric(
+    name = name,
+    coordinates = coordinates,
+    line_element = line_element,
+    transform = transform_functions,
+    M = 1,
+)
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) INFO: Initializing Schwarzschild spacetime.
+(PyGRO) INFO: Calculating inverse metric.
+(PyGRO) INFO: Calculating symbolic equations of motion.
+(PyGRO) INFO: Computing helper functions to normalize 4-velocity.
+(PyGRO) INFO: The Metric (Schwarzschild spacetime) has been initialized.
+</pre></div></div>
+</div>
+<p>and defining the <code class="docutils literal notranslate"><span class="pre">GeodesicEngine</span></code> with a stopping criterion at the event horizon:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>geo_engine = pygro.GeodesicEngine(metric)
+geo_engine.set_stopping_criterion(&quot;r &gt; 2.00001*M&quot;, &quot;horizon&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) INFO: Linking Schwarzschild spacetime to the Geodesic Engine
+(PyGRO) INFO: Metric linking complete.
+</pre></div></div>
+</div>
+<p>We want to verify the general relativistic prediciton that there exist circular photon orbit.</p>
+<p>These correspond to strong lensing configurations in which the photon path is so bent that it circles around the black hole indefinitely.</p>
+<p>In particular, around a Schwarzschild black hole, this can occurr only with orbits that have a radial coordinate <span class="math notranslate nohighlight">\(r_\textrm{UPO}=3M\)</span>, corresponding to an <strong>unstable photon orbit</strong>. Photons with <span class="math notranslate nohighlight">\(r&lt;r_\textrm{UPO}\)</span> will fall in the black hole, orbits with <span class="math notranslate nohighlight">\(r&gt;r_\textrm{UPO}\)</span> will escape to infinity.</p>
+<p>Let’s test this result.</p>
+<p>This is particularly simple if we definte an <code class="docutils literal notranslate"><span class="pre">Observer</span></code>, defined exaxtly as in the <a class="reference external" href="https://rdellamonica.github.io/pygro/define_observer.html">Define a space-time Observer</a> tutorial.</p>
+<p>In that case, the <span class="math notranslate nohighlight">\(\vec{f}_2\)</span> vector of the observer’s frame is directed along the vector <span class="math notranslate nohighlight">\(\vec{e}_\phi\)</span> of the coordinate basis, <em>i.e.</em> perpendicularly with respect to the radial direction. We can thus move the observer around, changing its position from very close to the horizon (<em>e.g.</em> at <span class="math notranslate nohighlight">\(r_0=2.1M\)</span>) going otward (<em>e.g.</em> up to <span class="math notranslate nohighlight">\(r_0=6M\)</span>) and a fire several photons along the <span class="math notranslate nohighlight">\(\vec{f}_2\)</span> direction.</p>
+<p>We can do this by using the <code class="docutils literal notranslate"><span class="pre">Observer.from_f2()</span></code> method, assigning zero angles because we want to fire the photon perpendicularly to the radius, and integrate it for a given interval of proper time:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Let&#39;s define an array of radii.
+r_arr = np.linspace(2.1, 6, 40)         # [2.1, 2.2, 2.3, ..., 5.7, 5.8, 5.9, 6.0]
+
+geo_arr = []
+
+# Initially we define the observer at the horizon (r = 2)
+observer = pygro.Observer(
+    metric,
+    [0, 2, np.pi/2, 0],
+    coframe = [
+        &quot;sqrt(1-2*M/r)*dt&quot;,
+        &quot;-dr/sqrt(1-2*M/r)&quot;,
+        &quot;r*sin(theta)*dphi&quot;,
+        &quot;-r*dtheta&quot;
+    ]
+)
+
+for r in r_arr:
+
+    # We then loop over the different radii and change the position of the observer accordingly
+    observer.x = [0, r, np.pi/2, 0]
+
+    geo = pygro.Geodesic(&quot;null&quot;, geo_engine, verbose = False)
+    geo.initial_x = observer.x
+    geo.initial_u = observer.from_f2(0, 0, type = geo.type)
+
+    geo_engine.integrate(geo, 100, 0.0001, verbose = False, accuracy_goal = 16, precision_goal = 16, hmax = 0.001 if r == 3 else 100)
+
+    geo_arr.append(geo)
+</pre></div>
+</div>
+</div>
+<p>Note that we have set a smaller <code class="docutils literal notranslate"><span class="pre">hamx</span></code> for the case <span class="math notranslate nohighlight">\(r=3M\)</span> because we know that this is supposed an unstable photon orbit and we thus want to the numerical precision to be under much stricter control in this case.</p>
+<p>Let’s visualize all the photon orbits that we have integrated:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots()
+
+
+cmap = plt.get_cmap(&#39;coolwarm&#39;)
+norm = mpl.colors.Normalize(vmin=0, vmax=6)
+mappable = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+
+for geo in geo_arr:
+    t, x, y, z = metric.transform(geo.x.T)
+
+    ax.plot(
+        x, y,
+        color = mappable.to_rgba(geo.initial_x[1]) if geo.initial_x[1] != 3 else &quot;#3b3b9b&quot;,
+        label = r&quot;$r_0 = 3M$ (Unstable photon orbit)&quot; if geo.initial_x[1] == 3 else None
+    )
+
+ax.axis(&#39;equal&#39;)
+
+theta = np.linspace(0, 2*np.pi, 150)
+x_bh = 2*np.cos(theta)
+y_bh = 2*np.sin(theta)
+
+ax.fill(x_bh, y_bh, color = &quot;k&quot;, zorder = 100)
+
+lim = 6
+
+ax.set_xlim(-lim, lim)
+ax.set_ylim(-lim, lim)
+
+ax.set_axisbelow(True)
+
+ax.set_xlabel(&#39;$x$ ($M$)&#39;)
+ax.set_ylabel(&#39;$y$ ($M$)&#39;)
+
+ax.legend()
+
+fig.colorbar(mappable, ax = ax, label = r&quot;$r_0$ ($M$)&quot;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-PhotonOrbit_11_0.png" src="../_images/examples_Schwarzschild-PhotonOrbit_11_0.png" />
+</div>
+</div>
+<p>Gotcha!</p>
+<p>We have plunging orbits for the cases with <span class="math notranslate nohighlight">\(r_0&lt;r_\textrm{UPO}\)</span>, escaping orbits for <span class="math notranslate nohighlight">\(r_0&gt;r_\textrm{UPO}\)</span> and a perfectly circular orbit in the <span class="math notranslate nohighlight">\(r_0=r_\textrm{UPO}\)</span> case.</p>
+<p>We can also see this better by plotting for this specific case (which corresponds to the 10th geodesic in our array) the radial coordinate as a funciton of the affine parameter on the geodesic:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(figsize = (5,2))
+
+ax.plot(geo_arr[9].tau, geo_arr[9].x[:,1], color  = &quot;#3b3b9b&quot;)
+
+ax.set_xlabel(r&quot;$\lambda$ ($M$)&quot;)
+ax.set_ylabel(r&quot;$r$ ($M$)&quot;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Schwarzschild-PhotonOrbit_13_0.png" src="../_images/examples_Schwarzschild-PhotonOrbit_13_0.png" />
+</div>
+</div>
+<p>From which we see that the orbital radius is perfectly constant.</p>
 </section>
 
         </article>
@@ -284,7 +487,7 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Innermost Stable Circilar Orbit</div>
+                <div class="title">Circular orbits</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -311,7 +514,14 @@
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/rdellamonica/pygro" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
           </div>
         </div>
         
@@ -323,7 +533,7 @@
       
     </aside>
   </div>
-</div><script src="../_static/documentation_options.js?v=8d563738"></script>
+</div><script src="../_static/documentation_options.js?v=292eb321"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
