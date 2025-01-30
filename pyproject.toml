@@ -1,6 +1,6 @@
 [project]
 name = "pygro"
-version = "1.0.0"
+version = "1.0.1"
 description = "A Python Integrator for General Relativistic Orbits"
 authors = [
     {name = "Riccardo Della Monica",email = "dellamonicariccardo@gmail.com"}
