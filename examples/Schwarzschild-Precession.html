@@ -286,14 +286,14 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pygro
-import numpy as np
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pygro</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-import matplotlib.pyplot as plt
-import matplotlib as mpl
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpl</span>
 
-from scipy.interpolate import interp1d
-from scipy.optimize import fsolve
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">interp1d</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">fsolve</span>
 </pre></div>
 </div>
 </div>
@@ -302,25 +302,25 @@ from scipy.optimize import fsolve
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>name = &quot;Schwarzschild spacetime&quot;
-coordinates = [&quot;t&quot;, &quot;r&quot;, &quot;theta&quot;, &quot;phi&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Schwarzschild spacetime&quot;</span>
+<span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;theta&quot;</span><span class="p">,</span> <span class="s2">&quot;phi&quot;</span><span class="p">]</span>
 
-transform_functions = [
-    &quot;t&quot;,
-    &quot;r*sin(theta)*cos(phi)&quot;,
-    &quot;r*sin(theta)*sin(phi)&quot;,
-    &quot;r*cos(theta)&quot;
-]
+<span class="n">transform_functions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;t&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;r*sin(theta)*cos(phi)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;r*sin(theta)*sin(phi)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;r*cos(theta)&quot;</span>
+<span class="p">]</span>
 
-line_element = &quot;-(1-2*M/r)*dt**2+1/(1-2*M/r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)&quot;
+<span class="n">line_element</span> <span class="o">=</span> <span class="s2">&quot;-(1-2*M/r)*dt**2+1/(1-2*M/r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)&quot;</span>
 
-metric = pygro.Metric(
-    name = name,
-    coordinates = coordinates,
-    line_element = line_element,
-    transform = transform_functions,
-    M = 1,
-)
+<span class="n">metric</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Metric</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span>
+    <span class="n">coordinates</span> <span class="o">=</span> <span class="n">coordinates</span><span class="p">,</span>
+    <span class="n">line_element</span> <span class="o">=</span> <span class="n">line_element</span><span class="p">,</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">transform_functions</span><span class="p">,</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
@@ -341,8 +341,8 @@ metric = pygro.Metric(
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>geo_engine = pygro.GeodesicEngine(metric)
-geo_engine.set_stopping_criterion(&quot;r &gt; 2.00001*M&quot;, &quot;horizon&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geo_engine</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">GeodesicEngine</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+<span class="n">geo_engine</span><span class="o">.</span><span class="n">set_stopping_criterion</span><span class="p">(</span><span class="s2">&quot;r &gt; 2.00001*M&quot;</span><span class="p">,</span> <span class="s2">&quot;horizon&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -360,8 +360,8 @@ geo_engine.set_stopping_criterion(&quot;r &gt; 2.00001*M&quot;, &quot;horizon&qu
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>orbit = pygro.Orbit(geo_engine)
-orbit.set_orbital_parameters(t_P = 0, a = 1000, e = 0.8)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">orbit</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Orbit</span><span class="p">(</span><span class="n">geo_engine</span><span class="p">)</span>
+<span class="n">orbit</span><span class="o">.</span><span class="n">set_orbital_parameters</span><span class="p">(</span><span class="n">t_P</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -380,9 +380,9 @@ orbit.set_orbital_parameters(t_P = 0, a = 1000, e = 0.8)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>T = np.sqrt(4*np.pi**2*orbit.a**3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">orbit</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
 
-print(f&quot;Keplerian period = {T:.0f} M&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Keplerian period = </span><span class="si">{</span><span class="n">T</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> M&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -399,7 +399,7 @@ Keplerian period = 198692 M
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>orbit.integrate(T*5, 0.1, accuracy_goal = 15, precision_goal = 15, verbose=True)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">orbit</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">accuracy_goal</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">precision_goal</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -417,28 +417,28 @@ Keplerian period = 198692 M
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.close(&#39;all&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
 
-fig, ax = plt.subplots()
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-t, x, y, z = metric.transform(orbit.geo.x.T)
+<span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 
-ax.plot(x, y)
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-theta = np.linspace(0, 2*np.pi, 150)
-x_bh = 2*np.cos(theta)
-y_bh = 2*np.sin(theta)
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">x_bh</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">y_bh</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 
-ax.fill(x_bh, y_bh, color = &quot;k&quot;)
+<span class="n">ax</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">x_bh</span><span class="p">,</span> <span class="n">y_bh</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
 
-ax.set_axisbelow(True)
+<span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
-ax.axis(&#39;equal&#39;)
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
 
-ax.set_xlabel(r&#39;$x$ ($M$)&#39;)
-ax.set_ylabel(r&#39;$y$ ($M$)&#39;)
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$ ($M$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$ ($M$)&#39;</span><span class="p">)</span>
 
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -455,19 +455,19 @@ plt.show()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.close(&#39;all&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
 
-fig, ax = plt.subplots()
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-ax.plot(orbit.geo.x[:,0], orbit.geo.x[:,1])
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
 
-ax.axhline(orbit.a*(1-orbit.e), linestyle = &quot;:&quot;, color = &quot;k&quot;)
-ax.axhline(orbit.a*(1+orbit.e), linestyle = &quot;:&quot;, color = &quot;k&quot;)
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">orbit</span><span class="o">.</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">orbit</span><span class="o">.</span><span class="n">e</span><span class="p">),</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">orbit</span><span class="o">.</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">orbit</span><span class="o">.</span><span class="n">e</span><span class="p">),</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
 
-ax.set_xlabel(r&quot;$t$ ($M$)&quot;)
-ax.set_ylabel(r&quot;$r$ ($M$)&quot;)
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$t$ ($M$)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$r$ ($M$)&quot;</span><span class="p">)</span>
 
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -486,14 +486,14 @@ plt.show()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-ax.plot(orbit.geo.x[:,3], orbit.geo.u[:,1])
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">3</span><span class="p">],</span> <span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">u</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
 
-ax.set_xlabel(r&quot;$\phi$ (rad)&quot;)
-ax.set_ylabel(r&quot;$\dot{r}$&quot;)
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\phi$ (rad)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\dot</span><span class="si">{r}</span><span class="s2">$&quot;</span><span class="p">)</span>
 
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -510,19 +510,19 @@ plt.show()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-ax.plot(orbit.geo.x[:,3], orbit.geo.u[:,1])
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">3</span><span class="p">],</span> <span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">u</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
 
-ax.set_xlim(2*np.pi-np.pi/20, 2*np.pi+np.pi/20)
-ax.set_ylim(-0.01, 0.01)
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">20</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 
-ax.axhline(0, color = &quot;k&quot;, linestyle = &quot;:&quot;, linewidth = 1)
-ax.axvline(2*np.pi, color = &quot;k&quot;, linestyle = &quot;--&quot;, linewidth = 1, label = r&quot;$2\pi$&quot;)
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$2\pi$&quot;</span><span class="p">)</span>
 
-ax.legend()
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -539,9 +539,9 @@ plt.show()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>precession = fsolve(interp1d(orbit.geo.x[:,3], orbit.geo.u[:,1], kind = &quot;cubic&quot;), x0 = 2*np.pi)[0] - 2*np.pi
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">precession</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">interp1d</span><span class="p">(</span><span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">3</span><span class="p">],</span> <span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">u</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">kind</span> <span class="o">=</span> <span class="s2">&quot;cubic&quot;</span><span class="p">),</span> <span class="n">x0</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
 
-print(f&quot;Orbital precession = {precession:.5} rad/orbital period&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Orbital precession = </span><span class="si">{</span><span class="n">precession</span><span class="si">:</span><span class="s2">.5</span><span class="si">}</span><span class="s2"> rad/orbital period&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -559,20 +559,20 @@ Orbital precession = 0.053048 rad/orbital period
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-ax.plot(orbit.geo.x[:,3], orbit.geo.u[:,1])
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">3</span><span class="p">],</span> <span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">u</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
 
-ax.set_xlim(2*np.pi-np.pi/20, 2*np.pi+np.pi/20)
-ax.set_ylim(-0.01, 0.01)
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">20</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
 
-ax.axhline(0, color = &quot;k&quot;, linestyle = &quot;:&quot;, linewidth = 1)
-ax.axvline(2*np.pi, color = &quot;k&quot;, linestyle = &quot;--&quot;, linewidth = 1, label = r&quot;$2\pi$&quot;)
-ax.axvline(precession+2*np.pi, color = &quot;firebrick&quot;, linestyle = &quot;--&quot;, linewidth = 1, label = r&quot;$2\pi + \Delta\phi$&quot;)
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$2\pi$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">precession</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;firebrick&quot;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$2\pi + \Delta\phi$&quot;</span><span class="p">)</span>
 
-ax.legend()
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -593,9 +593,9 @@ plt.show()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>PN_precession = 6*np.pi/(orbit.a*(1-orbit.e**2))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PN_precession</span> <span class="o">=</span> <span class="mi">6</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="p">(</span><span class="n">orbit</span><span class="o">.</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">orbit</span><span class="o">.</span><span class="n">e</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
 
-print(f&quot;Post-newtonian orbital precession = {PN_precession:.5} rad/orbital period&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Post-newtonian orbital precession = </span><span class="si">{</span><span class="n">PN_precession</span><span class="si">:</span><span class="s2">.5</span><span class="si">}</span><span class="s2"> rad/orbital period&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -614,26 +614,26 @@ Post-newtonian orbital precession = 0.05236 rad/orbital period
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>a_arr = np.geomspace(50, 10000, 100)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
-GR_precession_arr = []
-PN_precession_arr = []
+<span class="n">GR_precession_arr</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">PN_precession_arr</span> <span class="o">=</span> <span class="p">[]</span>
 
-for i, a in enumerate(a_arr):
-    print(f&quot;Orbit {i+1}/{len(a_arr)}&quot;, end = &quot;\r&quot;)
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">a_arr</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Orbit </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">a_arr</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    orbit = pygro.Orbit(geo_engine, verbose=False)
-    orbit.set_orbital_parameters(0, a, 0.8, 0, 0, 0)
+    <span class="n">orbit</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Orbit</span><span class="p">(</span><span class="n">geo_engine</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">orbit</span><span class="o">.</span><span class="n">set_orbital_parameters</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
-    T = np.sqrt(4*np.pi**2*orbit.a**3)
+    <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">orbit</span><span class="o">.</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
 
-    orbit.integrate(T*5, 0.1, accuracy_goal = 15, precision_goal = 15, verbose=False)
+    <span class="n">orbit</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">accuracy_goal</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">precision_goal</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-    GR_precession = fsolve(interp1d(orbit.geo.x[:,3], orbit.geo.u[:,1], kind = &quot;cubic&quot;), x0 = 2*np.pi)[0] - 2*np.pi
-    PN_precession = 6*np.pi/(orbit.a*(1-orbit.e**2))
+    <span class="n">GR_precession</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">interp1d</span><span class="p">(</span><span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">3</span><span class="p">],</span> <span class="n">orbit</span><span class="o">.</span><span class="n">geo</span><span class="o">.</span><span class="n">u</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">kind</span> <span class="o">=</span> <span class="s2">&quot;cubic&quot;</span><span class="p">),</span> <span class="n">x0</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">PN_precession</span> <span class="o">=</span> <span class="mi">6</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="p">(</span><span class="n">orbit</span><span class="o">.</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">orbit</span><span class="o">.</span><span class="n">e</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
 
-    GR_precession_arr.append(GR_precession)
-    PN_precession_arr.append(PN_precession)
+    <span class="n">GR_precession_arr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">GR_precession</span><span class="p">)</span>
+    <span class="n">PN_precession_arr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PN_precession</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -650,19 +650,19 @@ Orbit 100/100
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-ax.plot(a_arr, GR_precession_arr, label = &quot;Numerical&quot;)
-ax.plot(a_arr, PN_precession_arr, label = &quot;Post-newtonian&quot;, linestyle = &quot;:&quot;, color = &quot;k&quot;)
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a_arr</span><span class="p">,</span> <span class="n">GR_precession_arr</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Numerical&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a_arr</span><span class="p">,</span> <span class="n">PN_precession_arr</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Post-newtonian&quot;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
 
-ax.set_xscale(&#39;log&#39;)
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
 
-ax.set_xlabel(&quot;$a$ ($M$)&quot;)
-ax.set_ylabel(&quot;$\Delta\phi$ (rad)&quot;)
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$a$ ($M$)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$\Delta\phi$ (rad)&quot;</span><span class="p">)</span>
 
-ax.legend()
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

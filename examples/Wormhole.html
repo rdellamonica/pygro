@@ -286,11 +286,11 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pygro
-import numpy as np
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pygro</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-import matplotlib.pyplot as plt
-import matplotlib as mpl
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpl</span>
 </pre></div>
 </div>
 </div>
@@ -306,26 +306,26 @@ import matplotlib as mpl
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>name = &quot;Morris-Thorne spacetime&quot;
-coordinates = [&quot;t&quot;, &quot;l&quot;, &quot;theta&quot;, &quot;phi&quot;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Morris-Thorne spacetime&quot;</span>
+<span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;l&quot;</span><span class="p">,</span> <span class="s2">&quot;theta&quot;</span><span class="p">,</span> <span class="s2">&quot;phi&quot;</span><span class="p">]</span>
 
-transform_functions = [
-    &quot;t&quot;,
-    &quot;sqrt(b_0**2+l**2)*sin(theta)*cos(phi)&quot;,
-    &quot;sqrt(b_0**2+l**2)*sin(theta)*sin(phi)&quot;,
-    &quot;sqrt(b_0**2+l**2)*cos(theta)&quot;
-]
+<span class="n">transform_functions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;t&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sqrt(b_0**2+l**2)*sin(theta)*cos(phi)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sqrt(b_0**2+l**2)*sin(theta)*sin(phi)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sqrt(b_0**2+l**2)*cos(theta)&quot;</span>
+<span class="p">]</span>
 
 
-line_element = &quot;-dt**2+dl**2+(b_0**2+l**2)*(dtheta**2+sin(theta)**2*dphi**2)&quot;
+<span class="n">line_element</span> <span class="o">=</span> <span class="s2">&quot;-dt**2+dl**2+(b_0**2+l**2)*(dtheta**2+sin(theta)**2*dphi**2)&quot;</span>
 
-metric = pygro.Metric(
-    name = name,
-    coordinates = coordinates,
-    line_element = line_element,
-    transform = transform_functions,
-    b_0 = 1
-)
+<span class="n">metric</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Metric</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span>
+    <span class="n">coordinates</span> <span class="o">=</span> <span class="n">coordinates</span><span class="p">,</span>
+    <span class="n">line_element</span> <span class="o">=</span> <span class="n">line_element</span><span class="p">,</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">transform_functions</span><span class="p">,</span>
+    <span class="n">b_0</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">)</span>
 <br/></pre></div>
 </div>
 </div>
@@ -346,7 +346,7 @@ metric = pygro.Metric(
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>geo_engine = pygro.GeodesicEngine(metric)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geo_engine</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">GeodesicEngine</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -373,16 +373,16 @@ sigma_2&amp;=sqrt(b_0^2+l^2)sintheta dphi,&amp; sigma_3&amp;=-sqrt(b_0^2+l^2)dth
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>observer = pygro.Observer(
-    metric,
-    [0, 0, np.pi/2, 0],
-    coframe = [
-        &quot;dt&quot;,
-        &quot;-dl&quot;,
-        &quot;sqrt(b_0**2+l**2)*sin(theta)*dphi&quot;,
-        &quot;-sqrt(b_0**2+l**2)*dtheta&quot;
-    ]
-)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">observer</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Observer</span><span class="p">(</span>
+    <span class="n">metric</span><span class="p">,</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">coframe</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;dt&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-dl&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sqrt(b_0**2+l**2)*sin(theta)*dphi&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-sqrt(b_0**2+l**2)*dtheta&quot;</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -396,25 +396,25 @@ sigma_2&amp;=sqrt(b_0^2+l^2)sintheta dphi,&amp; sigma_3&amp;=-sqrt(b_0^2+l^2)dth
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y_arr = np.linspace(-5, 5, 81)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">81</span><span class="p">)</span>
 
-geo_arr = []
+<span class="n">geo_arr</span> <span class="o">=</span> <span class="p">[]</span>
 
-for y in y_arr:
+<span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">y_arr</span><span class="p">:</span>
 
-    x = 10
-    phi = np.arctan(y/x)
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">x</span><span class="p">)</span>
 
-    observer.x = [0, np.sqrt(x**2+y**2), np.pi/2, phi]
+    <span class="n">observer</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">phi</span><span class="p">]</span>
 
-    geo = pygro.Geodesic(&quot;null&quot;, geo_engine, verbose = False)
-    geo.initial_x = observer.x
-    geo.initial_u = observer.from_f1(0, phi, type = geo.type)
+    <span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Geodesic</span><span class="p">(</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">geo</span><span class="o">.</span><span class="n">initial_x</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">x</span>
+    <span class="n">geo</span><span class="o">.</span><span class="n">initial_u</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">from_f1</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="n">geo</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
 
-    # We limit the step size for the radial geodesic
-    geo_engine.integrate(geo, 100, 0.0001, verbose = False, accuracy_goal = 16, precision_goal = 16, hmax =  0.01 if y == 0 else 1)
+    <span class="c1"># We limit the step size for the radial geodesic</span>
+    <span class="n">geo_engine</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">geo</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">accuracy_goal</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">precision_goal</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">hmax</span> <span class="o">=</span>  <span class="mf">0.01</span> <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
 
-    geo_arr.append(geo)
+    <span class="n">geo_arr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geo</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -426,60 +426,60 @@ for y in y_arr:
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, [ax_l, ax_r] = plt.subplots(1, 2, figsize = (10, 5))
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">[</span><span class="n">ax_l</span><span class="p">,</span> <span class="n">ax_r</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
 
-for geo in geo_arr:
-    t, x, y, z = metric.transform(geo.x.T)
+<span class="k">for</span> <span class="n">geo</span> <span class="ow">in</span> <span class="n">geo_arr</span><span class="p">:</span>
+    <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 
-    idx = np.argwhere(geo.x[:,1] &gt;= 0)
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
 
-    if np.any(geo.x[:,1] &lt; 0):
-        color = &quot;#458ace&quot;
-    else:
-        color = &quot;k&quot;
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#458ace&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span>
 
-    ax_l.plot(
-        x[idx], y[idx],
-        color = color,
-        linewidth = 1
-    )
+    <span class="n">ax_l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span>
+        <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="p">)</span>
 
-    idx = np.argwhere(geo.x[:,1] &lt; 0)
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
 
-    ax_r.plot(
-        x[idx], y[idx],
-        color = color,
-        linewidth = 1
-    )
+    <span class="n">ax_r</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">,</span>
+        <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="p">)</span>
 
-theta = np.linspace(0, 2*np.pi, 150)
-x_wh = metric.get_constant(&#39;b_0&#39;)*np.cos(theta)
-y_wh = metric.get_constant(&#39;b_0&#39;)*np.sin(theta)
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">x_wh</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="n">get_constant</span><span class="p">(</span><span class="s1">&#39;b_0&#39;</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">y_wh</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="n">get_constant</span><span class="p">(</span><span class="s1">&#39;b_0&#39;</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 
-lim = 5
+<span class="n">lim</span> <span class="o">=</span> <span class="mi">5</span>
 
-for ax in [ax_l, ax_r]:
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">[</span><span class="n">ax_l</span><span class="p">,</span> <span class="n">ax_r</span><span class="p">]:</span>
 
-    ax.axis(&#39;equal&#39;)
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
 
-    ax.set_xlim(-lim, lim)
-    ax.set_ylim(-lim, lim)
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">lim</span><span class="p">,</span> <span class="n">lim</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="n">lim</span><span class="p">,</span> <span class="n">lim</span><span class="p">)</span>
 
-    ax.set_axisbelow(True)
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
-    ax.set_xlabel(&#39;$x$&#39;)
-    ax.set_ylabel(&#39;$y$&#39;)
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
 
-    ax.plot(x_wh, y_wh, color = &quot;k&quot;, zorder = 100, label = &quot;Throat&quot;, linestyle = &quot;--&quot;)
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_wh</span><span class="p">,</span> <span class="n">y_wh</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Throat&quot;</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
 
-ax_l.set_title(r&quot;Universe 1 ($l &gt; 0$)&quot;)
-ax_r.set_title(r&quot;Universe 2 ($l &lt; 0$)&quot;)
+<span class="n">ax_l</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Universe 1 ($l &gt; 0$)&quot;</span><span class="p">)</span>
+<span class="n">ax_r</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Universe 2 ($l &lt; 0$)&quot;</span><span class="p">)</span>
 
-ax_r.legend()
-ax_l.text(0, 0, fr&quot;$b_0 = {metric.get_constant(&#39;b_0&#39;)}$&quot;, ha = &quot;center&quot;, va = &quot;center&quot;)
+<span class="n">ax_r</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax_l</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">fr</span><span class="s2">&quot;$b_0 = </span><span class="si">{</span><span class="n">metric</span><span class="o">.</span><span class="n">get_constant</span><span class="p">(</span><span class="s1">&#39;b_0&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">ha</span> <span class="o">=</span> <span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span> <span class="o">=</span> <span class="s2">&quot;center&quot;</span><span class="p">)</span>
 
-plt.show()
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -495,7 +495,7 @@ plt.show()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>metric.set_constant(b_0 = 2)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metric</span><span class="o">.</span><span class="n">set_constant</span><span class="p">(</span><span class="n">b_0</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
