@@ -158,12 +158,12 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
                     if h1 > 0:
                         h2 = min(abs(self.hmax), 2*h1)
                     else:
-                        h2 = -max(abs(self.hmax), 2*abs(h1))
+                        h2 = -min(abs(self.hmax), 2*abs(h1))
                     break
                 if h1 > 0:
                     h2 = max(min(abs(self.hmax), h1*K), abs(self.hmin))
                 else:
-                    h2 = -min(max(abs(self.hmax), abs(h1)*K), abs(self.hmin))
+                    h2 = -max(min(abs(self.hmax), abs(h1)*K), abs(self.hmin))
                 break
             
         return x1, y_lower, h2
