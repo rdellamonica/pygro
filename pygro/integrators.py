@@ -79,7 +79,7 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
         :type max_iter: int
     """
     
-    def __init__(self, function: Callable, stopping_criterion: Callable, order: int, stages: int, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16, hmin: Optional[float] = 1e-16, max_iter: int = 100):
+    def __init__(self, function: Callable, stopping_criterion: Callable, order: int, stages: int, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16, hmin: Optional[float] = 1e-16, max_iter: int = 1000):
         
         super().__init__(function, stopping_criterion)
         
@@ -142,15 +142,15 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
                 # Reject step and try smaller step-size
                 
                 if j >= self.max_iter:
-                    raise IntegrationError("Reached maximum number of step iterations. Try reducing the initial step size.")
+                    raise IntegrationError("Reached maximum number of step iterations. Check initial step size, integration tolerances or check for the presence of horizons.")
                 
                 if h1 > 0:
                     h1 = max(min(abs(self.hmax), h1*K), abs(self.hmin))
                 else:
                     h1 = -max(min(abs(self.hmax), abs(h1)*K), abs(self.hmin))
-                continue
-            
+                
                 j += 1
+                continue
             
             else:
                 # Accept step

@@ -842,5 +842,5 @@ class Metric():
         n = 0
         for mu in range(4):
             for nu in range(4):
-                n += self.g_f(point)[mu,nu]*vec[mu]*vec[nu]
+                n += self._g_f(point)[mu,nu]*vec[mu]*vec[nu]
         return n
