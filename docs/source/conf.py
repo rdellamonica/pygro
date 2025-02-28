@@ -46,6 +46,7 @@ extensions = [
 
 
 linkcode_url = "https://github.com/rdellamonica/pygro"
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

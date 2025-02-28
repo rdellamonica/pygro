@@ -147,7 +147,7 @@ Of course, one can do the same with photons (null geodesics) and obtain a repres
     ax.set_xlabel(r'$x$ ($M$)')
     ax.set_ylabel(r'$y$ ($M$)')
 
-which gives out the following repre
+which gives out the following representation
 
 .. image:: _static/visualize_example_3.png
   :width: 100%

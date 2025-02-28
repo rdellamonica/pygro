@@ -13,6 +13,7 @@ docs/build
 docs/make.bat
 docs/Makefile
 docs/docsenv
+docs/docsenv2
 .vscode
 .gitignore
 .DS_Store
