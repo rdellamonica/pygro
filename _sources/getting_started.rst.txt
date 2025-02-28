@@ -6,13 +6,13 @@ Installation
 
 PyGRO is distributed as a Python package that can be installed through the PyPi package manager via:
 
-.. code-block:: console
+.. code-block::
 
    pip install pygro
 
 Alternatively, you can clone PyGRO's Github repo and install it manually:
 
-.. code-block:: console
+.. code-block::
 
    git clone https://github.com/rdellamonica/pygro.git
    cd pygro
@@ -29,7 +29,7 @@ To successfully use this package, ensure you have the following dependencies ins
 
 You can install these dependencies by running the following command in your terminal:
 
-.. code-block:: console
+.. code-block::
    
    pip install -r requirements.txt
 

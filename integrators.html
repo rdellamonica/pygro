@@ -225,6 +225,8 @@
 <li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-PhotonOrbit.html">Unstable photon orbit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/Schwarzschild-ISCO.html">Circular orbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples/Wormhole.html">Ellis wormhole</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Kerr-Photons.html">Null geodesics in Kerr spacetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/S2_MCMC.html">Fitting relativistic orbits to data</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
 <ul>
@@ -291,7 +293,7 @@
 <p>All the implemented methods refer to the general class of <a class="reference internal" href="#pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator" title="pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExplicitAdaptiveRungeKuttaIntegrator</span></code></a>, whose docuemntation is reported here:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygro.integrators.</span></span><span class="sig-name descname"><span class="pre">ExplicitAdaptiveRungeKuttaIntegrator</span></span><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/3cdd6214d14d47f472b9c3aeb99ac38f2101ab4a/pygro/integrators.py#L48-L169"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygro.integrators.</span></span><span class="sig-name descname"><span class="pre">ExplicitAdaptiveRungeKuttaIntegrator</span></span><a class="reference internal" href="_modules/pygro/integrators.html#ExplicitAdaptiveRungeKuttaIntegrator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/db6d1e35e761f3fe3b978db9cefb81d422148795/pygro/integrators.py#L48-L169"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator" title="Link to this definition">¶</a></dt>
 <dd><p>Base class for explicit adaptive step-size integrators of the Runge-Kutta family.</p>
 <p>The local error is estimated as the difference between the two approximations at higher and lower order:</p>
 <div class="math-wrapper docutils container">

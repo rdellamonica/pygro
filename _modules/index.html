@@ -2,11 +2,10 @@
 <html class="no-js" lang="en" data-content_root="../">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Define a space-time Observer" href="../define_observer.html" /><link rel="prev" title="Null geodesic integration" href="null_geodesic.html" />
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
 
     <link rel="shortcut icon" href="../_static/pygro-icon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-        <title>Time-like geodesic integration - Documentation</title>
+        <title>Overview: module code - Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=0745d1ac" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/github_style.css?v=1093691d" />
@@ -206,12 +205,12 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../create_metric.html">Define your own space-time</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../integrate_geodesic.html">Integrate a geodesic in PyGRO</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Integrate a geodesic in PyGRO</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="null_geodesic.html"><cite>Null geodesic integration</cite></a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><cite>Time-like geodesic integration</cite></a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../integrate_geodesic.html">Integrate a geodesic in PyGRO</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Integrate a geodesic in PyGRO</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../geodesics/null_geodesic.html"><cite>Null geodesic integration</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../geodesics/timelike_geodesic.html"><cite>Time-like geodesic integration</cite></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../define_observer.html">Define a space-time Observer</a></li>
@@ -254,17 +253,7 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/rdellamonica/pygro/blob/master/docs/source/geodesics/timelike_geodesic.rst?plain=true" title="View this page">
-    <svg><use href="#svg-eye"></use></svg>
-    <span class="visually-hidden">View this page</span>
-  </a>
-</div><div class="edit-this-page">
-  <a class="muted-link" href="https://github.com/rdellamonica/pygro/edit/master/docs/source/geodesics/timelike_geodesic.rst" title="Edit this page">
-    <svg><use href="#svg-pencil"></use></svg>
-    <span class="visually-hidden">Edit this page</span>
-  </a>
-</div><div class="theme-toggle-container theme-toggle-content">
+          <div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
@@ -279,73 +268,21 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="time-like-geodesic-integration">
-<h1><cite>Time-like geodesic integration</cite><a class="headerlink" href="#time-like-geodesic-integration" title="Link to this heading">¶</a></h1>
-<p>Let’s now proceed to the numerical integration of the geodesic equations for a massive particle or, in other words, for the time-like case.</p>
-<p>We will retrace the same steps followed for the <a class="reference internal" href="null_geodesic.html"><span class="doc">Null geodesic integration</span></a></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Geodesic</span><span class="p">(</span><span class="s2">&quot;time-like&quot;</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">)</span>
-<span class="n">geo</span><span class="o">.</span><span class="kp">set_starting_point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">geo</span><span class="o">.</span><span class="kp">set_starting_4velocity</span><span class="p">(</span><span class="n">u1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u3</span> <span class="o">=</span> <span class="mf">2e-4</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>We have fixed the initial position at <span class="math notranslate nohighlight">\(r=175M\)</span> on the equatorial plane of the Schwarzschild black hole. Again, we have made use of the <a class="reference internal" href="../geodesic.html#pygro.geodesic.Geodesic.set_starting_4velocity" title="pygro.geodesic.Geodesic.set_starting_4velocity"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_starting_4velocity()</span></code></a> method to fix the 4-velocity of the geodesic at the initial time. We are considering a geodesic that initially has only a tangential component (<span class="math notranslate nohighlight">\(u_\phi\)</span>) of the 4-velocity.</p>
-<p>Carrying out the integration reads:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">geo_engine</span><span class="o">.</span><span class="kp">integrate</span><span class="p">(</span><span class="n">geo</span><span class="p">,</span> <span class="mi">50000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>which we stop at an affine parameter <span class="math notranslate nohighlight">\(\tau=50000\)</span> (which, since we have normalized the geodesic to <span class="math notranslate nohighlight">\(g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu = -1\)</span>, corresponds to the proper time in units of <span class="math notranslate nohighlight">\(M\)</span>).</p>
-<p>When we <a class="reference internal" href="../visualize.html"><span class="doc">Visualize the results</span></a> we get</p>
-<a class="reference internal image-reference" href="../_images/time_like_geodesic_example_1.png"><img alt="Time-like geodesic orbiting the central black hole" src="../_images/time_like_geodesic_example_1.png" style="width: 100%;" />
-</a>
-<p>correspoding to a <a class="reference internal" href="../geodesic.html#pygro.geodesic.Geodesic" title="pygro.geodesic.Geodesic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodesic</span></code></a> that quasi-periodically orbits the central black hole while experiencing periastron advance, as expected for a highly relativistic orbit in a Schwarzschild space-time.</p>
-<p>Again, we can play around with the initial conditions and see how the resulting geodesics change.</p>
-<p>For example, we can consider an array of geodesics all starting at the same point and with an initially tangent 4-velocity and change the value of the tangential component to fix different moduli of the initial spatial velocity.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u3_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">linspace</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">5e-4</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-<span class="n">geo_arr</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">u3</span> <span class="ow">in</span> <span class="n">u3_arr</span><span class="p">:</span>
-
-    <span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Geodesic</span><span class="p">(</span><span class="s2">&quot;time-like&quot;</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">)</span>
-    <span class="n">geo</span><span class="o">.</span><span class="kp">set_starting_point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">geo</span><span class="o">.</span><span class="kp">set_starting_4velocity</span><span class="p">(</span><span class="n">u1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u3</span> <span class="o">=</span> <span class="n">u3</span><span class="p">)</span>
-    <span class="n">geo_engine</span><span class="o">.</span><span class="kp">integrate</span><span class="p">(</span><span class="n">geo</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">geo_arr</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">geo</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>In this case, we are varying the <code class="docutils literal notranslate"><span class="pre">u3</span></code> component of the <a class="reference internal" href="../geodesic.html#pygro.geodesic.Geodesic" title="pygro.geodesic.Geodesic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodesic</span></code></a>, while keeping everything else fixed (of course, the <a class="reference internal" href="../geodesic.html#pygro.geodesic.Geodesic.set_starting_4velocity" title="pygro.geodesic.Geodesic.set_starting_4velocity"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_starting_4velocity()</span></code></a> function also changes the initial value of <code class="docutils literal notranslate"><span class="pre">u0</span></code> to satisfy the normalization condition) and carrying out the integration up to the same value of proper time (or stopping it at an horizon, given the <code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCriterion</span></code> fixed in the <a class="reference internal" href="../integrate_geodesic.html"><span class="doc">Integrate a geodesic in PyGRO</span></a> tutorial).</p>
-<p>We can <a class="reference internal" href="../visualize.html"><span class="doc">Visualize the results</span></a> and obtain:</p>
-<a class="reference internal image-reference" href="../_images/time_like_geodesic_example_2.png"><img alt="A bunch of time-like geodesic either plunging in the central black hole or orbiting it, depending on the value of the initial velocity." src="../_images/time_like_geodesic_example_2.png" style="width: 100%;" />
-</a>
-<p>Some of the geodesics will be bound to che central black hole, describing quasi-periodic orbits around it (having stopped the integration at a fixed amount of proper time, some geodesics stop  before having completed a full turn), other plunge into the horizon, not having enough angular momentum to survive the pull of the central black hole.</p>
-<p>As for the case of the null geodesics, the <span class="math notranslate nohighlight">\(u_\phi\)</span> component of the 4-velocity has, in principle, no direct physical meaning. For this reason, if one wants to assign an initial spatial velocity on a physical direction in space and with a given initial spatial velocity relative to a specific space-time observer, the <a class="reference internal" href="../observer.html#pygro.observer.Observer" title="pygro.observer.Observer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code></a> class is the most appropriate, for which we refer to the <a class="reference internal" href="../define_observer.html"><span class="doc">Define a space-time Observer</span></a> tutorial.</p>
-</section>
-
+          <h1>All modules for which code is available</h1>
+<ul><li><a href="pygro/geodesic.html">pygro.geodesic</a></li>
+<li><a href="pygro/geodesic_engine.html">pygro.geodesic_engine</a></li>
+<li><a href="pygro/integrators.html">pygro.integrators</a></li>
+<li><a href="pygro/metric_engine.html">pygro.metric_engine</a></li>
+<li><a href="pygro/observer.html">pygro.observer</a></li>
+<li><a href="pygro/orbit.html">pygro.orbit</a></li>
+</ul>
         </article>
       </div>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../define_observer.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">Define a space-time Observer</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="null_geodesic.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title"><cite>Null geodesic integration</cite></div>
-                
-              </div>
-            </a>
+          
+          
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -384,7 +321,5 @@
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>

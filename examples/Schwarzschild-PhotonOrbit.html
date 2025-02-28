@@ -226,6 +226,8 @@
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Unstable photon orbit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Schwarzschild-ISCO.html">Circular orbits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Wormhole.html">Ellis wormhole</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Kerr-Photons.html">Null geodesics in Kerr spacetime</a></li>
+<li class="toctree-l1"><a class="reference internal" href="S2_MCMC.html">Fitting relativistic orbits to data</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
 <ul>
@@ -375,7 +377,7 @@
     <span class="n">coframe</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;sqrt(1-2*M/r)*dt&quot;</span><span class="p">,</span>
         <span class="s2">&quot;-dr/sqrt(1-2*M/r)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;r*sin(theta)*dphi&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-r*sin(theta)*dphi&quot;</span><span class="p">,</span>
         <span class="s2">&quot;-r*dtheta&quot;</span>
     <span class="p">]</span>
 <span class="p">)</span>
@@ -389,7 +391,7 @@
     <span class="n">geo</span><span class="o">.</span><span class="n">initial_x</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">x</span>
     <span class="n">geo</span><span class="o">.</span><span class="n">initial_u</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">from_f2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="n">geo</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
 
-    <span class="n">geo_engine</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">geo</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">accuracy_goal</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">precision_goal</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">hmax</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">geo_engine</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">geo</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">accuracy_goal</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">precision_goal</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">hmax</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="mi">100</span><span class="p">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="s2">&quot;bw&quot;</span><span class="p">)</span>
 
     <span class="n">geo_arr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geo</span><span class="p">)</span>
 </pre></div>
@@ -442,11 +444,19 @@
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+(PyGRO) WARNING: Ignoring fixed x limits to fulfill fixed data aspect with adjustable data limits.
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_Schwarzschild-PhotonOrbit_11_0.png" src="../_images/examples_Schwarzschild-PhotonOrbit_11_0.png" />
+<img alt="../_images/examples_Schwarzschild-PhotonOrbit_11_1.png" src="../_images/examples_Schwarzschild-PhotonOrbit_11_1.png" />
 </div>
 </div>
 <p>Gotcha!</p>

@@ -479,7 +479,7 @@
       "cell_type": "markdown",
       "metadata": {},
       "source": [
-        "The orbit sits on an unstable maximum of the potential. This means that the orbit is *bound* to the black hole and if we carry out the integration for a much longer interval of time it will eventually escape the equilibirum point, branching out of the circular configuration either on an elliptic orbit (given by the other root og the $V_eff(r) = 0$ equation) or falling into the black hole.\n",
+        "The orbit sits on an unstable maximum of the potential. This means that the orbit is *bound* to the black hole and if we carry out the integration for a much longer interval of time it will eventually escape the equilibirum point, branching out of the circular configuration either on an elliptic orbit (given by the other root of the $V_{\\rm eff}(r) = 0$ equation) or falling into the black hole.\n",
         "\n",
         "For example, let's consider the orbit"
       ]
