@@ -53,7 +53,7 @@ Finally we provide the users with a detailed API guide that offers support for a
    orbit
    
 Indices and tables
------------------
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`
