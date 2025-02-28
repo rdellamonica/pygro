@@ -67,7 +67,7 @@ class Observer:
                 for j, dx in enumerate(self.metric.dx):
                         self.coframe_matrix[i, j] = coframe_i.coeff(dx,1)
             
-            self.frame_matrix = self.coframe_matrix.inv()
+            self.frame_matrix = self.coframe_matrix.inv().T
     
     def _get_frame(self, frame : list[str]):
         if len(frame) != 4:
@@ -86,7 +86,7 @@ class Observer:
                 for j, x in enumerate(self.metric.x):
                         self.frame_matrix[i, j] = frame_i.coeff(sp.symbols("e"+str(x)),1)
             
-            self.coframe_matrix = self.frame_matrix.inv()
+            self.coframe_matrix = self.frame_matrix.inv().T
             
     def convert_3vector(self, vector: Sequence[Union[int, float]], type: _GEODESIC_TYPE):
         r'''

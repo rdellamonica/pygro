@@ -37,6 +37,8 @@ Moreover in the example notebooks we investigate some specific situations:
    examples/Schwarzschild-PhotonOrbit.ipynb
    examples/Schwarzschild-ISCO.ipynb
    examples/Wormhole.ipynb
+   examples/Kerr-Photons.ipynb
+   examples/S2_MCMC
 
 Finally we provide the users with a detailed API guide that offers support for all the classes and methods in PyGRO
 

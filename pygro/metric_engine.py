@@ -147,7 +147,7 @@ class Metric():
             else:
                 for i, dx1 in enumerate(self.dx):
                     for j, dx2 in enumerate(self.dx):
-                        self.g[i,j] = ds2_sym.coeff(dx1*dx2,1)
+                        self.g[i,j] = ds2_sym.coeff(dx1*dx2,1)/(2 if dx1 != dx2 else 1)
                         self.g_str[i,j] = str(self.g[i,j])
 
         if tensor:
@@ -806,7 +806,7 @@ class Metric():
         return sp.parse_expr(expr)
 
     def Christoffel(self, mu: int, nu: int, rho: int):
-        r"""The symbolic representation of the mu-nu-rho Christoffel symbol, :math:`\Gamma^{\mu}_{\nu\rho}` related to the metric tensor.
+        r"""The symbolic representation of the mu-nu-rho Christoffel symbol, :math:`\Gamma_{\mu\nu}^{\rho}` related to the metric tensor.
         """
         ch = 0
         for sigma in range(4):

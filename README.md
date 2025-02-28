@@ -6,6 +6,7 @@
 [<img src="https://img.shields.io/badge/pygro-v.1.0.1-blue">](https://github.com/rdellamonica/pygro)
 [<img src="https://img.shields.io/badge/docs-passing-green">](https://rdellamonica.github.io/pygro/index.html)
 [<img src="https://img.shields.io/badge/pypi-pygro-orange?link=">](https://pypi.org/project/PyGRO)
+[![DOI](https://zenodo.org/badge/334275937.svg)](https://zenodo.org/badge/latestdoi/334275937)
 
 ![watchers](https://img.shields.io/github/watchers/rdellamonica/pygro) ![stars](https://img.shields.io/github/stars/rdellamonica/pygro)
 
@@ -17,7 +18,7 @@
 
 PyGRO is distributed as a Python package that can be installed through the PyPi package mangaer via:
 
-```bash
+```console
 pip install pygro
 ```
 

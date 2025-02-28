@@ -221,7 +221,7 @@ class Orbit:
         v0 = np.array([vx0, vy0, vz0])
         
         R1 = Rotate_z(self.omega)
-        R2 = Rotate_y(self.i)
+        R2 = Rotate_x(self.i)
         R3 = Rotate_z(self.Omega)
 
         self._r0 = R3@R2@R1@r0
