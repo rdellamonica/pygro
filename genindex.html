@@ -233,6 +233,7 @@
 <li class="toctree-l1"><a class="reference internal" href="geodesic.html"><code class="docutils literal notranslate"><span class="pre">Geodesic</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="observer.html"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="orbit.html"><code class="docutils literal notranslate"><span class="pre">Orbit</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolators.html">Interpolators</a></li>
 </ul>
 
 </div>
@@ -270,24 +271,14 @@
           
 <section class="genindex-section">
   <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a></div>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a></div>
 </section>
 <section id="_" class="genindex-section">
   <h2>_</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="geodesic.html#pygro.geodesic.Geodesic.__init__">__init__() (pygro.geodesic.Geodesic method)</a>
-
-        <ul>
-          <li><a href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine.__init__">(pygro.geodesic_engine.GeodesicEngine method)</a>
+        <li><a href="metricengine.html#pygro.metric_engine.Metric.__init__">__init__() (pygro.metric_engine.Metric method)</a>
 </li>
-          <li><a href="metricengine.html#pygro.metric_engine.Metric.__init__">(pygro.metric_engine.Metric method)</a>
-</li>
-          <li><a href="observer.html#pygro.observer.Observer.__init__">(pygro.observer.Observer method)</a>
-</li>
-          <li><a href="orbit.html#pygro.orbit.Orbit.__init__">(pygro.orbit.Orbit method)</a>
-</li>
-        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -297,10 +288,6 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="metricengine.html#pygro.metric_engine.Metric.add_parameter">add_parameter() (pygro.metric_engine.Metric method)</a>
-</li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine.add_stopping_criterion">add_stopping_criterion() (pygro.geodesic_engine.GeodesicEngine method)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -313,8 +300,14 @@
         <li><a href="metricengine.html#pygro.metric_engine.Metric.Christoffel">Christoffel() (pygro.metric_engine.Metric method)</a>
 </li>
     </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="observer.html#pygro.observer.Observer.convert_3vector">convert_3vector() (pygro.observer.Observer method)</a>
+        <li><a href="interpolators.html#pygro.interpolators.DP54DenseOutput">DP54DenseOutput (class in pygro.interpolators)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -327,26 +320,6 @@
         <li><a href="metricengine.html#pygro.metric_engine.Metric.evaluate_parameters">evaluate_parameters() (pygro.metric_engine.Metric method)</a>
 </li>
     </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="integrators.html#pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator">ExplicitAdaptiveRungeKuttaIntegrator (class in pygro.integrators)</a>
-</li>
-    </ul></td>
-  </tr></table>
-</section>
-
-<section id="F" class="genindex-section">
-  <h2>F</h2>
-  <table style="width: 100%" class="indextable genindextable"><tr>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="observer.html#pygro.observer.Observer.from_f1">from_f1() (pygro.observer.Observer method)</a>
-</li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="observer.html#pygro.observer.Observer.from_f2">from_f2() (pygro.observer.Observer method)</a>
-</li>
-        <li><a href="observer.html#pygro.observer.Observer.from_f3">from_f3() (pygro.observer.Observer method)</a>
-</li>
-    </ul></td>
   </tr></table>
 </section>
 
@@ -354,18 +327,14 @@
   <h2>G</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="geodesic.html#pygro.geodesic.Geodesic">Geodesic (class in pygro.geodesic)</a>
-</li>
-        <li><a href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine">GeodesicEngine (class in pygro.geodesic_engine)</a>
-</li>
         <li><a href="metricengine.html#pygro.metric_engine.Metric.get_constant">get_constant() (pygro.metric_engine.Metric method)</a>
 </li>
         <li><a href="metricengine.html#pygro.metric_engine.Metric.get_evaluable_function">get_evaluable_function() (pygro.metric_engine.Metric method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="metricengine.html#pygro.metric_engine.Metric.get_parameters_constants">get_parameters_constants() (pygro.metric_engine.Metric method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="metricengine.html#pygro.metric_engine.Metric.get_parameters_expressions">get_parameters_expressions() (pygro.metric_engine.Metric method)</a>
 </li>
         <li><a href="metricengine.html#pygro.metric_engine.Metric.get_parameters_functions">get_parameters_functions() (pygro.metric_engine.Metric method)</a>
@@ -378,16 +347,22 @@
   </tr></table>
 </section>
 
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interpolators.html#pygro.interpolators.HermiteCubicInterpolator">HermiteCubicInterpolator (class in pygro.interpolators)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
 <section id="I" class="genindex-section">
   <h2>I</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine.integrate">integrate() (pygro.geodesic_engine.GeodesicEngine method)</a>
-
-        <ul>
-          <li><a href="orbit.html#pygro.orbit.Orbit.integrate">(pygro.orbit.Orbit method)</a>
+        <li><a href="interpolators.html#pygro.interpolators.Interpolator">Interpolator (class in pygro.interpolators)</a>
 </li>
-        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -400,6 +375,8 @@
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="interpolators.html#pygro.interpolators.LinearInterpolator">LinearInterpolator (class in pygro.interpolators)</a>
+</li>
         <li><a href="metricengine.html#pygro.metric_engine.Metric.load_metric">load_metric() (pygro.metric_engine.Metric method)</a>
 </li>
     </ul></td>
@@ -412,6 +389,15 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="metricengine.html#pygro.metric_engine.Metric">Metric (class in pygro.metric_engine)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    module
+
+        <ul>
+          <li><a href="interpolators.html#module-pygro.interpolators">pygro.interpolators</a>
+</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -426,16 +412,17 @@
   </tr></table>
 </section>
 
-<section id="O" class="genindex-section">
-  <h2>O</h2>
+<section id="P" class="genindex-section">
+  <h2>P</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="observer.html#pygro.observer.Observer">Observer (class in pygro.observer)</a>
+        <li>
+    pygro.interpolators
+
+        <ul>
+          <li><a href="interpolators.html#module-pygro.interpolators">module</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="orbit.html#pygro.orbit.Orbit">Orbit (class in pygro.orbit)</a>
-</li>
+        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -450,23 +437,11 @@
 </li>
         <li><a href="metricengine.html#pygro.metric_engine.Metric.set_coordinate_transformation">set_coordinate_transformation() (pygro.metric_engine.Metric method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="metricengine.html#pygro.metric_engine.Metric.set_expression_to_parameter">set_expression_to_parameter() (pygro.metric_engine.Metric method)</a>
 </li>
         <li><a href="metricengine.html#pygro.metric_engine.Metric.set_function_to_parameter">set_function_to_parameter() (pygro.metric_engine.Metric method)</a>
-</li>
-        <li><a href="orbit.html#pygro.orbit.Orbit.set_orbital_parameters">set_orbital_parameters() (pygro.orbit.Orbit method)</a>
-</li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="geodesic.html#pygro.geodesic.Geodesic.set_starting_4velocity">set_starting_4velocity() (pygro.geodesic.Geodesic method)</a>
-</li>
-        <li><a href="geodesic.html#pygro.geodesic.Geodesic.set_starting_point">set_starting_point() (pygro.geodesic.Geodesic method)</a>
-</li>
-        <li><a href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine.set_stopping_criterion">set_stopping_criterion() (pygro.geodesic_engine.GeodesicEngine method)</a>
-</li>
-        <li><a href="geodesicengine.html#pygro.geodesic_engine.StoppingCriterion">StoppingCriterion (class in pygro.geodesic_engine)</a>
-</li>
-        <li><a href="geodesicengine.html#pygro.geodesic_engine.StoppingCriterionList">StoppingCriterionList (class in pygro.geodesic_engine)</a>
 </li>
         <li><a href="metricengine.html#pygro.metric_engine.Metric.subs_functions">subs_functions() (pygro.metric_engine.Metric method)</a>
 </li>

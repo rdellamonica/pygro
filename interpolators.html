@@ -1,13 +1,13 @@
 <!doctype html>
 <html class="no-js" lang="en" data-content_root="./">
-  <head>
-<meta charset="utf-8"/>
+  <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="#" />
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Orbit" href="orbit.html" />
 
     <link rel="shortcut icon" href="_static/pygro-icon.ico"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
-<meta name="robots" content="noindex" />
-<title>Search - Documentation</title><link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0745d1ac" />
+        <title>Interpolators - Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0745d1ac" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="_static/github_style.css?v=1093691d" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -181,7 +181,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -199,7 +199,7 @@
   
   <span class="sidebar-brand-text">Documentation</span>
   
-</a><form class="sidebar-search-container" method="get" action="#" role="search">
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
@@ -229,13 +229,13 @@
 <li class="toctree-l1"><a class="reference internal" href="examples/S2_MCMC.html">Fitting relativistic orbits to data</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="metricengine.html"><code class="docutils literal notranslate"><span class="pre">Metric</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="geodesicengine.html"><code class="docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="geodesic.html"><code class="docutils literal notranslate"><span class="pre">Geodesic</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="observer.html"><code class="docutils literal notranslate"><span class="pre">Observer</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="orbit.html"><code class="docutils literal notranslate"><span class="pre">Orbit</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="interpolators.html">Interpolators</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Interpolators</a></li>
 </ul>
 
 </div>
@@ -255,7 +255,17 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/blob/master/docs/source/interpolators.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/rdellamonica/pygro/edit/master/docs/source/interpolators.rst" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
@@ -264,23 +274,51 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          
-<noscript>
-<div class="admonition error">
-  <p class="admonition-title">Error</p>
-  <p>
-    Please activate JavaScript to enable the search functionality.
-  </p>
-</div>
-</noscript>
+          <section id="interpolators">
+<h1>Interpolators<a class="headerlink" href="#interpolators" title="Link to this heading">¶</a></h1>
+<p>PyGRO implements several interpolation strategies for the integrated geodesic. The base interpolator class offers a way to compute the integrate geodesic at each value of the affine parameter on the integration interval. Whenever possible, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integrator</span></code> classes implement dense output tailored to the order of the numerical integration involved in the scheme.</p>
+<p>When the dense output for the specific class is not available, it will fall back to cubic interpolation using Hermite polynomials which guarantees third-order accuracy for integrators of order <span class="math notranslate nohighlight">\(p\geq3\)</span>.</p>
+<dl class="py class" id="module-pygro.interpolators">
+<dt class="sig sig-object py" id="pygro.interpolators.DP54DenseOutput">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygro.interpolators.</span></span><span class="sig-name descname"><span class="pre">DP54DenseOutput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygro/interpolators.html#DP54DenseOutput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/850446fc0455d9318fbbb9dd284dd5fb15db150f/pygro/interpolators.py#L91-L118"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.interpolators.DP54DenseOutput" title="Link to this definition">¶</a></dt>
+<dd><p>Dense output interpolator for the Dormand-Prince 5(4) method.</p>
+</dd></dl>
 
-<div id="search-results"></div>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygro.interpolators.HermiteCubicInterpolator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygro.interpolators.</span></span><span class="sig-name descname"><span class="pre">HermiteCubicInterpolator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygro/interpolators.html#HermiteCubicInterpolator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/850446fc0455d9318fbbb9dd284dd5fb15db150f/pygro/interpolators.py#L70-L89"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.interpolators.HermiteCubicInterpolator" title="Link to this definition">¶</a></dt>
+<dd><p>Implements Hermite cubic interpolation.</p>
+<p>This method ensures smooth interpolation by using derivative information.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pygro.interpolators.Interpolator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygro.interpolators.</span></span><span class="sig-name descname"><span class="pre">Interpolator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygro/interpolators.html#Interpolator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/850446fc0455d9318fbbb9dd284dd5fb15db150f/pygro/interpolators.py#L4-L62"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.interpolators.Interpolator" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for interpolation methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>np.ndarray</em>) – Array of x values.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – Array of y values.</p></li>
+<li><p><strong>k</strong> (<em>list</em><em>[</em><em>np.ndarray</em><em>]</em>) – List of derivative arrays.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pygro.interpolators.LinearInterpolator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygro.interpolators.</span></span><span class="sig-name descname"><span class="pre">LinearInterpolator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygro/interpolators.html#LinearInterpolator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference external" href="https://github.com/rdellamonica/pygro/blob/850446fc0455d9318fbbb9dd284dd5fb15db150f/pygro/interpolators.py#L64-L68"><span class="linkcode-link"><span class="pre">View</span> <span class="pre">on</span> <span class="pre">GitHub</span></span></a><a class="headerlink" href="#pygro.interpolators.LinearInterpolator" title="Link to this definition">¶</a></dt>
+<dd><p>Placeholder for a linear interpolation scheme. Currently not implemented.</p>
+</dd></dl>
+
+</section>
 
         </article>
       </div>
@@ -288,7 +326,17 @@
         
         <div class="related-pages">
           
-          
+          <a class="prev-page" href="orbit.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><code class="docutils literal notranslate"><span class="pre">Orbit</span></code></div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -314,8 +362,30 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Interpolators</a><ul>
+<li><a class="reference internal" href="#pygro.interpolators.DP54DenseOutput"><code class="docutils literal notranslate"><span class="pre">DP54DenseOutput</span></code></a></li>
+<li><a class="reference internal" href="#pygro.interpolators.HermiteCubicInterpolator"><code class="docutils literal notranslate"><span class="pre">HermiteCubicInterpolator</span></code></a></li>
+<li><a class="reference internal" href="#pygro.interpolators.Interpolator"><code class="docutils literal notranslate"><span class="pre">Interpolator</span></code></a></li>
+<li><a class="reference internal" href="#pygro.interpolators.LinearInterpolator"><code class="docutils literal notranslate"><span class="pre">LinearInterpolator</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -327,8 +397,7 @@
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-<script src="_static/searchtools.js"></script>
-<script src="_static/language_data.js"></script>
-<script src="searchindex.js"></script></body>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
 </html>
