@@ -51,6 +51,7 @@ Finally we provide the users with a detailed API guide that offers support for a
    geodesic
    observer
    orbit
+   interpolators
    
 Indices and tables
 ------------------

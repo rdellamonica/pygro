@@ -1,7 +1,8 @@
 import numpy as np
 from typing import Literal, Optional, Tuple, Callable, Optional
+from pygro.interpolators import Interpolator, LinearInterpolator, DP54DenseOutput, HermiteCubicInterpolator, DP853DenseOutput
 
-AVAILABLE_INTEGRATORS = Literal['rkf45', 'dp45', 'ck45', 'rkf78']
+AVAILABLE_INTEGRATORS = Literal['rkf45', 'dp45', 'ck45', 'rkf78', 'dp853']
 
 class IntegrationError(Exception):
     def __init__(self, message):
@@ -11,23 +12,25 @@ class Integrator:
     """
         Base class for ODE integrator.
     """
+    interpolator_class = LinearInterpolator
+    
     def __init__(self, function: Callable, stopping_criterion: Optional[Callable] = lambda x: True):
         
         if not callable(function):
             raise TypeError("'function' must be a callable object.")
         if not callable(stopping_criterion):
-            raise TypeError("'function' must be a callable object.")
+            raise TypeError("'stopping_criterion' must be a callable object.")
         
         self.f = function
         self.stopping_criterion = stopping_criterion
         
     def next_step(self, x: float, y: np.ndarray, h: float) -> Tuple[float, np.ndarray, float]:
-        raise NotImplementedError("next_step is not implemented")
+        raise NotImplementedError
     
-    def integrate(self, x_start: float, x_end: float, y_start: np.array, initial_step: float) -> Tuple[np.ndarray, np.ndarray, str]:
+    def integrate(self, x_start: float, x_end: float, y_start: np.array, initial_step: float) -> Tuple[np.ndarray, np.ndarray, str, Interpolator]:
         x = [x_start]
         y = [y_start]
-
+        k = []
         h = initial_step
         
         exit = "failed"
@@ -37,13 +40,20 @@ class Integrator:
             x.append(next[0])
             y.append(next[1])
             h = next[2]
+            k.append(next[3])
 
             if not self.stopping_criterion(*y[-1]):
                 exit = self.stopping_criterion.exit
             else:
                 exit = "done"
         
-        return np.array(x), np.array(y), exit
+        next = self.next_step(x[-1], y[-1], h, x_end)
+        k.append([self.f(next[0], next[1])])
+        
+        x = np.array(x)
+        y = np.array(y)
+        
+        return x, y, exit, self.interpolator_class(x, y, k)
 
 class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
     r"""
@@ -78,6 +88,7 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
         :param max_iter: maxium namber of step-size adaptation attempts before rising an error. If this error is reached, try to use smaller ``accuracy_goal`` and/or ``precision_goal`` or to reduce the initial step size of the integration (``initial_step`` in the :py:meth:`~pygro.geodesic_engine.GeodesicEngine.integrate` method).
         :type max_iter: int
     """
+    interpolator_class = HermiteCubicInterpolator
     
     def __init__(self, function: Callable, stopping_criterion: Callable, order: int, stages: int, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16, hmin: Optional[float] = 1e-16, max_iter: int = 1000):
         
@@ -128,11 +139,11 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
             for i in range(self.stages):
                 k[i] = self.f(x+self.c[i]*h1, y + h1*np.dot(k, self.a[i]))
             
-            y_lower = y + h1*np.dot(self.b[1], k)
-            y_higher = y + h1*np.dot(self.b[0], k)
+            y_propagation = y + h1*np.dot(self.b[1], k)
+            y_error = y + h1*np.dot(self.b[0], k)
             
-            v = np.linalg.norm(y_lower-y_higher)
-            w = self.atol+self.rtol*np.linalg.norm(np.maximum(y_lower, y_higher))
+            v = np.linalg.norm(y_propagation-y_error)
+            w = self.atol+self.rtol*np.linalg.norm(np.maximum(y_propagation, y_error))
 
             err = v/w
             
@@ -140,7 +151,6 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
 
             if err > 1:
                 # Reject step and try smaller step-size
-                
                 if j >= self.max_iter:
                     raise IntegrationError("Reached maximum number of step iterations. Check initial step size, integration tolerances or check for the presence of horizons.")
                 
@@ -166,9 +176,10 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
                     h2 = -max(min(abs(self.hmax), abs(h1)*K), abs(self.hmin))
                 break
             
-        return x1, y_lower, h2
+        return x1, y_propagation, h2, k
         
 class DormandPrince45(ExplicitAdaptiveRungeKuttaIntegrator):
+    interpolator_class = DP54DenseOutput
     def __init__(self, function: Callable, stopping_criterion: Callable, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16):
 
         self.a = np.array([
@@ -191,6 +202,37 @@ class DormandPrince45(ExplicitAdaptiveRungeKuttaIntegrator):
         ])
         
         super().__init__(function, stopping_criterion, 5, len(self.b[0]), accuracy_goal, precision_goal, safety_factor, hmax)
+
+class DormandPrince853(ExplicitAdaptiveRungeKuttaIntegrator):
+    interpolator_class = DP853DenseOutput
+    def __init__(self, function: Callable, stopping_criterion: Callable, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16):
+
+        self.a = np.array([
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1/18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1/48, 1/16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1/32, 0, 3/32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [5/16, 0, -75/64, 75/64, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [3/80, 0, 0, 3/16, 3/20, 0, 0, 0, 0, 0, 0, 0, 0],
+            [29443841/614563906, 0, 0, 77736538/692538347, -28693883/1125000000, 23124283/1800000000, 0, 0, 0, 0, 0, 0, 0],
+            [16016141/946692911, 0, 0, 61564180/158732637, 22789713/633445777, 545815736/2771057229, -180193667/1043307555, 0, 0, 0, 0, 0, 0],
+            [39632708/573591083, 0, 0, -433636366/683701615, -421739975/2616292301, 100302831/723423059, 790204164/839813087, 800635310/3783071287, 0, 0, 0, 0, 0],
+            [246121993/1340847787, 0, 0, -37695042795/15268766246, -309121744/1061227803, -12992083/490766935, 6005943493/2108947869, 393006217/1396673457, 123872331/1001029789, 0, 0, 0, 0],
+            [-1028468189/846180014, 0, 0, 8478235783/508512852, 1311729495/1432422823, -10304129995/1701304382, -48777925059/3047939560, 15336726248/1032824649, -45442868181/3398467696, 3065993473/597172653, 0, 0, 0],
+            [185892177/718116043, 0, 0, -3185094517/667107341, -477755414/1098053517, -703635378/230739211, 5731566787/1027545527, 5232866602/850066563, -4093664535/808688257, 3962137247/1805957418, 65686358/487910083, 0, 0],
+            [13451932/455176623, 0, 0, 0, 0, -808719846/976000145, 1757004468/5645159321, 656045339/265891186, -3867574721/1518517206, 465885868/322736535, 53011238/667516719, 2/45, 0]
+        ])
+
+        self.b = np.array([
+            [14005451/335480064, 0, 0, 0, 0, -59238493/1068277825, 181606767/758867731, 561292985/797845732, -1041891430/1371343529, 760417239/1151165299, 118820643/751138087, -528747749/2220607170, 1/4],
+            [13451932/455176623, 0, 0, 0, 0, -808719846/976000145, 1757004468/5645159321, 656045339/265891186, -3867574721/1518517206, 465885868/322736535, 53011238/667516719, 2/45, 0]
+        ])
+
+        self.c = np.array([
+            0, 1/18, 1/12, 1/8, 5/16, 3/8, 59/400, 93/200, 5490023248/9719169821, 13/20, 1201146811/1299019798, 1, 1
+        ])
+
+        super().__init__(function, stopping_criterion, 8, len(self.b[0]), accuracy_goal, precision_goal, safety_factor, hmax)
 
 class RungeKuttaFehlberg45(ExplicitAdaptiveRungeKuttaIntegrator):
     def __init__(self, function: Callable, stopping_criterion: Callable, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16):
@@ -418,6 +460,8 @@ def get_integrator(integrator: AVAILABLE_INTEGRATORS, *args, **kwargs) -> Integr
         return RungeKuttaFehlberg45(*args, **kwargs)
     if integrator == "dp45":
         return DormandPrince45(*args, **kwargs)
+    if integrator == "dp853":
+        return DormandPrince853(*args, **kwargs)
     if integrator == "ck45":
         return CashKarp45(*args, **kwargs)
     if integrator == "rkf78":

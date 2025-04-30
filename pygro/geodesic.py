@@ -68,9 +68,15 @@ class Geodesic():
     def x(self) -> np.ndarray:
         return self._x
     
+    def x_int(self, tau: float):
+        return self.interpolator(tau)[:,:4]
+    
     @property
     def u(self) -> np.ndarray:
         return self._u
+    
+    def u_int(self, tau: float):
+        return self.interpolator(tau)[:,4:]
     
     @property
     def tau(self) -> np.ndarray:

@@ -182,7 +182,7 @@ class GeodesicEngine():
         if verbose:
             time_start = time.perf_counter()
 
-        tau, xu, exit = integrator.integrate(0, tauf, np.array([*geo.initial_x, *geo.initial_u]), h)
+        tau, xu, exit, interpolator = integrator.integrate(0, tauf, np.array([*geo.initial_x, *geo.initial_u]), h)
                 
         if verbose:
             time_elapsed = (time.perf_counter() - time_start)
@@ -192,6 +192,7 @@ class GeodesicEngine():
         geo.x = np.stack(xu[:,:4])
         geo.u = np.stack(xu[:,4:])
         geo.exit = exit
+        geo.interpolator = interpolator
 
 class StoppingCriterion:
     r"""

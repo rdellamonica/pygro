@@ -61,15 +61,14 @@ Please cite it properly attribute it in your works:
 
 .. code-block:: latex
 
-   @ARTICLE{PyGRO2025,
-         author = {{Della Monica}, Riccardo},
-          title = "{PyGRO: a Python integrator for General Relativistic Orbits}",
-        journal = {arXiv e-prints},
-       keywords = {General Relativity and Quantum Cosmology},
-           year = 2025,
-          month = feb,
-         eprint = {arxiv:2502.xxxx},
-   primaryClass = {gr-qc},
+   @article{pygro2025,
+         title={PyGRO: a Python Integrator for General Relativistic Orbits},
+         author={Riccardo Della Monica},
+         year={2025},
+         eprint={2504.20152},
+         archivePrefix={arXiv},
+         primaryClass={gr-qc},
+         url={https://arxiv.org/abs/2504.20152},
    }
 
    
