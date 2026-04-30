@@ -182,7 +182,7 @@ class Orbit:
             
         # Computing Energy and Angular momentum from the keplerian orbit as initial guessess for the root search
         
-        GM = float(sp.limit(self.metric.evaluate_parameters((self.metric.subs_functions(self.metric.g[0,0])+1)/(2/self._r)), self._r, sp.oo))
+        GM = float(sp.limit(self.metric.evaluate_parameters((self.metric.subs_functions(self.metric.g[0,0])+1)/(2/self._r)), self._r, self.a))
 
         keplerian_T = np.sqrt(4*np.pi**2*self.a**3/GM)
         

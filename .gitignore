@@ -19,3 +19,4 @@ docs/docsenv2
 .DS_Store
 **/.DS_Store
 setup.py
+env/

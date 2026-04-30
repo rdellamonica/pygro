@@ -1,6 +1,6 @@
 import numpy as np
 from typing import Literal, Optional, Tuple, Callable, Optional
-from pygro.interpolators import Interpolator, LinearInterpolator, DP54DenseOutput, HermiteCubicInterpolator, DP853DenseOutput
+from pygro.interpolators import Interpolator, LinearInterpolator, DP54DenseOutput, HermiteCubicInterpolator
 
 AVAILABLE_INTEGRATORS = Literal['rkf45', 'dp45', 'ck45', 'rkf78', 'dp853']
 
@@ -204,7 +204,6 @@ class DormandPrince45(ExplicitAdaptiveRungeKuttaIntegrator):
         super().__init__(function, stopping_criterion, 5, len(self.b[0]), accuracy_goal, precision_goal, safety_factor, hmax)
 
 class DormandPrince853(ExplicitAdaptiveRungeKuttaIntegrator):
-    interpolator_class = DP853DenseOutput
     def __init__(self, function: Callable, stopping_criterion: Callable, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16):
 
         self.a = np.array([
