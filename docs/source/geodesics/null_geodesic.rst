@@ -22,7 +22,7 @@ We can hence use:
     geo.set_starting_point(0, 50, np.pi/2, 0)
     geo.set_starting_4velocity(u1 = -1, u2 = 0, u3 = 0.01)
 
-to fix the initial position of the geodesic at a distance :math:`r=50M` from the black hole, on the equatorial plane (:math:`\theta = \pi/2`) and, without loss of generality at a coordinate time :math:`t=0` and along the line :math:`\phi = 0`. Using the :py:meth:`~pygro.geodesic.Geodesic.set_starting_4velocity` method, we have fixed an initial 4-velocity starting from its components :math:`u_r=-1`, :math:`u_\theta=0` and :math:`u_\phi=0.01`, and we are letting the internal helper function of the :py:class:`.Geodesic` autonomously retrieve the corresponding value of :math:`u_t` that satisfies the normalization condition at the given initial point.
+to fix the initial position of the geodesic at a distance :math:`r=50M` from the black hole, on the equatorial plane (:math:`\theta = \pi/2`) and, without loss of generality at a coordinate time :math:`t=0` and along the line :math:`\phi = 0`. Using the :py:meth:`~pygro.geodesic.Geodesic.set_starting_4velocity` method, we have fixed an initial 4-velocity :math:`u^\mu` starting from its components :math:`u^r=-1`, :math:`u^\theta=0` and :math:`u^\phi=0.01`, and we are letting the internal helper function of the :py:class:`.Geodesic` autonomously retrieve the corresponding value of :math:`u^t` that satisfies the normalization condition at the given initial point.
 
 We will be alerted of the successful initialization of the :py:class:`.Geodesic` object by the output:
 

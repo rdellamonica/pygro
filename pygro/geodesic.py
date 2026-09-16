@@ -191,7 +191,7 @@ class Geodesic():
     
     def set_starting_4velocity(self, u0: Optional[float] = None, u1: Optional[float] = None, u2: Optional[float] = None, u3: Optional[float] = None):
         r"""
-            Sets the initial values of the components of the 4-velocity, enforcing the normalization conditions. For this reason, only three out of the four components ``u[i]`` of the 4-velocity must be specified, and the remaining one will be automatically computed to satistfy the normalization condition.
+            Sets the initial (contravariant) values of the components of the 4-velocity, enforcing the normalization conditions. For this reason, only three out of the four components ``u[i]`` of the 4-velocity must be specified, and the remaining one will be automatically computed to satistfy the normalization condition.
             
             To override this behaviour, you can directly set the ``.initial_u`` property of the :py:class:`Geodesic`.
         """

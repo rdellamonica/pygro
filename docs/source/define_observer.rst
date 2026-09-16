@@ -28,8 +28,8 @@ corresponding to the relations between the local frame metric and the space-time
 
 .. math::
 
-    f_a^\alpha f_\beta^b \eta_{ab} &= g_{\alpha\beta},\\
-    f^a_\alpha f^\beta_b g_{ab} &= \eta_{\alpha\beta}.
+    f^a_\alpha f_\beta^b \eta_{ab} &= g_{\alpha\beta},\\
+    f^\alpha_b f_b^\beta g_{\alpha\beta} &= \eta_{ab}.
 
 
 In other terms, in the local observer's frame the metric is ordinary Minkowski metric, which is a statement of the local flatness in General Relativity.
