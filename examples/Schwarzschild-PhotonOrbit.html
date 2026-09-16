@@ -294,17 +294,17 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Schwarzschild spacetime&quot;</span>
-<span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;theta&quot;</span><span class="p">,</span> <span class="s2">&quot;phi&quot;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">"Schwarzschild spacetime"</span>
+<span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"t"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="s2">"theta"</span><span class="p">,</span> <span class="s2">"phi"</span><span class="p">]</span>
 
 <span class="n">transform_functions</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;t&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;r*sin(theta)*cos(phi)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;r*sin(theta)*sin(phi)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;r*cos(theta)&quot;</span>
+    <span class="s2">"t"</span><span class="p">,</span>
+    <span class="s2">"r*sin(theta)*cos(phi)"</span><span class="p">,</span>
+    <span class="s2">"r*sin(theta)*sin(phi)"</span><span class="p">,</span>
+    <span class="s2">"r*cos(theta)"</span>
 <span class="p">]</span>
 
-<span class="n">line_element</span> <span class="o">=</span> <span class="s2">&quot;-(1-2*M/r)*dt**2+1/(1-2*M/r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)&quot;</span>
+<span class="n">line_element</span> <span class="o">=</span> <span class="s2">"-(1-2*M/r)*dt**2+1/(1-2*M/r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)"</span>
 
 <span class="n">metric</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Metric</span><span class="p">(</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span>
@@ -334,7 +334,7 @@
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geo_engine</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">GeodesicEngine</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
-<span class="n">geo_engine</span><span class="o">.</span><span class="n">set_stopping_criterion</span><span class="p">(</span><span class="s2">&quot;r &gt; 2.00001*M&quot;</span><span class="p">,</span> <span class="s2">&quot;horizon&quot;</span><span class="p">)</span>
+<span class="n">geo_engine</span><span class="o">.</span><span class="n">set_stopping_criterion</span><span class="p">(</span><span class="s2">"r &gt; 2.00001*M"</span><span class="p">,</span> <span class="s2">"horizon"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -358,7 +358,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s define an array of radii.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let's define an array of radii.</span>
 <span class="n">r_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">2.1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>         <span class="c1"># [2.1, 2.2, 2.3, ..., 5.7, 5.8, 5.9, 6.0]</span>
 
 <span class="n">geo_arr</span> <span class="o">=</span> <span class="p">[]</span>
@@ -368,10 +368,10 @@
     <span class="n">metric</span><span class="p">,</span>
     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
     <span class="n">coframe</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;sqrt(1-2*M/r)*dt&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-dr/sqrt(1-2*M/r)&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-r*sin(theta)*dphi&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;-r*dtheta&quot;</span>
+        <span class="s2">"sqrt(1-2*M/r)*dt"</span><span class="p">,</span>
+        <span class="s2">"-dr/sqrt(1-2*M/r)"</span><span class="p">,</span>
+        <span class="s2">"-r*sin(theta)*dphi"</span><span class="p">,</span>
+        <span class="s2">"-r*dtheta"</span>
     <span class="p">]</span>
 <span class="p">)</span>
 
@@ -380,11 +380,11 @@
     <span class="c1"># We then loop over the different radii and change the position of the observer accordingly</span>
     <span class="n">observer</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-    <span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Geodesic</span><span class="p">(</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="n">Geodesic</span><span class="p">(</span><span class="s2">"null"</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
     <span class="n">geo</span><span class="o">.</span><span class="n">initial_x</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">x</span>
     <span class="n">geo</span><span class="o">.</span><span class="n">initial_u</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">from_f2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="n">geo</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
 
-    <span class="n">geo_engine</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">geo</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">accuracy_goal</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">precision_goal</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">hmax</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="mi">100</span><span class="p">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="s2">&quot;bw&quot;</span><span class="p">)</span>
+    <span class="n">geo_engine</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">geo</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">accuracy_goal</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">precision_goal</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="n">hmax</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="mi">100</span><span class="p">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="s2">"bw"</span><span class="p">)</span>
 
     <span class="n">geo_arr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geo</span><span class="p">)</span>
 </pre></div>
@@ -399,7 +399,7 @@
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
 
-<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">)</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">'coolwarm'</span><span class="p">)</span>
 <span class="n">norm</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">mappable</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
 
@@ -408,17 +408,17 @@
 
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">mappable</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">geo</span><span class="o">.</span><span class="n">initial_x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="n">geo</span><span class="o">.</span><span class="n">initial_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span> <span class="k">else</span> <span class="s2">&quot;#3b3b9b&quot;</span><span class="p">,</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$r_0 = 3M$ (Unstable photon orbit)&quot;</span> <span class="k">if</span> <span class="n">geo</span><span class="o">.</span><span class="n">initial_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">mappable</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">geo</span><span class="o">.</span><span class="n">initial_x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="n">geo</span><span class="o">.</span><span class="n">initial_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">3</span> <span class="k">else</span> <span class="s2">"#3b3b9b"</span><span class="p">,</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">"$r_0 = 3M$ (Unstable photon orbit)"</span> <span class="k">if</span> <span class="n">geo</span><span class="o">.</span><span class="n">initial_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span> <span class="k">else</span> <span class="kc">None</span>
     <span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">'equal'</span><span class="p">)</span>
 
 <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
 <span class="n">x_bh</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 <span class="n">y_bh</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">x_bh</span><span class="p">,</span> <span class="n">y_bh</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">x_bh</span><span class="p">,</span> <span class="n">y_bh</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">"k"</span><span class="p">,</span> <span class="n">zorder</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
 
 <span class="n">lim</span> <span class="o">=</span> <span class="mi">6</span>
 
@@ -427,12 +427,12 @@
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x$ ($M$)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$y$ ($M$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'$x$ ($M$)'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'$y$ ($M$)'</span><span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mappable</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$r_0$ ($M$)&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mappable</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">"$r_0$ ($M$)"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -461,10 +461,10 @@
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">geo_arr</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="n">geo_arr</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span>  <span class="o">=</span> <span class="s2">&quot;#3b3b9b&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">geo_arr</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="n">geo_arr</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span>  <span class="o">=</span> <span class="s2">"#3b3b9b"</span><span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\lambda$ ($M$)&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$r$ ($M$)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$\lambda$ ($M$)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$r$ ($M$)"</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>

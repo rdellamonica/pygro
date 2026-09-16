@@ -276,7 +276,7 @@
 <h1>Visualize the results<a class="headerlink" href="#visualize-the-results" title="Link to this heading">¶</a></h1>
 <p>Let’s consider a <a class="reference internal" href="geodesic.html#pygro.geodesic.Geodesic" title="pygro.geodesic.Geodesic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodesic</span></code></a> object that has been integrated by following the procedures shown in the previous tutorials (see <a class="reference internal" href="integrate_geodesic.html"><span class="doc">Integrate a geodesic in PyGRO</span></a>).</p>
 <p>For example, let’s consider the following geodesic in the Schwarzschild space-time:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Geodesic</span><span class="p">(</span><span class="s2">&quot;time-like&quot;</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Geodesic</span><span class="p">(</span><span class="s2">"time-like"</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">)</span>
 <span class="n">geo</span><span class="o">.</span><span class="kp">set_starting_point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">geo</span><span class="o">.</span><span class="kp">set_starting_4velocity</span><span class="p">(</span><span class="n">u1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u3</span> <span class="o">=</span> <span class="mf">2e-4</span><span class="p">)</span>
 <span class="n">geo_engine</span><span class="o">.</span><span class="kp">integrate</span><span class="p">(</span><span class="n">geo</span><span class="p">,</span> <span class="mi">50000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -288,7 +288,7 @@
 </pre></div>
 </div>
 <p>which is assigned by the <a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.GeodesicEngine" title="pygro.geodesic_engine.GeodesicEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeodesicEngine</span></code></a> object. In this case we obtain</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; &#39;done&#39;
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; 'done'
 </pre></div>
 </div>
 <p>signaling that the integration has been carried on for the entire interval of proper time indicated in the <code class="xref py py-meth docutils literal notranslate"><span class="pre">integrate()</span></code> method. If a <a class="reference internal" href="geodesicengine.html#pygro.geodesic_engine.StoppingCriterion" title="pygro.geodesic_engine.StoppingCriterion"><code class="xref py py-class docutils literal notranslate"><span class="pre">StoppingCriterion</span></code></a> has been met the <code class="docutils literal notranslate"><span class="pre">exit</span></code> status of the <a class="reference internal" href="geodesic.html#pygro.geodesic.Geodesic" title="pygro.geodesic.Geodesic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodesic</span></code></a> will correspond to the exit message of the criterion that stopped the integration (see <a class="reference internal" href="integrate_geodesic.html"><span class="doc">Integrate a geodesic in PyGRO</span></a>).</p>
@@ -300,8 +300,8 @@
 
 <span class="n">ax</span><span class="o">.</span><span class="kp">plot</span><span class="p">(</span><span class="n">geo</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="kp">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\tau$ ($M$)&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="kp">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$r$ ($M$)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="kp">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$\tau$ ($M$)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="kp">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$r$ ($M$)"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>which outputs</p>
@@ -313,8 +313,8 @@
 
 <span class="n">ax</span><span class="o">.</span><span class="kp">plot</span><span class="p">(</span><span class="n">geo</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="n">geo</span><span class="o">.</span><span class="n">u</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="kp">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\tau$ ($M$)&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="kp">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\dot</span><span class="si">{t}</span><span class="s2">$ ($M$)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="kp">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$\tau$ ($M$)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="kp">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$\dot</span><span class="si">{t}</span><span class="s2">$ ($M$)"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>and obtain</p>
@@ -337,7 +337,7 @@
 <span class="n">x_bh</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="kp">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 <span class="n">y_bh</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="kp">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="kp">fill</span><span class="p">(</span><span class="n">x_bh</span><span class="p">,</span> <span class="n">y_bh</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="kp">fill</span><span class="p">(</span><span class="n">x_bh</span><span class="p">,</span> <span class="n">y_bh</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">"k"</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>obtaining a nice representation of the orbit:</p>
@@ -351,12 +351,12 @@
 
 <span class="n">phi_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 
-<span class="n">observer</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Observer</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coframe</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sqrt(A(r))*dt&quot;</span><span class="p">,</span> <span class="s2">&quot;-dr/sqrt(A(r))&quot;</span><span class="p">,</span> <span class="s2">&quot;-r*sin(theta)*dphi&quot;</span><span class="p">,</span> <span class="s2">&quot;-r*dtheta&quot;</span><span class="p">])</span>
+<span class="n">observer</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Observer</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coframe</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"sqrt(A(r))*dt"</span><span class="p">,</span> <span class="s2">"-dr/sqrt(A(r))"</span><span class="p">,</span> <span class="s2">"-r*sin(theta)*dphi"</span><span class="p">,</span> <span class="s2">"-r*dtheta"</span><span class="p">])</span>
 
 <span class="n">geo_arr</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">phi</span> <span class="ow">in</span> <span class="n">phi_arr</span><span class="p">:</span>
-    <span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Geodesic</span><span class="p">(</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Geodesic</span><span class="p">(</span><span class="s2">"null"</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
     <span class="n">geo</span><span class="o">.</span><span class="n">initial_x</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">x</span>
     <span class="n">geo</span><span class="o">.</span><span class="n">initial_u</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="kp">from_f1</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="bp">type</span> <span class="o">=</span> <span class="n">geo</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
 
@@ -368,13 +368,13 @@
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="kp">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
 
-<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="kp">get_cmap</span><span class="p">(</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">)</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="kp">get_cmap</span><span class="p">(</span><span class="s1">'coolwarm'</span><span class="p">)</span>
 <span class="n">norm</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="nc">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">mappable</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="nc">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">geo</span><span class="p">,</span> <span class="n">phi</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">geo_arr</span><span class="p">,</span> <span class="n">phi_arr</span><span class="p">):</span>
     <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="kp">transform</span><span class="p">(</span><span class="n">geo</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="nc">T</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="kp">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">mappable</span><span class="o">.</span><span class="kp">to_rgba</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="k">if</span> <span class="n">geo</span><span class="o">.</span><span class="n">exit</span> <span class="o">!=</span> <span class="s2">&quot;horizon&quot;</span> <span class="k">else</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># Color is assigned conditionally depending on wheter the geodesic hit the horizon</span>
+    <span class="n">ax</span><span class="o">.</span><span class="kp">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">mappable</span><span class="o">.</span><span class="kp">to_rgba</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="k">if</span> <span class="n">geo</span><span class="o">.</span><span class="n">exit</span> <span class="o">!=</span> <span class="s2">"horizon"</span> <span class="k">else</span> <span class="s2">"k"</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># Color is assigned conditionally depending on wheter the geodesic hit the horizon</span>
 
 <span class="c1"># Adding the black hole</span>
 
@@ -382,10 +382,10 @@
 <span class="n">x_bh</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="kp">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 <span class="n">y_bh</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="kp">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="kp">fill</span><span class="p">(</span><span class="n">x_bh</span><span class="p">,</span> <span class="n">y_bh</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="kp">fill</span><span class="p">(</span><span class="n">x_bh</span><span class="p">,</span> <span class="n">y_bh</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">"k"</span><span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="kp">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$ ($M$)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="kp">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$ ($M$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="kp">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$x$ ($M$)'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="kp">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$y$ ($M$)'</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>which gives out the following representation</p>

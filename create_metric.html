@@ -297,17 +297,17 @@ is to apply the <code class="docutils literal notranslate"><span class="pre">pyg
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pygro</span>
 
-<span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Schwarzschild spacetime&quot;</span>
-<span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;theta&quot;</span><span class="p">,</span> <span class="s2">&quot;phi&quot;</span><span class="p">]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s2">"Schwarzschild spacetime"</span>
+<span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"t"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="s2">"theta"</span><span class="p">,</span> <span class="s2">"phi"</span><span class="p">]</span>
 
 <span class="n">transform_functions</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;t&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;r*sin(theta)*cos(phi)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;r*sin(theta)*sin(phi)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;r*cos(theta)&quot;</span>
+    <span class="s2">"t"</span><span class="p">,</span>
+    <span class="s2">"r*sin(theta)*cos(phi)"</span><span class="p">,</span>
+    <span class="s2">"r*sin(theta)*sin(phi)"</span><span class="p">,</span>
+    <span class="s2">"r*cos(theta)"</span>
 <span class="p">]</span>
 
-<span class="n">line_element</span> <span class="o">=</span> <span class="s2">&quot;-(1-2*M/r)*dt**2+1/(1-2*M/r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)&quot;</span>
+<span class="n">line_element</span> <span class="o">=</span> <span class="s2">"-(1-2*M/r)*dt**2+1/(1-2*M/r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)"</span>
 
 <span class="n">metric</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Metric</span><span class="p">(</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span>
@@ -383,19 +383,19 @@ one wants to write it using the following expression</p>
 </div>
 <p>Clearly the new expression is formally equivalent to that in the previous section and one might think that this reformulation is not useful. However, for much more complicated metrics, having the possibility to inject into the metric auxiliary functions whose actual analytic expression is indicated elsewhere can be really useful and allow for neater formulation of the problem. For this reason, in PyGRO a functionality to accept auxiliary functions as part of the metric expression has been introduced. It can be easily accessed by specifying the auxiliary function and its dependency from the spacetime coordinates (e.g. <code class="docutils literal notranslate"><span class="pre">A(r)</span></code> in our case) in the <code class="docutils literal notranslate"><span class="pre">line_element</span></code> and later passing as additional keyword argument, whose name is the functional part of the function, to the <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> constructor a <code class="docutils literal notranslate"><span class="pre">str</span></code> containing the symbolic expression of the function (e.g. <code class="docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">A</span> <span class="pre">=</span> <span class="pre">&quot;1-2*M/r&quot;)</span></code>). Again, any constant parameter that is used in the auxiliary expression must be specified as additional keyword argument (e.g. <code class="docutils literal notranslate"><span class="pre">(...,</span> <span class="pre">M</span> <span class="pre">=</span> <span class="pre">1)</span></code>).</p>
 <p>Here is what a <a class="reference internal" href="metricengine.html#pygro.metric_engine.Metric" title="pygro.metric_engine.Metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric()</span></code></a> initialization would look like in this case:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Schwarzschild spacetime&quot;</span>
-<span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;theta&quot;</span><span class="p">,</span> <span class="s2">&quot;phi&quot;</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">"Schwarzschild spacetime"</span>
+<span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"t"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="s2">"theta"</span><span class="p">,</span> <span class="s2">"phi"</span><span class="p">]</span>
 
 <span class="n">transform_functions</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;t&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;r*sin(theta)*cos(phi)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;r*sin(theta)*sin(phi)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;r*cos(theta)&quot;</span>
+    <span class="s2">"t"</span><span class="p">,</span>
+    <span class="s2">"r*sin(theta)*cos(phi)"</span><span class="p">,</span>
+    <span class="s2">"r*sin(theta)*sin(phi)"</span><span class="p">,</span>
+    <span class="s2">"r*cos(theta)"</span>
 <span class="p">]</span>
 
-<span class="n">line_element</span> <span class="o">=</span> <span class="s2">&quot;-A(r)*dt**2+1/A(r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)&quot;</span>
+<span class="n">line_element</span> <span class="o">=</span> <span class="s2">"-A(r)*dt**2+1/A(r)*dr**2+r**2*(dtheta**2+sin(theta)**2*dphi**2)"</span>
 
-<span class="nc">A</span> <span class="o">=</span> <span class="s2">&quot;1-2*M/r&quot;</span>
+<span class="nc">A</span> <span class="o">=</span> <span class="s2">"1-2*M/r"</span>
 
 <span class="n">metric</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Metric</span><span class="p">(</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span>
@@ -423,22 +423,22 @@ one wants to write it using the following expression</p>
 <p>&gt; <code class="docutils literal notranslate"><span class="pre">&quot;A(r)&quot;</span> <span class="pre">-&gt;</span> <span class="pre">Metric(...,</span> <span class="pre">A</span> <span class="pre">=</span> <span class="pre">[...],</span> <span class="pre">dAdr</span> <span class="pre">=</span> <span class="pre">[...])</span></code></p>
 <p>It is important to notice that the <code class="docutils literal notranslate"><span class="pre">pyfunc</span></code> to pass to the metric must be defined as a method depending on four arguments, one for each coordinate, that has to be ordered exactly as the coordinates of the metric.</p>
 <p>Here, for example, we initialize the same Schwarzschild metric of the previous examples but using the auxiliary functions approach:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Schwarzschild spacetime&quot;</span>
-<span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;theta&quot;</span><span class="p">,</span> <span class="s2">&quot;phi&quot;</span><span class="p">]</span>
-<span class="n">line_element</span> <span class="o">=</span> <span class="s2">&quot;-A(r)*dt**2+1/A(r)*dr**2+r**2*(dtheta**2+dphi**2)&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s2">"Schwarzschild spacetime"</span>
+<span class="n">coordinates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"t"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="s2">"theta"</span><span class="p">,</span> <span class="s2">"phi"</span><span class="p">]</span>
+<span class="n">line_element</span> <span class="o">=</span> <span class="s2">"-A(r)*dt**2+1/A(r)*dr**2+r**2*(dtheta**2+dphi**2)"</span>
 <span class="n">transform</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;t&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;r*sin(theta)*cos(phi)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;r*sin(theta)*sin(phi)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;r*cos(theta)&quot;</span>
+    <span class="s2">"t"</span><span class="p">,</span>
+    <span class="s2">"r*sin(theta)*cos(phi)"</span><span class="p">,</span>
+    <span class="s2">"r*sin(theta)*sin(phi)"</span><span class="p">,</span>
+    <span class="s2">"r*cos(theta)"</span>
 <span class="p">]</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">A</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
-    <span class="nc">M</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="kp">get_constant</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">)</span>
+    <span class="nc">M</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="kp">get_constant</span><span class="p">(</span><span class="s2">"M"</span><span class="p">)</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="nc">M</span><span class="o">/</span><span class="n">r</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">dAdr</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
-    <span class="nc">M</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="kp">get_constant</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">)</span>
+    <span class="nc">M</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="kp">get_constant</span><span class="p">(</span><span class="s2">"M"</span><span class="p">)</span>
     <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="nc">M</span><span class="o">/</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span>
 
 <span class="n">metric</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Metric</span><span class="p">(</span>
@@ -450,7 +450,7 @@ one wants to write it using the following expression</p>
     <span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
 <span class="p">)</span>
 
-<span class="n">metric</span><span class="o">.</span><span class="kp">add_parameter</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">metric</span><span class="o">.</span><span class="kp">add_parameter</span><span class="p">(</span><span class="s2">"M"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">

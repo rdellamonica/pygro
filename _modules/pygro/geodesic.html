@@ -268,13 +268,13 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="n">_GEODESIC_TYPE</span> <span class="o">=</span> <span class="nc">Literal</span><span class="p">[</span><span class="s1">&#39;time-like&#39;</span><span class="p">,</span> <span class="s1">&#39;null&#39;</span><span class="p">]</span>
+<span class="n">_GEODESIC_TYPE</span> <span class="o">=</span> <span class="nc">Literal</span><span class="p">[</span><span class="s1">'time-like'</span><span class="p">,</span> <span class="s1">'null'</span><span class="p">]</span>
 <span class="n">_VALID_GEODESIC_TYPE</span><span class="p">:</span> <span class="nc">Tuple</span><span class="p">[</span><span class="n">_GEODESIC_TYPE</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="kp">get_args</span><span class="p">(</span><span class="n">_GEODESIC_TYPE</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Geodesic">
 <a class="viewcode-back" href="../../geodesic.html#pygro.geodesic.Geodesic">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Geodesic</span><span class="p">():</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        The ``pygro`` representation of a geodesic. It is used to define the geodesic type (either time-like or null), initial data and stores the results of the numerical integration, perfromed by the :py:class:`.GeodesicEngine`. </span>
 <span class="sd">        </span>
 <span class="sd">        See :doc:`integrate_geodesic` for more details on the actual integration procedure.</span>
@@ -283,29 +283,29 @@
 <span class="sd">        :vartype initial_x: np.ndarray</span>
 <span class="sd">        :ivar initial_u: The starting 4-velocity of the geodesic. It is a 4-dimensional `numpy.ndarray` that can be set using the helper function :py:func:`set_starting_4velocity` which enforces the appropriate normalization condition depending on the geodesic type.</span>
 <span class="sd">        :vartype initial_u: np.ndarray</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 <div class="viewcode-block" id="Geodesic.__init__">
 <a class="viewcode-back" href="../../geodesic.html#pygro.geodesic.Geodesic.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">type</span><span class="p">:</span> <span class="n">_GEODESIC_TYPE</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="nc">GeodesicEngine</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="bp">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">            The :py:class:`Geodesic` constructor accepts the following arguments:</span>
 <span class="sd">            </span>
-<span class="sd">            :param type: The geodesic normalization. It accepts strings with either ``&quot;time-like&quot;`` (:math:`g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu = -1`) or ``&quot;null&quot;`` (:math:`g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu = 0`). </span>
-<span class="sd">            :type type: Literal[&#39;time-like&#39;, &#39;null&#39;]</span>
+<span class="sd">            :param type: The geodesic normalization. It accepts strings with either ``"time-like"`` (:math:`g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu = -1`) or ``"null"`` (:math:`g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu = 0`). </span>
+<span class="sd">            :type type: Literal['time-like', 'null']</span>
 <span class="sd">            :param engine: The :py:class:`.GeodesicEngine` object to link to the :py:class:`Geodesic`. If not provided, the :py:class:`Geodesic` will be linked to the last initialized :py:class:`.GeodesicEngine`.</span>
 <span class="sd">            :type engine: Optional[GeodesicEngine]</span>
 <span class="sd">            :param verbose: Specifies whether to log information on the geodesic status to the standard output.</span>
 <span class="sd">            :type verbose: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_VALID_GEODESIC_TYPE</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Geodesic must either be &#39;null&#39; or &#39;time-like&#39;.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Geodesic must either be 'null' or 'time-like'."</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="ow">not</span> <span class="n">engine</span><span class="p">:</span>
             <span class="n">engine</span> <span class="o">=</span> <span class="nc">GeodesicEngine</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">logging</span><span class="o">.</span><span class="kp">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No GeodesicEngine object passed to the Geodesic constructor. Using last initialized GeodesicEngine instead&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="kp">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No GeodesicEngine object passed to the Geodesic constructor. Using last initialized GeodesicEngine instead"</span><span class="p">)</span>
             
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="nc">GeodesicEngine</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;No GeodesicEngine found, initialize one and pass it as argument to the Geodesic constructor&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"No GeodesicEngine found, initialize one and pass it as argument to the Geodesic constructor"</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">engine</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">metric</span>
@@ -354,11 +354,11 @@
     <span class="nd">@initial_x</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_x</span><span class="p">:</span> <span class="nc">Sequence</span><span class="p">[</span><span class="nc">Union</span><span class="p">[</span><span class="bp">int</span><span class="p">,</span> <span class="bp">float</span><span class="p">]]):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">initial_x</span><span class="p">,</span> <span class="p">(</span><span class="bp">list</span><span class="p">,</span> <span class="bp">tuple</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;initial_x must be a sequence (list or tuple).&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"initial_x must be a sequence (list or tuple)."</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_x</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;initial_x must contain exactly four elements.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"initial_x must contain exactly four elements."</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="p">(</span><span class="bp">int</span><span class="p">,</span> <span class="bp">float</span><span class="p">))</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">initial_x</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;All elements in initial_x must be numbers (int or float).&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"All elements in initial_x must be numbers (int or float)."</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_initial_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">array</span><span class="p">(</span><span class="n">initial_x</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -368,14 +368,14 @@
     <span class="nd">@initial_u</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">initial_u</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_u</span><span class="p">:</span> <span class="nc">Sequence</span><span class="p">[</span><span class="nc">Union</span><span class="p">[</span><span class="bp">int</span><span class="p">,</span> <span class="bp">float</span><span class="p">]]):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">initial_u</span><span class="p">,</span> <span class="p">(</span><span class="bp">list</span><span class="p">,</span> <span class="bp">tuple</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;initial_u must be a sequence (list or tuple).&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"initial_u must be a sequence (list or tuple)."</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_u</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;initial_u must contain exactly four elements.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"initial_u must contain exactly four elements."</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="p">(</span><span class="bp">int</span><span class="p">,</span> <span class="bp">float</span><span class="p">))</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">initial_u</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;All elements in initial_u must be numbers (int or float).&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"All elements in initial_u must be numbers (int or float)."</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must use set_starting_point before initializing the 4-velocity.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"You must use set_starting_point before initializing the 4-velocity."</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_tau</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
@@ -385,94 +385,94 @@
     <span class="nd">@x</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x must be a numpy array.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"x must be a numpy array."</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;x array must have shape (N, 4), where N can be any number.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"x array must have shape (N, 4), where N can be any number."</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">value</span>
     
     <span class="nd">@u</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">u</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;u must be a numpy array.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"u must be a numpy array."</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;u array must have shape (N, 4), where N can be any number.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"u array must have shape (N, 4), where N can be any number."</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_u</span> <span class="o">=</span> <span class="n">value</span>
         
     <span class="nd">@tau</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">tau</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;u must be a numpy array.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"u must be a numpy array."</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;u array must be a one-dimensional array&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"u array must be a one-dimensional array"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tau</span> <span class="o">=</span> <span class="n">value</span>
         
 <div class="viewcode-block" id="Geodesic.set_starting_point">
 <a class="viewcode-back" href="../../geodesic.html#pygro.geodesic.Geodesic.set_starting_point">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_starting_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">:</span> <span class="nc">Union</span><span class="p">[</span><span class="bp">float</span><span class="p">,</span> <span class="bp">int</span><span class="p">],</span> <span class="n">x1</span><span class="p">:</span> <span class="nc">Union</span><span class="p">[</span><span class="bp">float</span><span class="p">,</span> <span class="bp">int</span><span class="p">],</span> <span class="n">x2</span><span class="p">:</span> <span class="nc">Union</span><span class="p">[</span><span class="bp">float</span><span class="p">,</span> <span class="bp">int</span><span class="p">],</span> <span class="n">x3</span><span class="p">:</span> <span class="nc">Union</span><span class="p">[</span><span class="bp">float</span><span class="p">,</span> <span class="bp">int</span><span class="p">]):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">            Sets the initial values of the space-time coordinates from which to start the integration.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">&quot;Setting starting point&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">"Setting starting point"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initial_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">array</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">])</span></div>
 
     
     <span class="k">def</span><span class="w"> </span><span class="nf">get_initial_u0</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">&quot;null&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">"null"</span><span class="p">:</span>
             <span class="n">u_sol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="kp">u0_f_null</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_x</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">&quot;time-like&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">"time-like"</span><span class="p">:</span>
             <span class="n">u_sol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="kp">u0_f_timelike</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_x</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span><span class="p">)</span>
             
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="kp">isnan</span><span class="p">(</span><span class="n">u_sol</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The 4-velocity cannot be normalized, returned NaN&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"The 4-velocity cannot be normalized, returned NaN"</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">u_sol</span>
     
     <span class="k">def</span><span class="w"> </span><span class="nf">get_initial_u1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">&quot;null&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">"null"</span><span class="p">:</span>
             <span class="n">u_sol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="kp">u1_f_null</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_x</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">&quot;time-like&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">"time-like"</span><span class="p">:</span>
             <span class="n">u_sol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="kp">u1_f_timelike</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_x</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span><span class="p">)</span>
             
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="kp">isnan</span><span class="p">(</span><span class="n">u_sol</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The 4-velocity cannot be normalized, returned NaN&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"The 4-velocity cannot be normalized, returned NaN"</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">u_sol</span>
     
     <span class="k">def</span><span class="w"> </span><span class="nf">get_initial_u2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u3</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">&quot;null&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">"null"</span><span class="p">:</span>
             <span class="n">u_sol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="kp">u2_f_null</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_x</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u3</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">&quot;time-like&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">"time-like"</span><span class="p">:</span>
             <span class="n">u_sol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="kp">u2_f_timelike</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_x</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u3</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="kp">isnan</span><span class="p">(</span><span class="n">u_sol</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The 4-velocity cannot be normalized, returned NaN&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"The 4-velocity cannot be normalized, returned NaN"</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">u_sol</span>
     
     <span class="k">def</span><span class="w"> </span><span class="nf">get_initial_u3</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">&quot;null&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">"null"</span><span class="p">:</span>
             <span class="n">u_sol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="kp">u3_f_null</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_x</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">&quot;time-like&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_type</span> <span class="o">==</span> <span class="s2">"time-like"</span><span class="p">:</span>
             <span class="n">u_sol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="kp">u3_f_timelike</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_x</span><span class="p">,</span> <span class="n">u0</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="kp">isnan</span><span class="p">(</span><span class="n">u_sol</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The 4-velocity cannot be normalized, returned NaN&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"The 4-velocity cannot be normalized, returned NaN"</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="n">u_sol</span>
     
 <div class="viewcode-block" id="Geodesic.set_starting_4velocity">
 <a class="viewcode-back" href="../../geodesic.html#pygro.geodesic.Geodesic.set_starting_4velocity">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_starting_4velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u0</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="bp">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">u1</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="bp">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">u2</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="bp">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">u3</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="bp">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Sets the initial values of the components of the 4-velocity, enforcing the normalization conditions. For this reason, only three out of the four components ``u[i]`` of the 4-velocity must be specified, and the remaining one will be automatically computed to satistfy the normalization condition.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
+<span class="sd">            Sets the initial (contravariant) values of the components of the 4-velocity, enforcing the normalization conditions. For this reason, only three out of the four components ``u[i]`` of the 4-velocity must be specified, and the remaining one will be automatically computed to satistfy the normalization condition.</span>
 <span class="sd">            </span>
 <span class="sd">            To override this behaviour, you can directly set the ``.initial_u`` property of the :py:class:`Geodesic`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">check</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">u</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="p">[</span><span class="n">u0</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span><span class="p">])</span>
         
         <span class="k">if</span> <span class="ow">not</span> <span class="n">check</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Specify three components of the initial 4-velocity.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Specify three components of the initial 4-velocity."</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">u0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">u0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="kp">get_initial_u0</span><span class="p">(</span><span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span><span class="p">)</span>
@@ -483,7 +483,7 @@
         <span class="k">if</span> <span class="n">u3</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">u3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="kp">get_initial_u3</span><span class="p">(</span><span class="n">u0</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">&quot;Setting initial 4-velocity.&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">"Setting initial 4-velocity."</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initial_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">array</span><span class="p">([</span><span class="n">u0</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span><span class="p">])</span></div>
 </div>
 

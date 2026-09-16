@@ -290,8 +290,8 @@
 <p>corresponding to the relations between the local frame metric and the space-time metric</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
-\[\begin{split}f_a^\alpha f_\beta^b \eta_{ab} &amp;= g_{\alpha\beta},\\
-f^a_\alpha f^\beta_b g_{ab} &amp;= \eta_{\alpha\beta}.\end{split}\]</div>
+\[\begin{split}f^a_\alpha f_\beta^b \eta_{ab} &amp;= g_{\alpha\beta},\\
+f^\alpha_b f_b^\beta g_{\alpha\beta} &amp;= \eta_{ab}.\end{split}\]</div>
 </div>
 <p>In other terms, in the local observer’s frame the metric is ordinary Minkowski metric, which is a statement of the local flatness in General Relativity.</p>
 <section id="an-example-stationary-observers-in-the-schwarzschild-space-time">
@@ -332,7 +332,7 @@ f_3 &amp;= -\frac{1}{r}\partial_\theta\end{split}\]</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">observer</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Observer</span><span class="p">(</span>
     <span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span><span class="p">,</span>
     <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-    <span class="n">coframe</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sqrt(1-2*M/r)*dt&quot;</span><span class="p">,</span><span class="s2">&quot;-dr/sqrt(1-2*M/r)&quot;</span><span class="p">,</span> <span class="s2">&quot;-r*sin(theta)*dphi&quot;</span><span class="p">,</span> <span class="s2">&quot;-r*dtheta&quot;</span><span class="p">]</span>
+    <span class="n">coframe</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"sqrt(1-2*M/r)*dt"</span><span class="p">,</span><span class="s2">"-dr/sqrt(1-2*M/r)"</span><span class="p">,</span> <span class="s2">"-r*sin(theta)*dphi"</span><span class="p">,</span> <span class="s2">"-r*dtheta"</span><span class="p">]</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -343,7 +343,7 @@ f_3 &amp;= -\frac{1}{r}\partial_\theta\end{split}\]</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">observer</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Observer</span><span class="p">(</span>
     <span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span><span class="p">,</span>
     <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-    <span class="n">frame</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1/sqrt(1-2*M/r)*et&quot;</span><span class="p">,</span><span class="s2">&quot;-sqrt(1-2*M/r)*er&quot;</span><span class="p">,</span> <span class="s2">&quot;-1/(r*sin(theta))*ephi&quot;</span><span class="p">,</span> <span class="s2">&quot;-1/r*etheta&quot;</span><span class="p">]</span>
+    <span class="n">frame</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"1/sqrt(1-2*M/r)*et"</span><span class="p">,</span><span class="s2">"-sqrt(1-2*M/r)*er"</span><span class="p">,</span> <span class="s2">"-1/(r*sin(theta))*ephi"</span><span class="p">,</span> <span class="s2">"-1/r*etheta"</span><span class="p">]</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -360,7 +360,7 @@ f_3 &amp;= -\frac{1}{r}\partial_\theta\end{split}\]</div>
 </a>
 <p>Hence, suppose we want to fire a time-like geodesic starting at the observer’s position with a spatial velocity that, in the oberver’s reference frame, has an initial direction of <span class="math notranslate nohighlight">\(\theta_{\rm obs} = 15^{\circ}\)</span> and <span class="math notranslate nohighlight">\(\phi_{\rm obs} = 5^{\circ}\)</span> from the radial inward-pointing direction (<span class="math notranslate nohighlight">\(f_1\)</span> direction) and that the module of the velocity is 30% of the speed of light (<code class="docutils literal notranslate"><span class="pre">v</span> <span class="pre">=</span> <span class="pre">0.3</span></code> given the gometrized units that we are using).</p>
 <p>This can be done by:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Geodesic</span><span class="p">(</span><span class="s2">&quot;time-like&quot;</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Geodesic</span><span class="p">(</span><span class="s2">"time-like"</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 
 <span class="n">geo</span><span class="o">.</span><span class="n">initial_x</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">x</span>
 <span class="n">geo</span><span class="o">.</span><span class="n">initial_u</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="kp">from_f1</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="kp">deg2rad</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="kp">deg2rad</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="bp">type</span> <span class="o">=</span> <span class="n">geo</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">)</span>
@@ -378,7 +378,7 @@ f_3 &amp;= -\frac{1}{r}\partial_\theta\end{split}\]</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">observer</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Observer</span><span class="p">(</span>
     <span class="n">metric</span><span class="p">,</span>
     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="kp">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span>
-    <span class="n">coframe</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sqrt(A(r))*dt&quot;</span><span class="p">,</span> <span class="s2">&quot;-dr/sqrt(A(r))&quot;</span><span class="p">,</span> <span class="s2">&quot;-r*sin(theta)*dphi&quot;</span><span class="p">,</span> <span class="s2">&quot;-r*dtheta&quot;</span><span class="p">]</span>
+    <span class="n">coframe</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"sqrt(A(r))*dt"</span><span class="p">,</span> <span class="s2">"-dr/sqrt(A(r))"</span><span class="p">,</span> <span class="s2">"-r*sin(theta)*dphi"</span><span class="p">,</span> <span class="s2">"-r*dtheta"</span><span class="p">]</span>
 <span class="p">)</span>
 
 <span class="n">phi_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
@@ -386,7 +386,7 @@ f_3 &amp;= -\frac{1}{r}\partial_\theta\end{split}\]</div>
 
 <span class="k">for</span> <span class="n">phi</span> <span class="ow">in</span> <span class="n">phi_arr</span><span class="p">:</span>
 
-    <span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Geodesic</span><span class="p">(</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">geo</span> <span class="o">=</span> <span class="n">pygro</span><span class="o">.</span><span class="nc">Geodesic</span><span class="p">(</span><span class="s2">"null"</span><span class="p">,</span> <span class="n">geo_engine</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 
     <span class="n">geo</span><span class="o">.</span><span class="n">initial_x</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">x</span>
     <span class="n">geo</span><span class="o">.</span><span class="n">initial_u</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="kp">from_f1</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="bp">type</span> <span class="o">=</span> <span class="n">geo</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>

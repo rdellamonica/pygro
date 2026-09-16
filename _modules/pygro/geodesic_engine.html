@@ -276,17 +276,17 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">sympy.utilities.lambdify</span><span class="w"> </span><span class="kn">import</span> <span class="n">lambdify</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="n">_BACKEND_TYPES</span> <span class="o">=</span> <span class="nc">Literal</span><span class="p">[</span><span class="s2">&quot;autowrap&quot;</span><span class="p">,</span> <span class="s2">&quot;lambdify&quot;</span><span class="p">]</span>
+<span class="n">_BACKEND_TYPES</span> <span class="o">=</span> <span class="nc">Literal</span><span class="p">[</span><span class="s2">"autowrap"</span><span class="p">,</span> <span class="s2">"lambdify"</span><span class="p">]</span>
 
 <div class="viewcode-block" id="GeodesicEngine">
 <a class="viewcode-back" href="../../geodesicengine.html#pygro.geodesic_engine.GeodesicEngine">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">GeodesicEngine</span><span class="p">():</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        The main numerical class in PyGRO. It deals with performing the numerical operations to integrate a :py:class:`.Geodesic` object. </span>
 <span class="sd">        </span>
 <span class="sd">        After linking a :py:class:`.Metric` to the :py:class:`GeodesicEngine`, the latter will have the following attributes:</span>
 <span class="sd">        </span>
-<span class="sd">        :ivar motion_eq: A callable of the coordinates and their derivatives which returns the right-hand-side of the geodesic equations (casted to a first-order system of ODEs). For example, given the coordinates ``[&quot;t&quot;, &quot;x&quot;, &quot;y&quot;, &quot;z&quot;]``, the ``motion_eq`` will be of type ``(t, x, y, z, u_t, u_x, u_y, u_z) -&gt; Iterable[float]`` of dimension 8. </span>
+<span class="sd">        :ivar motion_eq: A callable of the coordinates and their derivatives which returns the right-hand-side of the geodesic equations (casted to a first-order system of ODEs). For example, given the coordinates ``["t", "x", "y", "z"]``, the ``motion_eq`` will be of type ``(t, x, y, z, u_t, u_x, u_y, u_z) -&gt; Iterable[float]`` of dimension 8. </span>
 <span class="sd">        :vartype motion_eq: Iterable[Callable]</span>
 <span class="sd">        :ivar u[i]_f_timelike: a helper function that returns the numerical value of the *i*-th component of the 4-velocity of a massive test particle as a function of the others, which normalizes the 4-velocity to :math:`g_{\mu\nu}\dot{x}^\mu\dot{x}^\nu = -1`</span>
 <span class="sd">        :vartype u[i]_f_timelike: Callable[Iterable[float], float]</span>
@@ -294,32 +294,32 @@
 <span class="sd">        :vartype u[i]_f_null: Callable[Iterable[float], float]</span>
 <span class="sd">        :ivar stopping_criterion: a :py:class:`.StoppingCriterionList` representing the list of conditions to check at each integration step to determine whether to stop the integration or not.</span>
 <span class="sd">        :vartype stopping_criterion: StoppingCriterionList</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">instances</span> <span class="o">=</span> <span class="p">[]</span>
     
 <div class="viewcode-block" id="GeodesicEngine.__init__">
 <a class="viewcode-back" href="../../geodesicengine.html#pygro.geodesic_engine.GeodesicEngine.__init__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="nc">Metric</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">backend</span><span class="p">:</span> <span class="n">_BACKEND_TYPES</span> <span class="o">=</span> <span class="s2">&quot;autowrap&quot;</span><span class="p">,</span> <span class="n">integrator</span> <span class="p">:</span> <span class="nc">AVAILABLE_INTEGRATORS</span> <span class="o">=</span> <span class="s2">&quot;rkf45&quot;</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="nc">Metric</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">backend</span><span class="p">:</span> <span class="n">_BACKEND_TYPES</span> <span class="o">=</span> <span class="s2">"autowrap"</span><span class="p">,</span> <span class="n">integrator</span> <span class="p">:</span> <span class="nc">AVAILABLE_INTEGRATORS</span> <span class="o">=</span> <span class="s2">"rkf45"</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">            The :py:class:`GeodesicEngine` constructor accepts the following arguments:</span>
 <span class="sd">            </span>
 <span class="sd">            :param metric: The :py:class:`.Metric` object to link to the :py:class:`GeodesicEngine` and from which the geodesic equations and all the related symbolic quantities are retrieved. If not provided, the :py:class:`GeodesicEngine` will be linked to the last initialized :py:class:`.Metric`.</span>
 <span class="sd">            :type metric: Metric</span>
 <span class="sd">            :param backend: The symbolic backend to use. If ``autowrap`` (defaul option) the symbolic expression will be converted, upon linking the :py:class:`.Metric` to the :py:class:`GeodesicEngine`, in pre-compiled C low-level callable with a consitent gain in performance of single function-calls. If ``lambdify`` the geodesic equations will not be compiled as C callables and will be converted to Python callables, with a loss in performances. The :py:class:`GeodesicEngine` will fallback to a ``lambdify`` whenever auxiliary py-functions are used to define the :py:class:`.Metric` object (see :doc:`create_metric` for an example).</span>
-<span class="sd">            :type backend: Literal[&quot;autowrap&quot;, &quot;lambdify&quot;]</span>
+<span class="sd">            :type backend: Literal["autowrap", "lambdify"]</span>
 <span class="sd">            :param integrator: Specifies the numerical integration schemes used to carry out the geodesic integration. See :doc:`integrators`. Default is ``rkf45`` correspoding to the :py:class:`.RungeKuttaFehlberg45` integrator.</span>
-<span class="sd">            :type integrator: Literal[&#39;rkf45&#39;, &#39;dp45&#39;, &#39;ck45&#39;, &#39;rkf78&#39;]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">            :type integrator: Literal['rkf45', 'dp45', 'ck45', 'rkf78']</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nc">Metric</span><span class="o">.</span><span class="n">instances</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nc">Metric</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nc">Metric</span><span class="p">):</span>
                     <span class="n">metric</span> <span class="o">=</span> <span class="nc">Metric</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="kp">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No Metric object passed to the Geodesic Engine constructor. Using last initialized Metric (</span><span class="si">{</span><span class="n">metric</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">) instead.&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="kp">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No Metric object passed to the Geodesic Engine constructor. Using last initialized Metric (</span><span class="si">{</span><span class="n">metric</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">) instead."</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No Metric found, initialize one and pass it as argument to the GeodesicEngine constructor.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No Metric found, initialize one and pass it as argument to the GeodesicEngine constructor."</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="ow">not</span> <span class="n">integrator</span> <span class="ow">in</span> <span class="p">(</span><span class="n">valid_integrators</span> <span class="o">:=</span> <span class="kp">get_args</span><span class="p">(</span><span class="nc">AVAILABLE_INTEGRATORS</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;integrator&#39; must be one of </span><span class="si">{</span><span class="n">valid_integrators</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"'integrator' must be one of </span><span class="si">{</span><span class="n">valid_integrators</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="kp">link_metric</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span> <span class="o">=</span> <span class="n">integrator</span>
@@ -329,9 +329,9 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">link_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nc">Metric</span><span class="p">,</span> <span class="n">backend</span><span class="p">:</span> <span class="n">_BACKEND_TYPES</span><span class="p">):</span>
         
         <span class="k">if</span> <span class="ow">not</span> <span class="n">backend</span> <span class="ow">in</span> <span class="p">(</span><span class="n">valid_backends</span> <span class="o">:=</span> <span class="kp">get_args</span><span class="p">(</span><span class="n">_BACKEND_TYPES</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;backend&#39; must be one of </span><span class="si">{</span><span class="n">valid_backends</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"'backend' must be one of </span><span class="si">{</span><span class="n">valid_backends</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         
-        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Linking </span><span class="si">{</span><span class="n">g</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> to the Geodesic Engine&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Linking </span><span class="si">{</span><span class="n">g</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> to the Geodesic Engine"</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">g</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eq_x</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">eq_x</span>
@@ -340,22 +340,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">_geodesic_engine_linked</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">geodesic_engine</span> <span class="o">=</span> <span class="bp">self</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;lambdify&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="kp">get_parameters_functions</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">=</span> <span class="s2">&quot;lambdify&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">"lambdify"</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="kp">get_parameters_functions</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">=</span> <span class="s2">"lambdify"</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">=</span> <span class="s2">&quot;autowrap&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">=</span> <span class="s2">"autowrap"</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_motion_eq_f</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">for</span> <span class="n">eq</span> <span class="ow">in</span> <span class="p">[</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">eq_x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">eq_u</span><span class="p">]:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">==</span> <span class="s2">&quot;autowrap&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">==</span> <span class="s2">"autowrap"</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_motion_eq_f</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="kp">autowrap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="kp">subs_functions</span><span class="p">(</span><span class="n">eq</span><span class="p">),</span> <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;cython&#39;</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="kp">get_parameters_symb</span><span class="p">()]))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_motion_eq_f</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="kp">autowrap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="kp">subs_functions</span><span class="p">(</span><span class="n">eq</span><span class="p">),</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'cython'</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="kp">get_parameters_symb</span><span class="p">()]))</span>
                 <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="kp">warning</span><span class="p">(</span><span class="s2">&quot;Falling back to &#39;lambdify&#39; backend because the current platform is not compatible with &#39;autowrap&#39;. This may affect performances.&quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">=</span> <span class="s2">&quot;lambdify&quot;</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="kp">warning</span><span class="p">(</span><span class="s2">"Falling back to 'lambdify' backend because the current platform is not compatible with 'autowrap'. This may affect performances."</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">=</span> <span class="s2">"lambdify"</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_motion_eq_f</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="kp">lambdify</span><span class="p">([</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="kp">get_parameters_symb</span><span class="p">()],</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="kp">subs_functions</span><span class="p">(</span><span class="n">eq</span><span class="p">)))</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">==</span> <span class="s2">&quot;lambdify&quot;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrapper</span> <span class="o">==</span> <span class="s2">"lambdify"</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_motion_eq_f</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="kp">lambdify</span><span class="p">([</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">u</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="kp">get_parameters_symb</span><span class="p">()],</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="kp">subs_functions</span><span class="p">(</span><span class="n">eq</span><span class="p">)))</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">_f_eq</span><span class="p">(</span><span class="n">tau</span><span class="p">,</span> <span class="n">xu</span><span class="p">):</span>
@@ -383,29 +383,29 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">stopping_criterion</span> <span class="o">=</span> <span class="nc">StoppingCriterionList</span><span class="p">([])</span>
         
-        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">&quot;Metric linking complete.&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">"Metric linking complete."</span><span class="p">)</span>
 
 <div class="viewcode-block" id="GeodesicEngine.set_stopping_criterion">
 <a class="viewcode-back" href="../../geodesicengine.html#pygro.geodesic_engine.GeodesicEngine.set_stopping_criterion">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">set_stopping_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">:</span> <span class="bp">str</span><span class="p">,</span> <span class="n">exit_str</span><span class="p">:</span> <span class="bp">str</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_stopping_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">:</span> <span class="bp">str</span><span class="p">,</span> <span class="n">exit_str</span><span class="p">:</span> <span class="bp">str</span> <span class="o">=</span> <span class="s2">"none"</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">            Creates a :py:class:`.StoppingCriterion` given the symbolic expression contained in the ``expr`` argument and sets is as the sole stopping criterion for the :py:class:`GeodesicEngine`.</span>
 <span class="sd">            </span>
 <span class="sd">            :param expr: a string to be sympy-parsed containing the expression that will be evaluated at each integration time-step.</span>
 <span class="sd">            :type expr: str</span>
 <span class="sd">            :param exit_str: the exit message that will be attached to the :py:class:`.Geodesic` when the stopping condition is met (*i.e.* when the condition in ``expr`` return ``False``).</span>
 <span class="sd">            :type exit_str: str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stopping_criterion</span> <span class="o">=</span> <span class="nc">StoppingCriterionList</span><span class="p">([])</span>
         <span class="bp">self</span><span class="o">.</span><span class="kp">add_stopping_criterion</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">exit_str</span><span class="p">)</span></div>
 
         
 <div class="viewcode-block" id="GeodesicEngine.add_stopping_criterion">
 <a class="viewcode-back" href="../../geodesicengine.html#pygro.geodesic_engine.GeodesicEngine.add_stopping_criterion">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">add_stopping_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">:</span> <span class="bp">str</span><span class="p">,</span> <span class="n">exit_str</span><span class="p">:</span> <span class="bp">str</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_stopping_criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">:</span> <span class="bp">str</span><span class="p">,</span> <span class="n">exit_str</span><span class="p">:</span> <span class="bp">str</span> <span class="o">=</span> <span class="s2">"none"</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">            Adds a :py:class:`.StoppingCriterion` to the :py:class:`.StoppingCriterionList` of the :py:class:`.GeodesicEngine`. Has the same parameters as :py:func:`set_stopping_criterion`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">expr_s</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
         <span class="n">free_symbols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">expr_s</span><span class="o">.</span><span class="n">free_symbols</span><span class="o">-</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
         <span class="n">check</span> <span class="o">=</span> <span class="kc">True</span>
@@ -419,13 +419,13 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">stopping_criterion</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="nc">StoppingCriterion</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">exit_str</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unkwnown symbol </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unkwnown symbol </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
 
         
 <div class="viewcode-block" id="GeodesicEngine.integrate">
 <a class="viewcode-back" href="../../geodesicengine.html#pygro.geodesic_engine.GeodesicEngine.integrate">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">geo</span><span class="p">:</span> <span class="s1">&#39;Geodesic&#39;</span><span class="p">,</span> <span class="n">tauf</span><span class="p">:</span> <span class="bp">float</span><span class="p">,</span> <span class="n">initial_step</span><span class="p">:</span> <span class="bp">float</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="bp">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="nc">Literal</span><span class="p">[</span><span class="s2">&quot;fw&quot;</span><span class="p">,</span> <span class="s2">&quot;bw&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;fw&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">geo</span><span class="p">:</span> <span class="s1">'Geodesic'</span><span class="p">,</span> <span class="n">tauf</span><span class="p">:</span> <span class="bp">float</span><span class="p">,</span> <span class="n">initial_step</span><span class="p">:</span> <span class="bp">float</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="bp">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="nc">Literal</span><span class="p">[</span><span class="s2">"fw"</span><span class="p">,</span> <span class="s2">"bw"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"fw"</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            The main function for the numerical integration. Accepts an initialized :py:class:`.Geodesic` (*i.e.* with appropriately set initial space-time position and 4-velocity), performs the numerical integration of the geodesic equations up to the provided final value of the affine parameter ``tauf`` or until a stopping condition is met, and returns to the input :py:class:`.Geodesic` object the integrated numerical array.</span>
 <span class="sd">            </span>
 <span class="sd">            See :doc:`integrate_geodesic` for a complete tutorials.</span>
@@ -438,18 +438,18 @@
 <span class="sd">            :type initial_step: float</span>
 <span class="sd">            :param verbose: whether to log the integration progress to the standard output or not.</span>
 <span class="sd">            :type verbose: bool</span>
-<span class="sd">            :param direction: if &quot;fw&quot; the integration is carried on forward in proper time; if &quot;bw&quot; the integration is carried on backward in proper time. The correct signs for ``tauf`` and ``initial_step`` will be assigned automatically.</span>
-<span class="sd">            :type direction: Literal[&quot;fw&quot;, &quot;bw&quot;]</span>
+<span class="sd">            :param direction: if "fw" the integration is carried on forward in proper time; if "bw" the integration is carried on backward in proper time. The correct signs for ``tauf`` and ``initial_step`` will be assigned automatically.</span>
+<span class="sd">            :type direction: Literal["fw", "bw"]</span>
 <span class="sd">            :param integrator_kwargs: the kwargs to be passed to the integrator.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;fw&quot;</span><span class="p">,</span> <span class="s2">&quot;bw&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;direction must be either &#39;fw&#39; or &#39;bw&#39;.&quot;</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"fw"</span><span class="p">,</span> <span class="s2">"bw"</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"direction must be either 'fw' or 'bw'."</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">&quot;Starting integration.&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">"Starting integration."</span><span class="p">)</span>
             
         <span class="n">integrator</span> <span class="o">=</span> <span class="n">integrators</span><span class="o">.</span><span class="kp">get_integrator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_integrator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">motion_eq</span><span class="p">,</span> <span class="n">stopping_criterion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopping_criterion</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_kwargs</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;bw&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s2">"bw"</span><span class="p">:</span>
             <span class="n">h</span> <span class="o">=</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">initial_step</span><span class="p">)</span>
             <span class="n">tauf</span> <span class="o">=</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">tauf</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -463,7 +463,7 @@
                 
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
             <span class="n">time_elapsed</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="kp">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_start</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Integration completed in </span><span class="si">{</span><span class="n">time_elapsed</span><span class="si">:</span><span class="s2">.5</span><span class="si">}</span><span class="s2"> s with result &#39;</span><span class="si">{</span><span class="n">exit</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Integration completed in </span><span class="si">{</span><span class="n">time_elapsed</span><span class="si">:</span><span class="s2">.5</span><span class="si">}</span><span class="s2"> s with result '</span><span class="si">{</span><span class="n">exit</span><span class="si">}</span><span class="s2">'."</span><span class="p">)</span>
 
         <span class="n">geo</span><span class="o">.</span><span class="n">tau</span> <span class="o">=</span> <span class="n">tau</span>
         <span class="n">geo</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">stack</span><span class="p">(</span><span class="n">xu</span><span class="p">[:,:</span><span class="mi">4</span><span class="p">])</span>
@@ -476,16 +476,16 @@
 <div class="viewcode-block" id="StoppingCriterion">
 <a class="viewcode-back" href="../../geodesicengine.html#pygro.geodesic_engine.StoppingCriterion">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">StoppingCriterion</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        An helper class to deal with stopping criterion. Requires as input the lambdified callable (``stopping_criterion``) built from a sympy symboic expression (``expr``) and can be called on a given geodesic step to return either ``True`` if the condition in the expression is verified or ``False`` when it is not, stopping the integration. It also requires an exit message (``exit_str``), useful to flag a geodesic that fires the stopping criterion (*i.e.* a geodesic that ends in an horizon).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stopping_criterion</span><span class="p">:</span> <span class="nc">Callable</span><span class="p">[[</span><span class="n">npt</span><span class="o">.</span><span class="nc">ArrayLike</span><span class="p">],</span> <span class="bp">bool</span><span class="p">],</span> <span class="n">expr</span><span class="p">:</span> <span class="bp">str</span><span class="p">,</span> <span class="n">exit_str</span><span class="p">:</span> <span class="bp">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stopping_criterion</span> <span class="o">=</span> <span class="n">stopping_criterion</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exit</span> <span class="o">=</span> <span class="n">exit_str</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span>
         
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;StoppingCriterion: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">expr</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"&lt;StoppingCriterion: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">expr</span><span class="si">}</span><span class="s2">&gt;"</span>
     
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">geo</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="nc">ArrayLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="kp">stopping_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">geo</span><span class="p">)</span></div>
@@ -494,9 +494,9 @@
 <div class="viewcode-block" id="StoppingCriterionList">
 <a class="viewcode-back" href="../../geodesicengine.html#pygro.geodesic_engine.StoppingCriterionList">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">StoppingCriterionList</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        An aggregator of multiple :py:class:`StoppingCriterion` objects. When called on a geodesic it tests multiple stopping criterions on the last step and returns ``False`` if at least one of the ``stopping_criterions`` is falsy. In that case stores the ``exit`` of the stopping criterion that fired the condition.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stopping_criterions</span><span class="p">:</span> <span class="bp">list</span><span class="p">[</span><span class="nc">StoppingCriterion</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stopping_criterions</span> <span class="o">=</span> <span class="n">stopping_criterions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exit</span> <span class="o">=</span> <span class="kc">None</span>
@@ -505,7 +505,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">stopping_criterions</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">stopping_criterion</span><span class="p">)</span>
         
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;StoppingCriterions: [</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="kp">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">s_c</span><span class="o">.</span><span class="n">expr</span><span class="si">}</span><span class="s1">&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">s_c</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">stopping_criterions</span><span class="p">])</span><span class="si">}</span><span class="s2">]&gt;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"&lt;StoppingCriterions: [</span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="kp">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">s_c</span><span class="o">.</span><span class="n">expr</span><span class="si">}</span><span class="s1">'</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">s_c</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">stopping_criterions</span><span class="p">])</span><span class="si">}</span><span class="s2">]&gt;"</span>
         
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">geo</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="nc">ArrayLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">bool</span><span class="p">:</span>
         <span class="n">check</span> <span class="o">=</span> <span class="kc">True</span>

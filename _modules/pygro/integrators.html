@@ -266,24 +266,24 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="nc">Literal</span><span class="p">,</span> <span class="nc">Optional</span><span class="p">,</span> <span class="nc">Tuple</span><span class="p">,</span> <span class="nc">Callable</span><span class="p">,</span> <span class="nc">Optional</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygro.interpolators</span><span class="w"> </span><span class="kn">import</span> <span class="nc">Interpolator</span><span class="p">,</span> <span class="nc">LinearInterpolator</span><span class="p">,</span> <span class="nc">DP54DenseOutput</span><span class="p">,</span> <span class="nc">HermiteCubicInterpolator</span>
 
-<span class="nc">AVAILABLE_INTEGRATORS</span> <span class="o">=</span> <span class="nc">Literal</span><span class="p">[</span><span class="s1">&#39;rkf45&#39;</span><span class="p">,</span> <span class="s1">&#39;dp45&#39;</span><span class="p">,</span> <span class="s1">&#39;ck45&#39;</span><span class="p">,</span> <span class="s1">&#39;rkf78&#39;</span><span class="p">,</span> <span class="s1">&#39;dp853&#39;</span><span class="p">]</span>
+<span class="nc">AVAILABLE_INTEGRATORS</span> <span class="o">=</span> <span class="nc">Literal</span><span class="p">[</span><span class="s1">'rkf45'</span><span class="p">,</span> <span class="s1">'dp45'</span><span class="p">,</span> <span class="s1">'ck45'</span><span class="p">,</span> <span class="s1">'rkf78'</span><span class="p">,</span> <span class="s1">'dp853'</span><span class="p">]</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">IntegrationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Integrator</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">        Base class for ODE integrator.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">interpolator_class</span> <span class="o">=</span> <span class="nc">LinearInterpolator</span>
     
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="nc">Callable</span><span class="p">,</span> <span class="n">stopping_criterion</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="nc">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="kc">True</span><span class="p">):</span>
         
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;function&#39; must be a callable object.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"'function' must be a callable object."</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">stopping_criterion</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;stopping_criterion&#39; must be a callable object.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"'stopping_criterion' must be a callable object."</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">function</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stopping_criterion</span> <span class="o">=</span> <span class="n">stopping_criterion</span>
@@ -297,7 +297,7 @@
         <span class="n">k</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">h</span> <span class="o">=</span> <span class="n">initial_step</span>
         
-        <span class="n">exit</span> <span class="o">=</span> <span class="s2">&quot;failed&quot;</span>
+        <span class="n">exit</span> <span class="o">=</span> <span class="s2">"failed"</span>
         
         <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x_end</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="kp">stopping_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
             <span class="nb">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="kp">next_step</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">h</span><span class="p">,</span> <span class="n">x_end</span><span class="p">)</span>
@@ -309,7 +309,7 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="kp">stopping_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
                 <span class="n">exit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopping_criterion</span><span class="o">.</span><span class="n">exit</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">exit</span> <span class="o">=</span> <span class="s2">&quot;done&quot;</span>
+                <span class="n">exit</span> <span class="o">=</span> <span class="s2">"done"</span>
         
         <span class="nb">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="kp">next_step</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">h</span><span class="p">,</span> <span class="n">x_end</span><span class="p">)</span>
         <span class="n">k</span><span class="o">.</span><span class="kp">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="kp">f</span><span class="p">(</span><span class="nb">next</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">next</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span>
@@ -322,7 +322,7 @@
 <div class="viewcode-block" id="ExplicitAdaptiveRungeKuttaIntegrator">
 <a class="viewcode-back" href="../../integrators.html#pygro.integrators.ExplicitAdaptiveRungeKuttaIntegrator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ExplicitAdaptiveRungeKuttaIntegrator</span><span class="p">(</span><span class="nc">Integrator</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        Base class for explicit adaptive step-size integrators of the Runge-Kutta family.</span>
 <span class="sd">        </span>
 <span class="sd">        The local error is estimated as the difference between the two approximations at higher and lower order:</span>
@@ -333,7 +333,7 @@
 <span class="sd">        </span>
 <span class="sd">        where :math:`\| \cdot \|` typically represents a norm, such as the maximum norm or the Euclidean norm (the one we use).</span>
 <span class="sd">        </span>
-<span class="sd">        The step size is adapted based on a defined error tolerance, which ensures the solution&#39;s accuracy, computed as:</span>
+<span class="sd">        The step size is adapted based on a defined error tolerance, which ensures the solution's accuracy, computed as:</span>
 
 <span class="sd">        .. math::</span>
 <span class="sd">            \text{tol} = \text{tol}_\text{abs} + \text{tol}_\text{rel} \cdot \| y \|</span>
@@ -353,7 +353,7 @@
 <span class="sd">        :type hmin: float</span>
 <span class="sd">        :param max_iter: maxium namber of step-size adaptation attempts before rising an error. If this error is reached, try to use smaller ``accuracy_goal`` and/or ``precision_goal`` or to reduce the initial step size of the integration (``initial_step`` in the :py:meth:`~pygro.geodesic_engine.GeodesicEngine.integrate` method).</span>
 <span class="sd">        :type max_iter: int</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">interpolator_class</span> <span class="o">=</span> <span class="nc">HermiteCubicInterpolator</span>
     
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="nc">Callable</span><span class="p">,</span> <span class="n">stopping_criterion</span><span class="p">:</span> <span class="nc">Callable</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="bp">int</span><span class="p">,</span> <span class="n">stages</span><span class="p">:</span> <span class="bp">int</span><span class="p">,</span> <span class="n">accuracy_goal</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="bp">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">precision_goal</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="bp">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">safety_factor</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="bp">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="n">hmax</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="bp">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e+16</span><span class="p">,</span> <span class="n">hmin</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="bp">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-16</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">:</span> <span class="bp">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span>
@@ -361,19 +361,19 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">stopping_criterion</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="bp">int</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;order&#39; must be integer.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"'order' must be integer."</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stages</span><span class="p">,</span> <span class="bp">int</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;stages&#39; must be integer.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"'stages' must be integer."</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">accuracy_goal</span><span class="p">,</span> <span class="bp">int</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;accuracy_goal&#39; must be integer.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"'accuracy_goal' must be integer."</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">precision_goal</span><span class="p">,</span> <span class="bp">int</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;precision_goal&#39; must be integer.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"'precision_goal' must be integer."</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">safety_factor</span><span class="p">,</span> <span class="p">(</span><span class="bp">float</span><span class="p">,</span> <span class="bp">int</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;safety_factor&#39; must be a number.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"'safety_factor' must be a number."</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hmax</span><span class="p">,</span> <span class="p">(</span><span class="bp">float</span><span class="p">,</span> <span class="bp">int</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;hmax&#39; must be a number.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"'hmax' must be a number."</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">order</span> <span class="o">=</span> <span class="n">order</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stages</span> <span class="o">=</span> <span class="n">stages</span>
@@ -418,7 +418,7 @@
             <span class="k">if</span> <span class="n">err</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="c1"># Reject step and try smaller step-size</span>
                 <span class="k">if</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="nc">IntegrationError</span><span class="p">(</span><span class="s2">&quot;Reached maximum number of step iterations. Check initial step size, integration tolerances or check for the presence of horizons.&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="nc">IntegrationError</span><span class="p">(</span><span class="s2">"Reached maximum number of step iterations. Check initial step size, integration tolerances or check for the presence of horizons."</span><span class="p">)</span>
                 
                 <span class="k">if</span> <span class="n">h1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">h1</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hmax</span><span class="p">),</span> <span class="n">h1</span><span class="o">*</span><span class="nc">K</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hmin</span><span class="p">))</span>
@@ -604,7 +604,7 @@
 
         <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x_end</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="kp">stopping_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="kp">format</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">end</span><span class="o">=</span> <span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="si">{:.4f}</span><span class="s2">"</span><span class="o">.</span><span class="kp">format</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">end</span><span class="o">=</span> <span class="s2">"</span><span class="se">\r</span><span class="s2">"</span><span class="p">)</span>
             <span class="nb">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="kp">next_step</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">h</span><span class="p">,</span> <span class="n">twiddle1</span><span class="p">,</span> <span class="n">twiddle2</span><span class="p">,</span> <span class="n">quit1</span><span class="p">,</span> <span class="n">quit2</span><span class="p">)</span>
             <span class="n">x</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="nb">next</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">y</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="nb">next</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -617,7 +617,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="kp">stopping_criterion</span><span class="p">(</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
             <span class="n">exit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopping_criterion</span><span class="o">.</span><span class="n">exit</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">exit</span> <span class="o">=</span> <span class="s2">&quot;done&quot;</span>
+            <span class="n">exit</span> <span class="o">=</span> <span class="s2">"done"</span>
 
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="kp">array</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="kp">array</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">exit</span>
     
@@ -713,7 +713,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="nc">ERR</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">i</span><span class="p">))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">ERR</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="s2">&quot;__len__&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="s2">"__len__"</span><span class="p">):</span>
             <span class="n">v</span> <span class="o">=</span> <span class="n">y1</span><span class="o">-</span><span class="n">y2</span>
             <span class="n">w</span> <span class="o">=</span> <span class="n">v</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="nc">Atol</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="nc">Rtol</span><span class="o">*</span><span class="n">y1</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="kp">norm</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">i</span><span class="p">))</span>
@@ -722,15 +722,15 @@
             <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">v</span><span class="o">/</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="nc">Atol</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="nc">Rtol</span><span class="o">*</span><span class="n">y1</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">i</span><span class="p">))</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">get_integrator</span><span class="p">(</span><span class="n">integrator</span><span class="p">:</span> <span class="nc">AVAILABLE_INTEGRATORS</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nc">Integrator</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">integrator</span> <span class="o">==</span> <span class="s2">&quot;rkf45&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">integrator</span> <span class="o">==</span> <span class="s2">"rkf45"</span><span class="p">:</span>
         <span class="k">return</span> <span class="nc">RungeKuttaFehlberg45</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">integrator</span> <span class="o">==</span> <span class="s2">&quot;dp45&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">integrator</span> <span class="o">==</span> <span class="s2">"dp45"</span><span class="p">:</span>
         <span class="k">return</span> <span class="nc">DormandPrince45</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">integrator</span> <span class="o">==</span> <span class="s2">&quot;dp853&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">integrator</span> <span class="o">==</span> <span class="s2">"dp853"</span><span class="p">:</span>
         <span class="k">return</span> <span class="nc">DormandPrince853</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">integrator</span> <span class="o">==</span> <span class="s2">&quot;ck45&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">integrator</span> <span class="o">==</span> <span class="s2">"ck45"</span><span class="p">:</span>
         <span class="k">return</span> <span class="nc">CashKarp45</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">integrator</span> <span class="o">==</span> <span class="s2">&quot;rkf78&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">integrator</span> <span class="o">==</span> <span class="s2">"rkf78"</span><span class="p">:</span>
         <span class="k">return</span> <span class="nc">RungeKuttaFehlberg78</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     
 </pre></div>

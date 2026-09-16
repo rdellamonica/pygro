@@ -268,7 +268,7 @@
 <div class="viewcode-block" id="Interpolator">
 <a class="viewcode-back" href="../../interpolators.html#pygro.interpolators.Interpolator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Interpolator</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Base class for interpolation methods.</span>
 <span class="sd">    </span>
 <span class="sd">    :param x: Array of x values.</span>
@@ -277,24 +277,24 @@
 <span class="sd">    :type y: np.ndarray</span>
 <span class="sd">    :param k: List of derivative arrays.</span>
 <span class="sd">    :type k: list[np.ndarray]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="bp">list</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
         
     <span class="k">def</span><span class="w"> </span><span class="nf">_compute_interpolation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="bp">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Compute the interpolated value at a given x.</span>
 <span class="sd">        </span>
 <span class="sd">        :param x: Point at which to evaluate the interpolation.</span>
 <span class="sd">        :type x: float</span>
 <span class="sd">        :raises NotImplementedError: Must be implemented in subclasses.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
     
     <span class="k">def</span><span class="w"> </span><span class="nf">_interpolate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="bp">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Interpolate a value within the defined range.</span>
 <span class="sd">        </span>
 <span class="sd">        :param x: Point at which to interpolate.</span>
@@ -302,9 +302,9 @@
 <span class="sd">        :raises ValueError: If x is outside the integration range.</span>
 <span class="sd">        :return: Interpolated value.</span>
 <span class="sd">        :rtype: np.ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Provided value (</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">) is outside the integration range [</span><span class="si">{</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">].&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Provided value (</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">) is outside the integration range [</span><span class="si">{</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">]."</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -315,14 +315,14 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="kp">_compute_interpolation</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="bp">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">float</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Evaluate the interpolator at a given x.</span>
 <span class="sd">        </span>
 <span class="sd">        :param x: Point or array of points at which to evaluate.</span>
 <span class="sd">        :type x: float or Iterable</span>
 <span class="sd">        :return: Interpolated value(s).</span>
 <span class="sd">        :rtype: float | np.ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nc">Iterable</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="kp">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="kp">_interpolate</span><span class="p">(</span><span class="n">x_i</span><span class="p">)</span> <span class="k">for</span> <span class="n">x_i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="kp">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="kp">_interpolate</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span></div>
@@ -331,20 +331,20 @@
 <div class="viewcode-block" id="LinearInterpolator">
 <a class="viewcode-back" href="../../interpolators.html#pygro.interpolators.LinearInterpolator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">LinearInterpolator</span><span class="p">(</span><span class="nc">Interpolator</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Placeholder for a linear interpolation scheme. Currently not implemented.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="HermiteCubicInterpolator">
 <a class="viewcode-back" href="../../interpolators.html#pygro.interpolators.HermiteCubicInterpolator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HermiteCubicInterpolator</span><span class="p">(</span><span class="nc">Interpolator</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Implements Hermite cubic interpolation.</span>
 <span class="sd">    </span>
 <span class="sd">    This method ensures smooth interpolation by using derivative information.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_compute_interpolation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">searchsorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
         
@@ -364,9 +364,9 @@
 <div class="viewcode-block" id="DP54DenseOutput">
 <a class="viewcode-back" href="../../interpolators.html#pygro.interpolators.DP54DenseOutput">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DP54DenseOutput</span><span class="p">(</span><span class="nc">Interpolator</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Dense output interpolator for the Dormand-Prince 5(4) method.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">array</span><span class="p">([</span><span class="mi">35</span><span class="o">/</span><span class="mi">384</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="o">/</span><span class="mi">1113</span><span class="p">,</span> <span class="mi">125</span><span class="o">/</span><span class="mi">192</span><span class="p">,</span> <span class="o">-</span><span class="mi">2187</span><span class="o">/</span><span class="mi">6784</span><span class="p">,</span> <span class="mi">11</span><span class="o">/</span><span class="mi">84</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
         
     <span class="k">def</span><span class="w"> </span><span class="nf">_compute_interpolation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>

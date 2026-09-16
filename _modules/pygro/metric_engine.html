@@ -280,7 +280,7 @@
 <div class="viewcode-block" id="Metric">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Metric</span><span class="p">():</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;This is the main symbolic tool within PyGRO to perform tensorial calculations</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""This is the main symbolic tool within PyGRO to perform tensorial calculations</span>
 <span class="sd">    starting from the space-time metric. PyGRO uses the signature convention :math:`(-,\,+,\,+,\,+)`.</span>
 <span class="sd">    </span>
 <span class="sd">    After successful initialization (:py:func:`Metric.__init__`), the :py:class:`.Metric` instance has the following attributes:</span>
@@ -303,7 +303,7 @@
 <span class="sd">    :vartype u[i]_timelike: sympy.Basic</span>
 <span class="sd">    :ivar transform_functions: The expressions transform functions to pseudo-cartesian coordinates that can be either passed as arguments of the :py:class:`Metric` constructor or set with the :py:func:`Metric.set_coordinate_transformation` method.</span>
 <span class="sd">    :vartype transform_functions: list[sympy.Basic]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">instances</span> <span class="o">=</span> <span class="p">[]</span>
     
 <div class="viewcode-block" id="Metric.__init__">
@@ -317,7 +317,7 @@
         <span class="n">load</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="bp">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">params</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">            To instantiate a new ``Metric`` object call</span>
 <span class="sd">            </span>
 <span class="sd">            &gt;&gt;&gt; spacetime_metric = pygro.Metric(name, coordinates, line_element)</span>
@@ -340,7 +340,7 @@
 <span class="sd">            :type transform: list[str]</span>
 <span class="sd">            </span>
 <span class="sd">            see :doc:`create_metric` for a detailed documentation on how to correctly define a space-time metric.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_initialized_metric</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_geodesic_engine_linked</span> <span class="o">=</span> <span class="kc">False</span>
@@ -360,29 +360,29 @@
         <span class="n">line_element</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="bp">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tensor</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="n">sp</span><span class="o">.</span><span class="nc">Basic</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">transform_functions</span><span class="p">:</span> <span class="nc">Optional</span><span class="p">[</span><span class="bp">list</span><span class="p">[</span><span class="bp">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the `Metric`. </span>
+<span class="w">        </span><span class="sd">"""Initializes the `Metric`. </span>
 
 <span class="sd">        :param \**kwargs:</span>
 <span class="sd">            Required parameters are ``name``, ``coordinates`` and one between ``line_element`` or ``tensor``,</span>
 <span class="sd">            but additional parameters can and *must* be passed on occasions (see :doc:`create_metric` to see examples). </span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         
         <span class="k">if</span> <span class="p">(</span><span class="n">line_element</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">tensor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;initialize_metric needs at least &quot;name&quot;, &quot;coordinates&quot;, and one between &quot;line_element&quot; and &quot;tensors&quot; as arguments.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'initialize_metric needs at least "name", "coordinates", and one between "line_element" and "tensors" as arguments.'</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">line_element</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">line_element</span><span class="p">,</span> <span class="bp">str</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;line_element must be a string&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"line_element must be a string"</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">tensor</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="nc">Matrix</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;tensor must be a sympy.Matrix&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"tensor must be a sympy.Matrix"</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;name&#39; must be a string.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"'name' must be a string."</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">coordinate</span><span class="p">,</span> <span class="bp">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">coordinate</span> <span class="ow">in</span> <span class="n">coordinates</span><span class="p">]):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;coordinates&#39; must be a list of strings.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"'coordinates' must be a list of strings."</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">coordinates</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;coordinates&#39; must have dimension 4.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"'coordinates' must have dimension 4."</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dx</span> <span class="o">=</span> <span class="p">[]</span>
@@ -392,16 +392,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="n">coordinates_input</span> <span class="o">=</span> <span class="n">coordinates</span>
         
-        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initializing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Initializing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
         
         <span class="k">for</span> <span class="n">coordinate</span> <span class="ow">in</span> <span class="n">coordinates_input</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">symbols</span><span class="p">(</span><span class="n">coordinate</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">x_str</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">coordinate</span><span class="p">)</span>
 
-            <span class="n">velocity</span> <span class="o">=</span> <span class="s2">&quot;u_&quot;</span> <span class="o">+</span> <span class="n">coordinate</span>
+            <span class="n">velocity</span> <span class="o">=</span> <span class="s2">"u_"</span> <span class="o">+</span> <span class="n">coordinate</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">symbols</span><span class="p">(</span><span class="n">velocity</span><span class="p">))</span>
 
-            <span class="n">differential</span> <span class="o">=</span> <span class="s2">&quot;d&quot;</span> <span class="o">+</span> <span class="n">coordinate</span>
+            <span class="n">differential</span> <span class="o">=</span> <span class="s2">"d"</span> <span class="o">+</span> <span class="n">coordinate</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">symbols</span><span class="p">(</span><span class="n">differential</span><span class="p">))</span>
         
         <span class="k">if</span> <span class="n">line_element</span><span class="p">:</span>
@@ -412,7 +412,7 @@
                 <span class="n">ds2_str</span> <span class="o">=</span> <span class="n">line_element</span>
                 <span class="n">ds2_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">expand</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">ds2_str</span><span class="p">))</span>
             <span class="k">except</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Please insert a valid expression for the line element.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Please insert a valid expression for the line element."</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dx1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">):</span>
                     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">dx2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">):</span>
@@ -427,9 +427,9 @@
                     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">g_str</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Please insert a valid expression for the metric tensor.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Please insert a valid expression for the metric tensor."</span><span class="p">)</span>
                 
-        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">&quot;Calculating inverse metric.&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">"Calculating inverse metric."</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">g_inv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="kp">inv</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">g_inv_str</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">zeros</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="n">dtype</span> <span class="o">=</span> <span class="bp">object</span><span class="p">)</span>
         
@@ -437,7 +437,7 @@
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">g_inv_str</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g_inv</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
         
-        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">&quot;Calculating symbolic equations of motion.&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">"Calculating symbolic equations of motion."</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eq_u</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eq_u_str</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="bp">object</span><span class="p">)</span>
 
@@ -455,7 +455,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">eq_x</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="n">rho</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">eq_x_str</span><span class="p">[</span><span class="n">rho</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">[</span><span class="n">rho</span><span class="p">])</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">&quot;Computing helper functions to normalize 4-velocity.&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">"Computing helper functions to normalize 4-velocity."</span><span class="p">)</span>
 
         <span class="n">eq</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -490,7 +490,7 @@
                 <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">)</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="kp">set_constant</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">):</span> <span class="n">params</span><span class="o">.</span><span class="kp">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))})</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Insert value for </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">)</span><span class="si">}</span><span class="s2">: &quot;</span><span class="p">))</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Insert value for </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">)</span><span class="si">}</span><span class="s2">: "</span><span class="p">))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="kp">set_constant</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">):</span> <span class="n">value</span><span class="p">})</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">free_func</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -498,46 +498,46 @@
                 <span class="bp">self</span><span class="o">.</span><span class="kp">add_parameter</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">))</span>
                 
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">func</span><span class="p">)</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Auxiliary functions shoudld be passed as arguments, either as strings (expression mode) or as python methods (functional mode).&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Auxiliary functions shoudld be passed as arguments, either as strings (expression mode) or as python methods (functional mode)."</span><span class="p">)</span>
                 
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">func</span><span class="p">)],</span> <span class="bp">str</span><span class="p">):</span>
-                    <span class="n">kind</span> <span class="o">=</span> <span class="s2">&quot;expr&quot;</span>
+                    <span class="n">kind</span> <span class="o">=</span> <span class="s2">"expr"</span>
                 <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">func</span><span class="p">)]):</span>
-                    <span class="n">kind</span> <span class="o">=</span> <span class="s2">&quot;py&quot;</span>
+                    <span class="n">kind</span> <span class="o">=</span> <span class="s2">"py"</span>
 
-                <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;expr&quot;</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;expression&quot;</span>
+                <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">"expr"</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)][</span><span class="s1">'kind'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"expression"</span>
                     <span class="n">expr_str</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">func</span><span class="p">)]</span>
 
                     <span class="n">expr_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">expand</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">expr_str</span><span class="p">))</span>
 
-                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">expr_sym</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)][</span><span class="s1">'value'</span><span class="p">]</span> <span class="o">=</span> <span class="n">expr_sym</span>
 
-                    <span class="n">expr_free_sym</span> <span class="o">=</span> <span class="n">expr_sym</span><span class="o">.</span><span class="n">free_symbols</span><span class="o">-</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">][</span><span class="s2">&quot;symbolic&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">])</span><span class="o">-</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+                    <span class="n">expr_free_sym</span> <span class="o">=</span> <span class="n">expr_sym</span><span class="o">.</span><span class="n">free_symbols</span><span class="o">-</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">][</span><span class="s2">"symbolic"</span><span class="p">]</span> <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">])</span><span class="o">-</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
 
                     <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="n">expr_free_sym</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="kp">add_parameter</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))</span>
                         <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">)</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
                             <span class="bp">self</span><span class="o">.</span><span class="kp">set_constant</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">):</span> <span class="n">params</span><span class="o">.</span><span class="kp">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))})</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Insert value for </span><span class="si">{}</span><span class="s2">: &quot;</span><span class="o">.</span><span class="kp">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))))</span>
+                            <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">"Insert value for </span><span class="si">{}</span><span class="s2">: "</span><span class="o">.</span><span class="kp">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))))</span>
                             <span class="bp">self</span><span class="o">.</span><span class="kp">set_constant</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">):</span> <span class="n">value</span><span class="p">})</span>
 
                     <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">args</span><span class="p">):</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)][</span><span class="sa">f</span><span class="s2">&quot;d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">expr_sym</span><span class="o">.</span><span class="kp">diff</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)][</span><span class="sa">f</span><span class="s2">"d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">]</span> <span class="o">=</span> <span class="n">expr_sym</span><span class="o">.</span><span class="kp">diff</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
 
-                <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;py&quot;</span><span class="p">:</span>
+                <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">"py"</span><span class="p">:</span>
 
-                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;pyfunc&quot;</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)][</span><span class="s1">'kind'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"pyfunc"</span>
                     
                     <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
-                    <span class="n">derlist</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]</span>
+                    <span class="n">derlist</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]</span>
 
                     <span class="n">arg_derlist</span> <span class="o">=</span> <span class="p">{}</span>
 
                     <span class="k">for</span> <span class="n">der</span> <span class="ow">in</span> <span class="n">derlist</span><span class="p">:</span>
                         <span class="k">if</span> <span class="ow">not</span> <span class="n">der</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
-                            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Functional derivatives of auxiliary functions are required as extra-arguments. In this case &#39;</span><span class="si">{</span><span class="n">der</span><span class="si">}</span><span class="s2">&#39; is missing.&quot;</span><span class="p">)</span>
+                            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Functional derivatives of auxiliary functions are required as extra-arguments. In this case '</span><span class="si">{</span><span class="n">der</span><span class="si">}</span><span class="s2">' is missing."</span><span class="p">)</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="n">arg_derlist</span><span class="p">[</span><span class="n">der</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">der</span><span class="p">]</span>
 
@@ -546,82 +546,82 @@
         <span class="k">if</span> <span class="n">transform_functions</span><span class="p">:</span>
             <span class="n">transform</span> <span class="o">=</span> <span class="n">transform_functions</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">transform</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;&quot;transform&quot; should be a 4-dimensional list of strings&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'"transform" should be a 4-dimensional list of strings'</span><span class="p">)</span>
             
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">"t"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">,</span> <span class="s2">"z"</span><span class="p">]):</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">x_inpt</span> <span class="o">=</span> <span class="n">transform</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                     <span class="n">x_symb</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">x_inpt</span><span class="p">)</span>
                 <span class="k">except</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Insert a valid expression for transform function </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Insert a valid expression for transform function </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">transform_s</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">x_symb</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions_str</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">x_inpt</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">lambdify</span><span class="p">([</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_symb</span><span class="p">()],</span> <span class="n">x_symb</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">lambdify</span><span class="p">([</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_symb</span><span class="p">()],</span> <span class="n">x_symb</span><span class="p">,</span> <span class="s1">'numpy'</span><span class="p">))</span>
                     
         <span class="bp">self</span><span class="o">.</span><span class="n">_g_ff</span> <span class="o">=</span> <span class="kp">lambdify</span><span class="p">([</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_symb</span><span class="p">()],</span> <span class="bp">self</span><span class="o">.</span><span class="kp">subs_functions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">))</span>
         
-        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The Metric (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">) has been initialized.&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The Metric (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">) has been initialized."</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Metric.save_metric">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.save_metric">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">save_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Saves the metric into a *.metric* file which can later be loaded with the :py:func:`Metric.load_metric` method.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Saves the metric into a *.metric* file which can later be loaded with the :py:func:`Metric.load_metric` method.</span>
 
 <span class="sd">        :param filename: The name of the *.metric* file in which to save the metric.</span>
 <span class="sd">        :type filename: str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">"w+"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
                 <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
                 
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_str</span><span class="o">.</span><span class="kp">tolist</span><span class="p">()</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_str</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;g_inv&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_inv_str</span><span class="o">.</span><span class="kp">tolist</span><span class="p">()</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;eq_x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eq_x_str</span><span class="o">.</span><span class="kp">tolist</span><span class="p">()</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;eq_u&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eq_u_str</span><span class="o">.</span><span class="kp">tolist</span><span class="p">()</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;u0_timelike&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u0_s_timelike</span><span class="p">)</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;u1_timelike&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u1_s_timelike</span><span class="p">)</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;u2_timelike&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u2_s_timelike</span><span class="p">)</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;u3_timelike&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u3_s_timelike</span><span class="p">)</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;u0_null&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u0_s_null</span><span class="p">)</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;u1_null&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u1_s_null</span><span class="p">)</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;u2_null&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u2_s_null</span><span class="p">)</span>
-                <span class="n">output</span><span class="p">[</span><span class="s1">&#39;u3_null&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u3_s_null</span><span class="p">)</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'g'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_str</span><span class="o">.</span><span class="kp">tolist</span><span class="p">()</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_str</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'g_inv'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_inv_str</span><span class="o">.</span><span class="kp">tolist</span><span class="p">()</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'eq_x'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eq_x_str</span><span class="o">.</span><span class="kp">tolist</span><span class="p">()</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'eq_u'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eq_u_str</span><span class="o">.</span><span class="kp">tolist</span><span class="p">()</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'u0_timelike'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u0_s_timelike</span><span class="p">)</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'u1_timelike'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u1_s_timelike</span><span class="p">)</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'u2_timelike'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u2_s_timelike</span><span class="p">)</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'u3_timelike'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u3_s_timelike</span><span class="p">)</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'u0_null'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u0_s_null</span><span class="p">)</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'u1_null'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u1_s_null</span><span class="p">)</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'u2_null'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u2_s_null</span><span class="p">)</span>
+                <span class="n">output</span><span class="p">[</span><span class="s1">'u3_null'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u3_s_null</span><span class="p">)</span>
 
-                <span class="n">output</span><span class="p">[</span><span class="s2">&quot;expressions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">output</span><span class="p">[</span><span class="s2">"expressions"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
                 <span class="n">expressions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_expressions</span><span class="p">()</span>
 
                 <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">expressions</span><span class="p">:</span>
-                    <span class="n">output</span><span class="p">[</span><span class="s2">&quot;expressions&quot;</span><span class="p">]</span><span class="o">.</span><span class="kp">append</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">expressions</span><span class="p">[</span><span class="n">f</span><span class="p">][</span><span class="s1">&#39;symbol&#39;</span><span class="p">],</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">expressions</span><span class="p">[</span><span class="n">f</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">])})</span>
+                    <span class="n">output</span><span class="p">[</span><span class="s2">"expressions"</span><span class="p">]</span><span class="o">.</span><span class="kp">append</span><span class="p">({</span><span class="s1">'name'</span><span class="p">:</span> <span class="n">expressions</span><span class="p">[</span><span class="n">f</span><span class="p">][</span><span class="s1">'symbol'</span><span class="p">],</span> <span class="s1">'value'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">expressions</span><span class="p">[</span><span class="n">f</span><span class="p">][</span><span class="s1">'value'</span><span class="p">])})</span>
                 
-                <span class="n">output</span><span class="p">[</span><span class="s2">&quot;functions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">output</span><span class="p">[</span><span class="s2">"functions"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
                 <span class="n">functions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_functions</span><span class="p">()</span>
 
                 <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">functions</span><span class="p">:</span>
-                    <span class="n">output</span><span class="p">[</span><span class="s2">&quot;functions&quot;</span><span class="p">]</span><span class="o">.</span><span class="kp">append</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">functions</span><span class="p">[</span><span class="n">f</span><span class="p">][</span><span class="s1">&#39;symbol&#39;</span><span class="p">]})</span>
+                    <span class="n">output</span><span class="p">[</span><span class="s2">"functions"</span><span class="p">]</span><span class="o">.</span><span class="kp">append</span><span class="p">({</span><span class="s1">'name'</span><span class="p">:</span> <span class="n">functions</span><span class="p">[</span><span class="n">f</span><span class="p">][</span><span class="s1">'symbol'</span><span class="p">]})</span>
                 
                 <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span><span class="p">):</span>
-                    <span class="n">output</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions_str</span>
+                    <span class="n">output</span><span class="p">[</span><span class="s1">'transform'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions_str</span>
                 
                 <span class="n">json</span><span class="o">.</span><span class="kp">dump</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">&quot;Initialize or load a metric before saving.&quot;</span><span class="p">)</span></div>
+            <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">"Initialize or load a metric before saving."</span><span class="p">)</span></div>
 
     
 <div class="viewcode-block" id="Metric.load_metric">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.load_metric">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Loads the metric from a *.metric* file which has been saved through the :py:func:`Metric.save_metric` method.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Loads the metric from a *.metric* file which has been saved through the :py:func:`Metric.save_metric` method.</span>
 
 <span class="sd">        :param filename: The name of the *.metric* file from which to load the metric.</span>
 <span class="sd">        :type filename: str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span>
 
         <span class="n">load</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="kp">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
@@ -634,15 +634,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">json</span> <span class="o">=</span> <span class="n">metric_json</span>
         <span class="n">load</span> <span class="o">=</span> <span class="n">metric_json</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;expressions&quot;</span> <span class="ow">in</span> <span class="n">load</span><span class="p">:</span>
-            <span class="n">load</span><span class="p">[</span><span class="s2">&quot;expressions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">"expressions"</span> <span class="ow">in</span> <span class="n">load</span><span class="p">:</span>
+            <span class="n">load</span><span class="p">[</span><span class="s2">"expressions"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         
-        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;functions&quot;</span> <span class="ow">in</span> <span class="n">load</span><span class="p">:</span>
-            <span class="n">load</span><span class="p">[</span><span class="s2">&quot;functions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">"functions"</span> <span class="ow">in</span> <span class="n">load</span><span class="p">:</span>
+            <span class="n">load</span><span class="p">[</span><span class="s2">"functions"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">&quot;Loading </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="kp">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">"Loading </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="kp">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dx</span> <span class="o">=</span> <span class="p">[]</span>
@@ -651,14 +651,14 @@
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 
-            <span class="n">coordinate</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">coordinate</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">'x'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">symbols</span><span class="p">(</span><span class="n">coordinate</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">x_str</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">coordinate</span><span class="p">)</span>
 
-            <span class="n">velocity</span> <span class="o">=</span> <span class="s2">&quot;u_&quot;</span> <span class="o">+</span> <span class="n">coordinate</span>
+            <span class="n">velocity</span> <span class="o">=</span> <span class="s2">"u_"</span> <span class="o">+</span> <span class="n">coordinate</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">symbols</span><span class="p">(</span><span class="n">velocity</span><span class="p">))</span>
 
-            <span class="n">differential</span> <span class="o">=</span> <span class="s2">&quot;d&quot;</span> <span class="o">+</span> <span class="n">coordinate</span>
+            <span class="n">differential</span> <span class="o">=</span> <span class="s2">"d"</span> <span class="o">+</span> <span class="n">coordinate</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">symbols</span><span class="p">(</span><span class="n">differential</span><span class="p">))</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
@@ -674,27 +674,27 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
 
-                <span class="n">component</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">component</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">'g'</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">g_str</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">component</span>
-                <span class="n">component</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">&#39;g_inv&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">component</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">'g_inv'</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">g_inv</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">g_inv_str</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">component</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">eq_u</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">&#39;eq_u&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">eq_x</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">&#39;eq_x&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">eq_u_str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">&#39;eq_u&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">eq_x_str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">&#39;eq_x&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eq_u</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">'eq_u'</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eq_x</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">'eq_x'</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eq_u_str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">'eq_u'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">eq_x_str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">'eq_x'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">u0_s_null</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">&#39;u0_null&#39;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">u1_s_null</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">&#39;u1_null&#39;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">u2_s_null</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">&#39;u2_null&#39;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">u3_s_null</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">&#39;u3_null&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u0_s_null</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">'u0_null'</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u1_s_null</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">'u1_null'</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u2_s_null</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">'u2_null'</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u3_s_null</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">'u3_null'</span><span class="p">])</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">u0_s_timelike</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">&#39;u0_timelike&#39;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">u1_s_timelike</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">&#39;u1_timelike&#39;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">u2_s_timelike</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">&#39;u2_timelike&#39;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">u3_s_timelike</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">&#39;u3_timelike&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u0_s_timelike</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">'u0_timelike'</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u1_s_timelike</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">'u1_timelike'</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u2_s_timelike</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">'u2_timelike'</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u3_s_timelike</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">load</span><span class="p">[</span><span class="s1">'u3_timelike'</span><span class="p">])</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span> <span class="o">=</span> <span class="p">[]</span>
@@ -710,158 +710,158 @@
                 <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">)</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="kp">set_constant</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">):</span> <span class="n">params</span><span class="o">.</span><span class="kp">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))})</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Insert value for </span><span class="si">{}</span><span class="s2">: &quot;</span><span class="o">.</span><span class="kp">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))))</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">"Insert value for </span><span class="si">{}</span><span class="s2">: "</span><span class="o">.</span><span class="kp">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="kp">set_constant</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">):</span> <span class="n">value</span><span class="p">})</span>
         
-        <span class="k">for</span> <span class="n">expression</span> <span class="ow">in</span> <span class="n">load</span><span class="p">[</span><span class="s2">&quot;expressions&quot;</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="kp">add_parameter</span><span class="p">(</span><span class="n">expression</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">expression</span> <span class="ow">in</span> <span class="n">load</span><span class="p">[</span><span class="s2">"expressions"</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="kp">add_parameter</span><span class="p">(</span><span class="n">expression</span><span class="p">[</span><span class="s1">'name'</span><span class="p">])</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">expression</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;expression&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">expression</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]][</span><span class="s1">'kind'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"expression"</span>
 
-            <span class="n">func_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">expression</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+            <span class="n">func_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">expression</span><span class="p">[</span><span class="s1">'name'</span><span class="p">])</span>
 
-            <span class="n">expr_str</span> <span class="o">=</span> <span class="n">expression</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+            <span class="n">expr_str</span> <span class="o">=</span> <span class="n">expression</span><span class="p">[</span><span class="s1">'value'</span><span class="p">]</span>
             <span class="n">expr_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">expand</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">expr_str</span><span class="p">))</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">expression</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">expr_sym</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">expression</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]][</span><span class="s1">'value'</span><span class="p">]</span> <span class="o">=</span> <span class="n">expr_sym</span>
 
-            <span class="n">expr_free_sym</span> <span class="o">=</span> <span class="n">expr_sym</span><span class="o">.</span><span class="n">free_symbols</span><span class="o">-</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">][</span><span class="s2">&quot;symbolic&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">])</span><span class="o">-</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">expr_free_sym</span> <span class="o">=</span> <span class="n">expr_sym</span><span class="o">.</span><span class="n">free_symbols</span><span class="o">-</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">][</span><span class="s2">"symbolic"</span><span class="p">]</span> <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">])</span><span class="o">-</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
 
             <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="n">expr_free_sym</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="kp">add_parameter</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))</span>
                 <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">)</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="kp">set_constant</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">):</span> <span class="n">params</span><span class="o">.</span><span class="kp">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))})</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Insert value for </span><span class="si">{}</span><span class="s2">: &quot;</span><span class="o">.</span><span class="kp">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))))</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">"Insert value for </span><span class="si">{}</span><span class="s2">: "</span><span class="o">.</span><span class="kp">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="kp">set_constant</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">):</span> <span class="n">value</span><span class="p">})</span>
 
             <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">func_sym</span><span class="o">.</span><span class="n">args</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">expression</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]][</span><span class="sa">f</span><span class="s2">&quot;d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">func_sym</span><span class="o">.</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">expr_sym</span><span class="o">.</span><span class="kp">diff</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">expression</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]][</span><span class="sa">f</span><span class="s2">"d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">func_sym</span><span class="o">.</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">]</span> <span class="o">=</span> <span class="n">expr_sym</span><span class="o">.</span><span class="kp">diff</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">function</span> <span class="ow">in</span> <span class="n">load</span><span class="p">[</span><span class="s2">&quot;functions&quot;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">function</span> <span class="ow">in</span> <span class="n">load</span><span class="p">[</span><span class="s2">"functions"</span><span class="p">]:</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="kp">add_parameter</span><span class="p">(</span><span class="n">function</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">function</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;pyfunc&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="kp">add_parameter</span><span class="p">(</span><span class="n">function</span><span class="p">[</span><span class="s1">'name'</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">function</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]][</span><span class="s1">'kind'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"pyfunc"</span>
 
-            <span class="n">func_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">function</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+            <span class="n">func_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">function</span><span class="p">[</span><span class="s1">'name'</span><span class="p">])</span>
 
             <span class="n">func</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">func_sym</span><span class="o">.</span><span class="n">func</span><span class="p">)</span>
             <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">func_sym</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">function</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">function</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]][</span><span class="s1">'value'</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="kp">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Remember to set the Python function for </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="kp">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Remember to set the Python function for </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
             
             <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-                <span class="n">dername</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;d</span><span class="si">{</span><span class="n">func</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">dername</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"d</span><span class="si">{</span><span class="n">func</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
 
                 <span class="k">if</span> <span class="n">dername</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">function</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]][</span><span class="n">dername</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">dername</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">function</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]][</span><span class="n">dername</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">dername</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="kp">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Remember to set the Python function for </span><span class="si">{</span><span class="n">dername</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="kp">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Remember to set the Python function for </span><span class="si">{</span><span class="n">dername</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_initialized_metric</span> <span class="o">=</span> <span class="kc">True</span>
         
-        <span class="k">if</span> <span class="s2">&quot;transform&quot;</span> <span class="ow">in</span> <span class="n">load</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">"transform"</span> <span class="ow">in</span> <span class="n">load</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-                <span class="n">transf</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">transf</span> <span class="o">=</span> <span class="n">load</span><span class="p">[</span><span class="s1">'transform'</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
                 <span class="n">transform_function</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">transf</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">transform_s</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">transform_function</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">lambdify</span><span class="p">([</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_symb</span><span class="p">()],</span> <span class="n">transform_function</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">lambdify</span><span class="p">([</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_symb</span><span class="p">()],</span> <span class="n">transform_function</span><span class="p">,</span> <span class="s1">'numpy'</span><span class="p">))</span>
 
                 
         <span class="bp">self</span><span class="o">.</span><span class="n">_g_ff</span> <span class="o">=</span> <span class="kp">lambdify</span><span class="p">([</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_symb</span><span class="p">()],</span> <span class="bp">self</span><span class="o">.</span><span class="kp">subs_functions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">))</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The Metric (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">) has been initialized.&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The Metric (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">) has been initialized."</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Metric.add_parameter">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.add_parameter">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">:</span> <span class="bp">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="bp">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Manually adds a constant parameter to the `Metric` object. The value of this parameter must be specified</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Manually adds a constant parameter to the `Metric` object. The value of this parameter must be specified</span>
 <span class="sd">        </span>
 <span class="sd">        :param symbol: The symbolic name of the parameter.</span>
 <span class="sd">        :type symbol: str</span>
 <span class="sd">        :param value: The value of the parameter.</span>
 <span class="sd">        :type value: float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">symbol</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="s1">&#39;symbolic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="s1">'symbol'</span><span class="p">]</span> <span class="o">=</span> <span class="n">symbol</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="s1">'symbolic'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="s1">'value'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
             <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;constant&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="s1">'kind'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"constant"</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">symbol</span><span class="p">][</span><span class="s1">'kind'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="kp">error</span><span class="p">(</span><span class="s2">&quot;Initialize or load a metric before adding parameters.&quot;</span><span class="p">)</span></div>
+            <span class="n">logging</span><span class="o">.</span><span class="kp">error</span><span class="p">(</span><span class="s2">"Initialize or load a metric before adding parameters."</span><span class="p">)</span></div>
 
     
 <div class="viewcode-block" id="Metric.set_constant">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.set_constant">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_constant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Sets the value of a given parameter in the `Metric`. Useful to change the value of an existing paramter.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Sets the value of a given parameter in the `Metric`. Useful to change the value of an existing paramter.</span>
 <span class="sd">        The parameter and its value to be set should be passed as a keyword argument to the `set_constant` function.</span>
 <span class="sd">        </span>
 <span class="sd">        :Example:</span>
 <span class="sd">        &gt;&gt;&gt; metric.set_constant(M = 1)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">param</span><span class="p">]</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;constant&quot;</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">'value'</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">param</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">'kind'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"constant"</span>
                 <span class="k">except</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="kp">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No parameter named &#39;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39; in the Metric.&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="kp">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No parameter named '</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)</span><span class="si">}</span><span class="s2">' in the Metric."</span><span class="p">)</span>
                     <span class="k">break</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="kp">error</span><span class="p">(</span><span class="s2">&quot;Initialize or load a metric before adding parameters.&quot;</span><span class="p">)</span></div>
+            <span class="n">logging</span><span class="o">.</span><span class="kp">error</span><span class="p">(</span><span class="s2">"Initialize or load a metric before adding parameters."</span><span class="p">)</span></div>
 
     
 <div class="viewcode-block" id="Metric.set_expression_to_parameter">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.set_expression_to_parameter">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_expression_to_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">expr_str</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Selects the ``param`` element from the ``metric.parameters`` dictionary, sets its kind to ``&quot;expr&quot;`` and assignes to it a value which is the sybolic parsed</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Selects the ``param`` element from the ``metric.parameters`` dictionary, sets its kind to ``"expr"`` and assignes to it a value which is the sybolic parsed</span>
 <span class="sd">        expression in the `expr_str` argument.</span>
 <span class="sd">        </span>
 <span class="sd">        :param param: The symbolic name of the parameter to modify.</span>
 <span class="sd">        :type param: str</span>
 <span class="sd">        :param expr_str: The symbolic expresison to assign to this parameter.</span>
 <span class="sd">        :type expr_str: str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">expr_str</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;expression&quot;</span>
-                <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">&#39;symbolic&#39;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">'value'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">expr_str</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">'kind'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"expression"</span>
+                <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">'symbolic'</span><span class="p">]</span>
 
                 <span class="n">expr_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">expand</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">expr_str</span><span class="p">))</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">expr_sym</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">'value'</span><span class="p">]</span> <span class="o">=</span> <span class="n">expr_sym</span>
 
-                <span class="n">expr_free_sym</span> <span class="o">=</span> <span class="n">expr_sym</span><span class="o">.</span><span class="n">free_symbols</span><span class="o">-</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">][</span><span class="s2">&quot;symbolic&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">])</span><span class="o">-</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+                <span class="n">expr_free_sym</span> <span class="o">=</span> <span class="n">expr_sym</span><span class="o">.</span><span class="n">free_symbols</span><span class="o">-</span><span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameter</span><span class="p">][</span><span class="s2">"symbolic"</span><span class="p">]</span> <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">])</span><span class="o">-</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
 
                 <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="n">expr_free_sym</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="kp">add_parameter</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))</span>
-                    <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Insert value for </span><span class="si">{}</span><span class="s2">: &quot;</span><span class="o">.</span><span class="kp">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))))</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">"Insert value for </span><span class="si">{}</span><span class="s2">: "</span><span class="o">.</span><span class="kp">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">))))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="kp">set_constant</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">sym</span><span class="p">):</span> <span class="n">value</span><span class="p">})</span>
 
 
                 <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">args</span><span class="p">):</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="sa">f</span><span class="s2">&quot;d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">expr_sym</span><span class="o">.</span><span class="kp">diff</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="sa">f</span><span class="s2">"d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">func</span><span class="p">)</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">]</span> <span class="o">=</span> <span class="n">expr_sym</span><span class="o">.</span><span class="kp">diff</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
 
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No parameter named &#39;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39; in the Metric.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No parameter named '</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)</span><span class="si">}</span><span class="s2">' in the Metric."</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="kp">warning</span><span class="p">(</span><span class="s2">&quot;Initialize or load a metric before adding parameters.&quot;</span><span class="p">)</span></div>
+            <span class="n">logging</span><span class="o">.</span><span class="kp">warning</span><span class="p">(</span><span class="s2">"Initialize or load a metric before adding parameters."</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="Metric.set_function_to_parameter">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.set_function_to_parameter">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_function_to_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">:</span> <span class="bp">str</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="nc">Callable</span><span class="p">,</span> <span class="o">**</span><span class="n">derivatives</span><span class="p">:</span> <span class="bp">list</span><span class="p">[</span><span class="nc">Callable</span><span class="p">]):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Selects the ``param`` element from the ``metric.parameters`` dictionary, sets its kind to ``&quot;py&quot;`` and assignes as its value the ``function`` method that is passed as argument. </span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""Selects the ``param`` element from the ``metric.parameters`` dictionary, sets its kind to ``"py"`` and assignes as its value the ``function`` method that is passed as argument. </span>
 
 <span class="sd">        .. note::</span>
 <span class="sd">            The ``function`` argument **must** be a method which admits four floats and returns a single float as results.</span>
@@ -873,14 +873,14 @@
 <span class="sd">        </span>
 <span class="sd">        .. code-block::</span>
 
-<span class="sd">            line_element = &quot;-A(r)*dt**2+1/A(r)*dr**2+(r**2)*(dtheta**2+sin(theta)**2*dphi**2)&quot;</span>
+<span class="sd">            line_element = "-A(r)*dt**2+1/A(r)*dr**2+(r**2)*(dtheta**2+sin(theta)**2*dphi**2)"</span>
 <span class="sd">            </span>
 <span class="sd">            def A(t, r, theta, phi):</span>
-<span class="sd">                M = metric.get_constant(&quot;M&quot;)</span>
+<span class="sd">                M = metric.get_constant("M")</span>
 <span class="sd">                return 1-2*M/r</span>
 
 <span class="sd">            def dAdr(t, r, theta, phi):</span>
-<span class="sd">                M = metric.get_constant(&quot;M&quot;)</span>
+<span class="sd">                M = metric.get_constant("M")</span>
 <span class="sd">                return 2*M/r**2</span>
 <span class="sd">                </span>
 <span class="sd">            metric = pygro.Metric(..., A = A, dAdr = dAdr)</span>
@@ -892,90 +892,90 @@
 <span class="sd">        :type function: Callable</span>
 <span class="sd">        :param derivatives: methods to be called as the derivatives of the auxiliary function in the ``Metric`` with respect to the variables on which it depends. The argument keyword must be d[function]d[variable]. For example, if ``A(r, theta)`` is the auxiliary function, the derivatives ``(..., dAdr = [...], dAdtheta = [...])`` must be provided.</span>
 <span class="sd">        :type derivatives: list[Callable]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
             
-            <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">&#39;symbolic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
-            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">&#39;symbolic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">func</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;pyfunc&quot;</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">'symbolic'</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">'symbolic'</span><span class="p">]</span><span class="o">.</span><span class="n">func</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">'kind'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"pyfunc"</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kp">implemented_function</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func</span><span class="si">}</span><span class="s2">_func&quot;</span><span class="p">,</span> <span class="n">function</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="s1">'value'</span><span class="p">]</span> <span class="o">=</span> <span class="kp">implemented_function</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">func</span><span class="si">}</span><span class="s2">_func"</span><span class="p">,</span> <span class="n">function</span><span class="p">)</span>
 
             <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-                <span class="n">der</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;d</span><span class="si">{</span><span class="n">func</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">der</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"d</span><span class="si">{</span><span class="n">func</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">"</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">der</span> <span class="ow">in</span> <span class="n">derivatives</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Specify a meethod for the derivative of the function with respect to </span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Specify a meethod for the derivative of the function with respect to </span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="n">der</span><span class="p">]</span> <span class="o">=</span> <span class="kp">implemented_function</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;d</span><span class="si">{</span><span class="n">func</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">_func&quot;</span><span class="p">,</span> <span class="n">derivatives</span><span class="p">[</span><span class="n">der</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">param</span><span class="p">)][</span><span class="n">der</span><span class="p">]</span> <span class="o">=</span> <span class="kp">implemented_function</span><span class="p">(</span><span class="sa">f</span><span class="s2">"d</span><span class="si">{</span><span class="n">func</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">_func"</span><span class="p">,</span> <span class="n">derivatives</span><span class="p">[</span><span class="n">der</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">&quot;Initialize or load a metric before adding parameters.&quot;</span><span class="p">)</span></div>
+            <span class="n">logging</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="s2">"Initialize or load a metric before adding parameters."</span><span class="p">)</span></div>
 
             
 <div class="viewcode-block" id="Metric.get_parameters_symb">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.get_parameters_symb">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_parameters_symb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        :Returns:</span>
 <span class="sd">        The symbolic representation of all the elements in ``pygro.Metric.parameters``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">&#39;symbolic&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">constant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;constant&quot;</span><span class="p">]</span></div>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">'symbolic'</span><span class="p">]</span> <span class="k">for</span> <span class="n">constant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">'kind'</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"constant"</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="Metric.get_parameters_val">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.get_parameters_val">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_parameters_val</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        :Returns:</span>
-<span class="sd">        The numerical value of all the elements in ``pygro.Metric.parameters`` of type ``&quot;constant&quot;``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">constant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;constant&quot;</span><span class="p">]</span></div>
+<span class="sd">        The numerical value of all the elements in ``pygro.Metric.parameters`` of type ``"constant"``.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">'value'</span><span class="p">]</span> <span class="k">for</span> <span class="n">constant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">'kind'</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"constant"</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="Metric.get_parameters_constants">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.get_parameters_constants">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_parameters_constants</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        :Returns:</span>
-<span class="sd">        All the elements in ``pygro.Metric.parameters`` of type ``&quot;constant&quot;``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">&#39;symbol&#39;</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">]</span> <span class="k">for</span> <span class="n">constant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;constant&quot;</span><span class="p">}</span></div>
+<span class="sd">        All the elements in ``pygro.Metric.parameters`` of type ``"constant"``.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">'symbol'</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">]</span> <span class="k">for</span> <span class="n">constant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s2">"kind"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"constant"</span><span class="p">}</span></div>
 
     
 <div class="viewcode-block" id="Metric.get_parameters_expressions">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.get_parameters_expressions">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_parameters_expressions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        :Returns:</span>
-<span class="sd">        All the elements in ``pygro.Metric.parameters`` of type ``&quot;epxression&quot;`` (auxiliary expressions).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">&#39;symbol&#39;</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">]</span> <span class="k">for</span> <span class="n">constant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;expression&quot;</span><span class="p">}</span></div>
+<span class="sd">        All the elements in ``pygro.Metric.parameters`` of type ``"epxression"`` (auxiliary expressions).</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">'symbol'</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">]</span> <span class="k">for</span> <span class="n">constant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s2">"kind"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"expression"</span><span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="Metric.get_parameters_functions">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.get_parameters_functions">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_parameters_functions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        :Returns:</span>
-<span class="sd">        All the elements in ``pygro.Metric.parameters`` of type ``&quot;pyfunc&quot;`` (auxiliary functions).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">&#39;symbol&#39;</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">]</span> <span class="k">for</span> <span class="n">constant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;pyfunc&quot;</span><span class="p">}</span></div>
+<span class="sd">        All the elements in ``pygro.Metric.parameters`` of type ``"pyfunc"`` (auxiliary functions).</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s1">'symbol'</span><span class="p">]:</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">]</span> <span class="k">for</span> <span class="n">constant</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">constant</span><span class="p">][</span><span class="s2">"kind"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"pyfunc"</span><span class="p">}</span></div>
 
     
 <div class="viewcode-block" id="Metric.get_constant">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.get_constant">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_constant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">:</span> <span class="bp">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the value of the constant ``parameter``, if defined.</span>
+<span class="w">        </span><span class="sd">"""Returns the value of the constant ``parameter``, if defined.</span>
 <span class="sd">        </span>
 <span class="sd">        :param param: The symbolic name of the parameter to retrieve.</span>
 <span class="sd">        :type param: str</span>
 <span class="sd">        </span>
 <span class="sd">        :Raises:</span>
 <span class="sd">            ValueError: if ``parameter`` not defined.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">param</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;constant&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">param</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">param</span><span class="p">][</span><span class="s2">"kind"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"constant"</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">param</span><span class="p">][</span><span class="s2">"value"</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown constant </span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unknown constant </span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
 
 
     <span class="c1"># Auxiliary functions</span>
@@ -983,26 +983,26 @@
 <div class="viewcode-block" id="Metric.subs_functions">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.subs_functions">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">subs_functions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="nc">Basic</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;:Returns: </span>
+<span class="w">        </span><span class="sd">""":Returns: </span>
 <span class="sd">        The input ``sympy`` symbolic expression ``expr`` where the all the occurences of symbolic expressions have beem substituted by their representation.</span>
 <span class="sd">        </span>
 <span class="sd">        :param expr: The ``sympy`` symbolic expression in which to substitute funcitons.</span>
 <span class="sd">        :type expr: sp.Basic</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">functions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_expressions</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">functions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">functions</span><span class="p">:</span>
 
                 <span class="n">subs</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="n">f</span> <span class="o">=</span> <span class="n">functions</span><span class="p">[</span><span class="n">func</span><span class="p">][</span><span class="s1">&#39;symbolic&#39;</span><span class="p">]</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="n">functions</span><span class="p">[</span><span class="n">func</span><span class="p">][</span><span class="s1">'symbolic'</span><span class="p">]</span>
 
                 <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
-                    <span class="n">subs</span><span class="o">.</span><span class="kp">append</span><span class="p">((</span><span class="n">sp</span><span class="o">.</span><span class="nc">Derivative</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">arg</span><span class="p">),</span> <span class="n">functions</span><span class="p">[</span><span class="n">func</span><span class="p">][</span><span class="sa">f</span><span class="s2">&quot;d</span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">func</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]))</span>
+                    <span class="n">subs</span><span class="o">.</span><span class="kp">append</span><span class="p">((</span><span class="n">sp</span><span class="o">.</span><span class="nc">Derivative</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">arg</span><span class="p">),</span> <span class="n">functions</span><span class="p">[</span><span class="n">func</span><span class="p">][</span><span class="sa">f</span><span class="s2">"d</span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">func</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">"</span><span class="p">]))</span>
                 
                 <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="kp">subs</span><span class="p">(</span><span class="n">subs</span><span class="p">)</span>
             
-                <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="kp">subs</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">functions</span><span class="p">[</span><span class="n">func</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
+                <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="kp">subs</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">functions</span><span class="p">[</span><span class="n">func</span><span class="p">][</span><span class="s1">'value'</span><span class="p">])</span>
         
         <span class="n">functions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_functions</span><span class="p">()</span>
 
@@ -1010,14 +1010,14 @@
             <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">functions</span><span class="p">:</span>
 
                 <span class="n">subs</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="n">f</span> <span class="o">=</span> <span class="n">functions</span><span class="p">[</span><span class="n">func</span><span class="p">][</span><span class="s1">&#39;symbolic&#39;</span><span class="p">]</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="n">functions</span><span class="p">[</span><span class="n">func</span><span class="p">][</span><span class="s1">'symbolic'</span><span class="p">]</span>
 
                 <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
-                    <span class="n">subs</span><span class="o">.</span><span class="kp">append</span><span class="p">((</span><span class="n">sp</span><span class="o">.</span><span class="nc">Derivative</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">arg</span><span class="p">),</span> <span class="n">functions</span><span class="p">[</span><span class="n">func</span><span class="p">][</span><span class="sa">f</span><span class="s2">&quot;d</span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">func</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">](</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)))</span>
+                    <span class="n">subs</span><span class="o">.</span><span class="kp">append</span><span class="p">((</span><span class="n">sp</span><span class="o">.</span><span class="nc">Derivative</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">arg</span><span class="p">),</span> <span class="n">functions</span><span class="p">[</span><span class="n">func</span><span class="p">][</span><span class="sa">f</span><span class="s2">"d</span><span class="si">{</span><span class="n">f</span><span class="o">.</span><span class="n">func</span><span class="si">}</span><span class="s2">d</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">"</span><span class="p">](</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)))</span>
                 
                 <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="kp">subs</span><span class="p">(</span><span class="n">subs</span><span class="p">)</span>
             
-                <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="kp">subs</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">functions</span><span class="p">[</span><span class="n">func</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">](</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+                <span class="n">expr</span> <span class="o">=</span> <span class="n">expr</span><span class="o">.</span><span class="kp">subs</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">functions</span><span class="p">[</span><span class="n">func</span><span class="p">][</span><span class="s1">'value'</span><span class="p">](</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
         
         <span class="k">return</span> <span class="n">expr</span></div>
 
@@ -1026,7 +1026,7 @@
 <div class="viewcode-block" id="Metric.evaluate_parameters">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.evaluate_parameters">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">:</span> <span class="n">sp</span><span class="o">.</span><span class="nc">Basic</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;:Returns: </span>
+<span class="w">        </span><span class="sd">""":Returns: </span>
 <span class="sd">        The input ``sympy`` symbolic expression ``expr`` where the all the constant parameters have been evalueated with their corrispodning values.</span>
 <span class="sd">        </span>
 <span class="sd">        :param expr: The ``sympy`` symbolic expression in which to substitute funcitons.</span>
@@ -1034,15 +1034,15 @@
 <span class="sd">        </span>
 <span class="sd">        :Raises:</span>
 <span class="sd">            ValueError: if the value of the parameter has not been previously set.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="kp">values</span><span class="p">()):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must set_constant for every constant value in your metric, before evaluating.&quot;</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">'value'</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="kp">values</span><span class="p">()):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"You must set_constant for every constant value in your metric, before evaluating."</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">subs</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">const</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_constants</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">const</span><span class="p">:</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="n">const</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="s1">&#39;symbol&#39;</span><span class="p">]</span>
-                <span class="n">y</span> <span class="o">=</span> <span class="n">const</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">const</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="s1">'symbol'</span><span class="p">]</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">const</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="s1">'value'</span><span class="p">]</span>
                 <span class="n">subs</span><span class="o">.</span><span class="kp">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">])</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="kp">subs_functions</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span><span class="o">.</span><span class="kp">subs</span><span class="p">(</span><span class="n">subs</span><span class="p">)</span></div>
 
@@ -1050,13 +1050,13 @@
 <div class="viewcode-block" id="Metric.get_evaluable_function">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.get_evaluable_function">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_evaluable_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="p">:</span> <span class="bp">str</span> <span class="o">|</span> <span class="n">sp</span><span class="o">.</span><span class="nc">Basic</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        :Returns: </span>
 <span class="sd">        A python callable from a sympy expressions, where all auxiliary functions and parameters from the metric have been evaluated.</span>
 
 <span class="sd">        :param expr: The ``sympy`` symbolic expression to evaluate or a string containing the symbolic expression.</span>
 <span class="sd">        :type expr: str | sp.Basic</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="bp">str</span><span class="p">):</span>
             <span class="n">expr</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
         
@@ -1071,17 +1071,17 @@
 <div class="viewcode-block" id="Metric.set_coordinate_transformation">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.set_coordinate_transformation">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_coordinate_transformation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transform_functions</span><span class="p">:</span> <span class="bp">list</span><span class="p">[</span><span class="bp">str</span><span class="p">]):</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;Sets the coordinate transforamtion to a pseduo-cartesian system of coordinates.</span>
+<span class="w">            </span><span class="sd">"""Sets the coordinate transforamtion to a pseduo-cartesian system of coordinates.</span>
 <span class="sd">            </span>
 <span class="sd">            :Example:</span>
 <span class="sd">            </span>
 <span class="sd">            .. code-block::</span>
 
 <span class="sd">                transform_functions = [</span>
-<span class="sd">                    &quot;t&quot;,</span>
-<span class="sd">                    &quot;r*sin(theta)*cos(phi)&quot;,</span>
-<span class="sd">                    &quot;r*sin(theta)*sin(phi)&quot;,</span>
-<span class="sd">                    &quot;r*cos(theta)&quot;</span>
+<span class="sd">                    "t",</span>
+<span class="sd">                    "r*sin(theta)*cos(phi)",</span>
+<span class="sd">                    "r*sin(theta)*sin(phi)",</span>
+<span class="sd">                    "r*cos(theta)"</span>
 <span class="sd">                ]</span>
 <span class="sd">                </span>
 <span class="sd">                metric.set_coordinate_transformation(transform_functions = transform_functions)</span>
@@ -1089,34 +1089,34 @@
 
 <span class="sd">            :param transform_functions: A list of strings containing the symbolic expressions of the transformation functions</span>
 <span class="sd">            :type transform_functions: list[str]</span>
-<span class="sd">            &quot;&quot;&quot;</span>
+<span class="sd">            """</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transform_s</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">"t"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">,</span> <span class="s2">"z"</span><span class="p">]):</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">x_symb</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="kp">parse_expr</span><span class="p">(</span><span class="n">transform_functions</span><span class="p">)</span>
                 <span class="k">except</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Insert a valid expression for transformation to the cartesian coordinate: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Insert a valid expression for transformation to the cartesian coordinate: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                 
                 <span class="bp">self</span><span class="o">.</span><span class="n">transform_s</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">x_symb</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">lambdify</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">],</span> <span class="n">x_symb</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">))</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="kp">lambdify</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">],</span> <span class="n">x_symb</span><span class="p">,</span> <span class="s1">'numpy'</span><span class="p">))</span></div>
 
     
 <div class="viewcode-block" id="Metric.transform">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.transform">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nc">X</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="nc">ArrayLike</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;A function to apply the transformation defined in ``transform_functions`` to the given point.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""A function to apply the transformation defined in ``transform_functions`` to the given point.</span>
 <span class="sd">        </span>
 <span class="sd">        :param X: the point(s) to transform. This can either be a 4-dimensional array or a :math:`4\times n` ``np.array`` (`i.e.` a collection of points).</span>
 <span class="sd">        :type point: npt.ArrayLike</span>
 <span class="sd">        </span>
 <span class="sd">        :Returns:</span>
 <span class="sd">        The transformed values of the coordinates of the point(s).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="o">*</span><span class="nc">X</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_val</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="o">*</span><span class="nc">X</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_val</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span><span class="p">[</span><span class="mi">2</span><span class="p">](</span><span class="o">*</span><span class="nc">X</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_val</span><span class="p">()),</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_functions</span><span class="p">[</span><span class="mi">3</span><span class="p">](</span><span class="o">*</span><span class="nc">X</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="kp">get_parameters_val</span><span class="p">())</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Coordinate transformations not set. Use .set_coordinate_transformation method in Metric class.&quot;</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Coordinate transformations not set. Use .set_coordinate_transformation method in Metric class."</span><span class="p">)</span></div>
 
         
     <span class="k">def</span><span class="w"> </span><span class="nf">_g_f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
@@ -1128,8 +1128,8 @@
 <div class="viewcode-block" id="Metric.Christoffel">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.Christoffel">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">Christoffel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="bp">int</span><span class="p">,</span> <span class="n">nu</span><span class="p">:</span> <span class="bp">int</span><span class="p">,</span> <span class="n">rho</span><span class="p">:</span> <span class="bp">int</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;The symbolic representation of the mu-nu-rho Christoffel symbol, :math:`\Gamma_{\mu\nu}^{\rho}` related to the metric tensor.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""The symbolic representation of the mu-nu-rho Christoffel symbol, :math:`\Gamma_{\mu\nu}^{\rho}` related to the metric tensor.</span>
+<span class="sd">        """</span>
         <span class="n">ch</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
             <span class="n">ch</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_inv</span><span class="p">[</span><span class="n">rho</span><span class="p">,</span><span class="n">sigma</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">sigma</span><span class="p">,</span> <span class="n">nu</span><span class="p">]</span><span class="o">.</span><span class="kp">diff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">mu</span><span class="p">])</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">]</span><span class="o">.</span><span class="kp">diff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">nu</span><span class="p">])</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">[</span><span class="n">mu</span><span class="p">,</span> <span class="n">nu</span><span class="p">]</span><span class="o">.</span><span class="kp">diff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">sigma</span><span class="p">]))</span><span class="o">/</span><span class="mi">2</span>
@@ -1139,8 +1139,8 @@
 <div class="viewcode-block" id="Metric.Lagrangian">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.Lagrangian">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">Lagrangian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The symbolic representation of the test particle Lagrangian related to the metric tensor.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""The symbolic representation of the test particle Lagrangian related to the metric tensor.</span>
+<span class="sd">        """</span>
         <span class="n">lagrangian</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="k">for</span> <span class="n">mu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
@@ -1153,7 +1153,7 @@
 <div class="viewcode-block" id="Metric.norm">
 <a class="viewcode-back" href="../../metricengine.html#pygro.metric_engine.Metric.norm">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">norm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="nc">Iterable</span><span class="p">[</span><span class="bp">float</span><span class="p">],</span> <span class="n">vec</span><span class="p">:</span> <span class="nc">Iterable</span><span class="p">[</span><span class="bp">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="bp">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        :Returns:</span>
 <span class="sd">        The norm of the 4-vector ``vec`` computed at the given ``point`` in space-time. Uses the currently set values of the constant ``parameters``.</span>
 <span class="sd">        </span>
@@ -1164,9 +1164,9 @@
 <span class="sd">        </span>
 <span class="sd">        :Raises:</span>
 <span class="sd">            ValueError: if the input arrays are not 4-dimensional.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The &#39;point&#39; and the &#39;vector&#39; must be 4-dimensional arrays.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"The 'point' and the 'vector' must be 4-dimensional arrays."</span><span class="p">)</span>
         <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">mu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
