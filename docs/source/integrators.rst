@@ -7,8 +7,8 @@ A series of different integration schemes is pre-built in PyGRO. These can be ch
 
 In particular, we have implemented a series of adaptive step-size `explicit Runge-Kutta methods <https://en.wikipedia.org/wiki/Runge-Kutta_methods#Explicit_Runge-Kutta_methods>`_:
 
-- **Runge-Kutta-Fehlberg4(5)**: (``integrator = "rkf45"``) embedded method from the Runge-Kutta family of the 4th order with error estiamtion of the 5th order. The implemented version is based on [1]_.
-- **Dormand-Prince5(4)**: (``integrator = "dp45"``) embedded method of the 5th order with error estiamtion of the 4th order. The implemented version is based on [2]_. It is the **default** choice in PyGRO when no ``integrator`` argument is passed to the :py:class:`.GeodesicEngine`.
+- **Runge-Kutta-Fehlberg4(5)**: (``integrator = "rkf45"``) embedded method from the Runge-Kutta family of the 4th order with error estiamtion of the 5th order. The implemented version is based on [1]_. It is the **default** choice in PyGRO when no ``integrator`` argument is passed to the :py:class:`.GeodesicEngine`.
+- **Dormand-Prince5(4)**: (``integrator = "dp45"``) embedded method of the 5th order with error estiamtion of the 4th order. The implemented version is based on [2]_. 
 - **Cash-Karp**: (``integrator = "ck45"``) embedded method of the 4th order with error estiamtion of the 5th order. The implemented version is based on [3]_.
 - **Runge-Kutta-Fehlberg7(8)**: (``integrator = "rkf78"``) embedded method from the Runge-Kutta family of the 7th order with error estiamtion of the 8th order. The implemented version is based on [4]_.
 

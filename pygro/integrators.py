@@ -180,7 +180,7 @@ class ExplicitAdaptiveRungeKuttaIntegrator(Integrator):
         
 class DormandPrince45(ExplicitAdaptiveRungeKuttaIntegrator):
     interpolator_class = DP54DenseOutput
-    def __init__(self, function: Callable, stopping_criterion: Callable, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16):
+    def __init__(self, function: Callable, stopping_criterion: Callable, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16, hmin: Optional[float] = 1e-16, max_iter: int = 1000):
 
         self.a = np.array([
             [0, 0, 0, 0, 0, 0, 0],
@@ -201,10 +201,10 @@ class DormandPrince45(ExplicitAdaptiveRungeKuttaIntegrator):
             0, 1/5, 3/10, 4/5, 8/9, 1, 1
         ])
         
-        super().__init__(function, stopping_criterion, 5, len(self.b[0]), accuracy_goal, precision_goal, safety_factor, hmax)
+        super().__init__(function, stopping_criterion, 5, len(self.b[0]), accuracy_goal, precision_goal, safety_factor, hmax, hmin, max_iter)
 
 class DormandPrince853(ExplicitAdaptiveRungeKuttaIntegrator):
-    def __init__(self, function: Callable, stopping_criterion: Callable, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16):
+    def __init__(self, function: Callable, stopping_criterion: Callable, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16, hmin: Optional[float] = 1e-16, max_iter: int = 1000):
 
         self.a = np.array([
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -231,10 +231,10 @@ class DormandPrince853(ExplicitAdaptiveRungeKuttaIntegrator):
             0, 1/18, 1/12, 1/8, 5/16, 3/8, 59/400, 93/200, 5490023248/9719169821, 13/20, 1201146811/1299019798, 1, 1
         ])
 
-        super().__init__(function, stopping_criterion, 8, len(self.b[0]), accuracy_goal, precision_goal, safety_factor, hmax)
+        super().__init__(function, stopping_criterion, 8, len(self.b[0]), accuracy_goal, precision_goal, safety_factor, hmax, hmin, max_iter)
 
 class RungeKuttaFehlberg45(ExplicitAdaptiveRungeKuttaIntegrator):
-    def __init__(self, function: Callable, stopping_criterion: Callable, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16):
+    def __init__(self, function: Callable, stopping_criterion: Callable, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16, hmin: Optional[float] = 1e-16, max_iter: int = 1000):
 
         self.a = np.array([
             [0, 0, 0, 0, 0, 0],
@@ -254,13 +254,11 @@ class RungeKuttaFehlberg45(ExplicitAdaptiveRungeKuttaIntegrator):
             0, 1/4, 3/8, 12/13, 1, 1/2
         ])
         
-        super().__init__(function, stopping_criterion, 5, len(self.b[0]), accuracy_goal, precision_goal, safety_factor, hmax)
+        super().__init__(function, stopping_criterion, 5, len(self.b[0]), accuracy_goal, precision_goal, safety_factor, hmax, hmin, max_iter)
     
     
 class RungeKuttaFehlberg78(ExplicitAdaptiveRungeKuttaIntegrator):
-    def __init__(self, function: Callable, stopping_criterion: Callable, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16):
-
-        super().__init__(function, stopping_criterion, 7, 13, accuracy_goal, precision_goal, safety_factor, hmax)
+    def __init__(self, function: Callable, stopping_criterion: Callable, accuracy_goal: Optional[int] = 10, precision_goal: Optional[int] = 10, safety_factor: Optional[float] = 0.9, hmax: Optional[float] = 1e+16, hmin: Optional[float] = 1e-16, max_iter: int = 1000):
 
         self.c = [0, 2/27,  1/9, 1/6, 5/12, 1/2, 5/6, 1/6, 2/3, 1/3, 1, 0, 1]
         
@@ -287,6 +285,8 @@ class RungeKuttaFehlberg78(ExplicitAdaptiveRungeKuttaIntegrator):
                 [41/840, 0, 0, 0, 0, 34/105, 9/35, 9/35, 9/280, 9/280, 41/840, 0, 0]
             ]
         )
+
+        super().__init__(function, stopping_criterion, 7, 13, accuracy_goal, precision_goal, safety_factor, hmax, hmin, max_iter)
 
 class CashKarp45(Integrator):
     # TODO: improve CashKarp typing, notation and documentation
